@@ -1,17 +1,18 @@
 package com.d103.newreka.user.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+import com.d103.newreka.quizStats.domain.QuizStats;
+import com.d103.newreka.typingStats.domain.TypingStats;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity // 이 클래스는 엔티티를 나타냄을 명시
 @NoArgsConstructor // 생성자 표시 안해도 있다고 해줌
@@ -32,8 +33,8 @@ public class User {
 	private Long id; // Long이 db에서 bigint임
 	//erd의 유저 식별번호
 
-	@Column(name = "login_id", nullable = false, columnDefinition = "varchar(30)")
-	private String loginId;
+//	@Column(name = "login_id", nullable = false, columnDefinition = "varchar(30)")
+//	private String loginId;
 
 	@Column(nullable = false, columnDefinition = "varchar(30)")
 	private String password;
@@ -49,4 +50,13 @@ public class User {
 
 	@Column(nullable = false, columnDefinition = "varchar(30)")
 	private String name;
+
+	@Builder.Default
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<QuizStats> userQuiz = new ArrayList<>();
+
+	@Builder.Default
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<TypingStats> userTyping = new ArrayList<>();
+
 }
