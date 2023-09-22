@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from 'react-router-dom';
 
-const Button = () => {
+const LoginButton = () => {
     const history = useHistory();
 
     const handleClick = () => {
@@ -15,4 +15,4 @@ const Button = () => {
     );
 };
 
-export default Button;
+export default LoginButton;
