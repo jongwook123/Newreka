@@ -1,7 +1,7 @@
 from konlpy.tag import Okt
 from konlpy.tag import Komoran
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 import string
 import pandas as pd
@@ -69,20 +69,32 @@ if __name__ == '__main__':
     stopword_file.close()
 
     # 데이터 읽기
-    cur_news_data = []
-    # 첫 번째 반복문: 21부터 23까지 (3시간)
-    for hour in range(20, 21):
+    cur_news_data_list = []
+    # 현재 시간에서 10분 단위로 내림하여 설정
+    now = datetime.now()
+    now_minutes_floor = (now.minute // 10) * 10
+    now = now.replace(minute=now_minutes_floor)
     
-        # 두 번째 반복문: 각 시간대에 대해 파일 읽기 (00부터 50까지)
-        for minute in range(0, 51, 10):
-            file_name = "/home/ubuntu/news_title/20230922/{:02d}/news_title_20230922_{:02d}{:02d}.txt".format(hour, hour, minute)
-            with open(file_name, 'r', encoding='utf-8') as cur_news_file:
-                for word in cur_news_file.readlines():
-                    cur_news_data.append(word.rstrip())
+    start_time = now - timedelta(hours=3, minutes = 10)
+    
+    while start_time < now:
+        file_path = "/home/ubuntu/news_title/{date}/{hour}/news_title_{date}_{time}.txt".format(
+            date=start_time.strftime("%Y%m%d"),
+            hour=start_time.strftime("%H"),
+            time=start_time.strftime("%H%M")
+        )
+        #print(file_path)
+        
+        # 데이터 읽고 추가
+        with open(file_path, 'r', encoding='utf-8') as cur_news_file:
+            cur_news_data_list.extend(line.rstrip() for line in cur_news_file)
+        
+        # 10분 단위
+        start_time += timedelta(minutes=10)
 
 
     # 제목 띄워쓰기로 합치기
-    cur_news_data = ' '.join(cur_news_data)
+    cur_news_data = ' '.join(cur_news_data_list)
 
     # 데이터 전처리
     processed_news_data = finalpreprocess(cur_news_data)
@@ -94,4 +106,12 @@ if __name__ == '__main__':
     # Print the top-10 words
     top_10_keywords = freq_dist.most_common(10)
     print(top_10_keywords)
+    
+    # KeyBert 모델 초기화
+    #model = KeyBERT('distilbert-base-nli-mean-tokens')
+
+    # 대표 키워드 추출하기
+    #top_10_keywords_with_scores= model.extract_keywords(processed_news_data, keyphrase_ngram_range=(1,2), stop_words=None, use_maxsum=True,nr_candidates=20,top_n=10)
+
+    #print(top_10_keywords_with_scores)
 
