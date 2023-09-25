@@ -13,20 +13,20 @@ export default function App() {
         <ThemeProvider theme={theme}>
             <GlobalStyle />
             <BrowserRouter basename={process.env.PUBLIC_URL}>
-                <head>
+                <header>
                     <meta
                         http-equiv="Content-Security-Policy"
                         content="upgrade-insecure-requests"
                     />
-                </head>
+                </header>
                 <Routes>
                     <Route path="/login" element={<LoginPage />}></Route>
                     <Route path="/oauth/redirected/kakao" element={<KakaoRedirectPage />}></Route>
                     {/* 헤더 */}
                     
-                    <Route element={<HeaderLayout />}>
-                        <Route path="/" element={<MainPage />} />
-                    </Route>
+                    <Route element={<HeaderLayout />} />
+                    <Route path="/" element={<MainPage />} />
+                    
                 </Routes>
             </BrowserRouter>
         </ThemeProvider>
