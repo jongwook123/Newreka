@@ -12,7 +12,8 @@ export const Date = styled.header`
 
 export const Title = styled.h1`
     text-align: center;
-    font-size: 30px;
+    font-size: 50px;
+    width: 60%;
     
 `
 
@@ -23,12 +24,18 @@ export const Title_div = styled.div`
     align-items: center;
     border-top: 2px solid;
     border-bottom: 2px solid;
-    padding : 4% 0
+
+    padding-top: 4%;
+    padding-bottom: 4%;
+    
 `
 
 export const Sub_menu = styled.span`
     text-align: right; /* 오른쪽 정렬 */
+    font-size: 30px;
+    width: 20%;
 `
 export const Dummy = styled.span`
     text-align: right; /* 오른쪽 정렬 */
+    width: 20%;
 `

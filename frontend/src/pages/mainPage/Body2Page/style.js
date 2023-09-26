@@ -1,32 +1,42 @@
 import styled from "styled-components";
 
-
 export const Main = styled.main`
-    margin: 10px 0;
+    margin: 20px auto;
     width: 95%;
-    height : 800px;
+    min-height : 800px;
     background-color : #F5ECE5;
     border-radius: 20px;
 `
 
 export const Title = styled.h1`
-    padding-top: 30px;
-    padding-left: 50px;
+   padding-top: 50px; 
+   font-size : 40px; 
+   color:#333333 ; 
 `
 
 export const Menu = styled.section`
-    display: flex;
-    padding-top: 50px;
-    padding-left: 50px;
+   display:flex ;
+   padding-top :30px ;  
 `
 
 export const MenuList = styled.span`
-    margin: 3px;
+   font-size :30px ;
+   cursor:pointer ;
+   color: ${props => props.selected ? '#FF6347' : '#333333'}; 
+
+   &:hover {
+      color:#FF6347 ;  
+      transition:.3s ease-in-out ;
+     }
 `
+
+
 export const MenuBody = styled.div`
-    background-color: black;
-    width: 90%;
-    height: 80%;
-    justify-content: center;
-    margin: 0 auto;
+    display:flex ;
+     width:90% ;
+     height:auto ;
+
+     margin-top :30px ;
 `
+
+

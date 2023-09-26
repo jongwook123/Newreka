@@ -6,9 +6,8 @@ import { GlobalStyle } from "styles/GlobalStyle"
 
 import MainPage from "pages/mainPage"
 import MyPage from "pages/myPage"
-import LoginPage from "pages/mainPage/LoginPage"
-import KakaoRedirectPage from "pages/mainPage/KakaoRedirectPage"
-import HeaderLayout from "component/layouts/headerlayout"
+import LoginPage from "pages/userPages/LoginPage/LoginPage"
+
 export default function App() {
     return (
         <ThemeProvider theme={theme}>
