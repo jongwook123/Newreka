@@ -5,10 +5,11 @@ import { theme } from "styles/Theme"
 import { GlobalStyle } from "styles/GlobalStyle"
 
 import MainPage from "pages/mainPage"
+import MyPage from "pages/myPage"
 import LoginPage from "pages/userPages/LoginPage/LoginPage"
-import KakaoRedirectPage from "pages/mainPage/KakaoRedirectPage"
 import HeaderLayout from "component/layouts/headerlayout"
 import SignupPage from "pages/userPages/SignupPage/SignupPage"
+
 export default function App() {
     return (
         <ThemeProvider theme={theme}>
@@ -23,12 +24,10 @@ export default function App() {
                 <Routes>
                     <Route path="/login" element={<LoginPage />}></Route>
                     <Route path="/signup" element={<SignupPage />}></Route>
-                    <Route path="/oauth/redirected/kakao" element={<KakaoRedirectPage />}></Route>
-                    {/* 헤더 */}
-                    
                     <Route element={<HeaderLayout />} />
                     <Route path="/" element={<MainPage />} />
-                    
+                    <Route path="/mypage" element={<MyPage />} />
+
                 </Routes>
             </BrowserRouter>
         </ThemeProvider>

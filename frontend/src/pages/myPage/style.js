@@ -31,3 +31,8 @@ export const Body = styled.body`
     background-color : #F5ECE5;
     border-radius: 20px;
 `
+
+export const KeywordSection = styled.section`
+    display: flex;
+    justify-content: center;
+`
