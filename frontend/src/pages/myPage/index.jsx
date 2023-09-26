@@ -9,16 +9,18 @@ export default function MyPage() {
         <S.Main>
             <Header>
             </Header>
-            <S.Body>
-                <h2>Keywords</h2>
-                <S.KeywordSection>
-                    <Keywords />
-                </S.KeywordSection>
-            </S.Body>
-            <S.Body>
-                <h2>Scrapped News</h2>
-                <Scrap />
-            </S.Body>
+            <S.BodySection>
+                <S.Body>
+                    <h2>Keywords</h2>
+                    <S.KeywordSection>
+                        <Keywords />
+                    </S.KeywordSection>
+                </S.Body>
+                <S.Body>
+                    <h2>Scrapped News</h2>
+                    <Scrap />
+                </S.Body>
+            </S.BodySection>
             <Footer />
         </S.Main>
     )

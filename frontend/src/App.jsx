@@ -7,6 +7,7 @@ import { GlobalStyle } from "styles/GlobalStyle"
 import MainPage from "pages/mainPage"
 import MyPage from "pages/myPage"
 import LoginPage from "pages/userPages/LoginPage/LoginPage"
+import HeaderLayout from "component/layouts/headerlayout"
 
 export default function App() {
     return (
@@ -21,7 +22,6 @@ export default function App() {
                 </header>
                 <Routes>
                     <Route path="/login" element={<LoginPage />}></Route>
-                    <Route path="/oauth/redirected/kakao" element={<KakaoRedirectPage />}></Route>
                     {/* 헤더 */}
 
                     <Route element={<HeaderLayout />} />

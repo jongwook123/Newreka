@@ -10,8 +10,15 @@ export const Main = styled.main`
 `
 
 export const Header = styled.header`
-border-bottom: 2px solid;
+    border-bottom: 2px solid;
 `
+
+export const BodySection = styled.section`
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+`
+
 
 export const Body = styled.body`
     display: flex;

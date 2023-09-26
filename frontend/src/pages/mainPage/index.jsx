@@ -1,27 +1,26 @@
 import Header from 'component/header';
+import Footer from 'component/footer';
 import * as S from './style';
-import Body1Page from './Body1Page';
-import Body2Page from './Body2Page';
-
+import WordCloudPage from './WordCloud';
+import MainPageTabs from 'component/tabs/mainPageTabs';
 
 export default function MainPage() {
     return (
         <S.Main>
-            <Header menu_name="menuName">
+            <Header>
             </Header>
-            <S.Body1>
-                <h2>Hot 10</h2>
-                <Body1Page/>
-            </S.Body1>
-            <S.Body2>
-                <h2>뉴스 관련</h2>
-                <Body2Page/>
-            </S.Body2>
-            <S.Footer>
-                <p>@SSAFY D103. All rights reserved.</p>
-            </S.Footer>
+            <S.BodySection>
+                <S.Body>
+                    <h2>HOT 10</h2>
+                    <WordCloudPage />
+                </S.Body>
+                <S.Body>
+                    <h2>Selected Keyword</h2>
+                    <MainPageTabs />
+                </S.Body>
+            </S.BodySection>
+            <Footer />
         </S.Main>
     )
-        
-}
 
+}

@@ -41,7 +41,7 @@ function WordCloudPage() {
       const top5Words = words.slice(0, 5); // Select top 5 words
       const top5Color = 'blue'; // Change this to the desired color for top 5 words
       const otherColor = 'gray'; // Change this to the desired color for other words
-    
+
       let group = d3
         .select(wordRef.current)
         .append('svg')
@@ -49,7 +49,7 @@ function WordCloudPage() {
         .attr('height', layout.size()[1])
         .append('g')
         .attr('transform', 'translate(' + layout.size()[0] / 2 + ',' + layout.size()[1] / 2 + ')');
-    
+
       // Modify position based on size (z-index based on size)
       words.forEach(d => {
         d.z = Math.sqrt(d.size); // Adjust the function based on your preference
@@ -58,49 +58,49 @@ function WordCloudPage() {
       const colorScale = d3.scaleOrdinal()
         .domain(top5Words.map(d => d.text))
         .range(d3.schemeCategory10);
-    
+
       const simulation = d3.forceSimulation(words)
         .force('charge', d3.forceManyBody().strength(50))
         .force('collide', d3.forceCollide().radius(d => Math.max(10, Math.abs(d.size * 0.95)))) // Adjust the additional radius
         .stop();
-    
+
       for (let i = 0; i < 70; ++i) simulation.tick();
       group
-      .selectAll('.word-circle')
-      .data(words)
-      .enter()
-      .append('circle')
-      .attr('r', d => Math.max(10, Math.abs(d.size)))
-      .attr('class', 'word-circle')
-      .attr('transform', d => `translate(${d.x},${d.y})`)
-      .attr('fill', d => (top5Words.includes(d) ? colorScale(d.text) : 'gray')) 
-      .attr('opacity', 0.7)
-      .attr('z', d => d.z)
-      .on('click', handleCircleClick);
-      
+        .selectAll('.word-circle')
+        .data(words)
+        .enter()
+        .append('circle')
+        .attr('r', d => Math.max(10, Math.abs(d.size)))
+        .attr('class', 'word-circle')
+        .attr('transform', d => `translate(${d.x},${d.y})`)
+        .attr('fill', d => (top5Words.includes(d) ? colorScale(d.text) : 'gray'))
+        .attr('opacity', 0.7)
+        .attr('z', d => d.z)
+        .on('click', handleCircleClick);
+
       group
-      .selectAll('.word-text')
-      .data(words)
-      .enter()
-      .append('text')
-      .attr('font-size', d => Math.sqrt(d.size) * 2.5)
-      .style('fill', 'white')
-      .attr('text-anchor', 'middle')
-      .attr('class', 'word-text')
-      .attr('transform', d => `translate(${d.x},${d.y})`)
-      .attr('z', d => d.z)
-      .attr('cursor', 'default')
-      .selectAll('tspan')
-      .data(d => d.text.split(/(\s+)/))
-      .enter()
-      .append('tspan')
-      .attr('x', 0)
-      .attr('y', (d, i) => i * 15)  // Adjust the line height as needed
-      .text(d => d);
-    
+        .selectAll('.word-text')
+        .data(words)
+        .enter()
+        .append('text')
+        .attr('font-size', d => Math.sqrt(d.size) * 2.5)
+        .style('fill', 'white')
+        .attr('text-anchor', 'middle')
+        .attr('class', 'word-text')
+        .attr('transform', d => `translate(${d.x},${d.y})`)
+        .attr('z', d => d.z)
+        .attr('cursor', 'default')
+        .selectAll('tspan')
+        .data(d => d.text.split(/(\s+)/))
+        .enter()
+        .append('tspan')
+        .attr('x', 0)
+        .attr('y', (d, i) => i * 15)  // Adjust the line height as needed
+        .text(d => d);
+
       // Append circles after text, so they visually appear on top
     }
-    
+
     // Function to generate a random color
     function getRandomColor() {
       const letters = '0123456789ABCDEF';
@@ -111,9 +111,9 @@ function WordCloudPage() {
       return color;
     }
 
-      // Append circles after text, so they visually appear on top
-      
-    
+    // Append circles after text, so they visually appear on top
+
+
   }, []);
 
   return <div ref={wordRef} />;

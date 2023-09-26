@@ -1,16 +1,16 @@
 import * as S from "./style";
 
-function Card({ props: { groupName, img_src } }) {
+function Card({ props: { title, img_src } }) {
 
   return (
     <S.CardSection>
+      <S.TextContainer>
+        <h2>{title}</h2>
+      </S.TextContainer>
       <img
         src={img_src}
         alt=""
       />
-      <S.TextContainer>
-        <h2>{groupName}</h2>
-      </S.TextContainer>
     </S.CardSection>
   );
 }

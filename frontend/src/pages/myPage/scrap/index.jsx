@@ -1,11 +1,11 @@
 
 import * as S from './style';
-import TabsTemplate from 'component/tabs/indes';
+import MyPageTabs from 'component/tabs/myPageTabs';
 
 export default function Scrap() {
     return (
         <S.Main>
-            <TabsTemplate />
+            <MyPageTabs />
         </S.Main>
     )
 

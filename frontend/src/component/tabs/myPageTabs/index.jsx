@@ -4,7 +4,7 @@ import NewsPreview from 'component/previews';
 import WideCard from 'component/newscards/widecard';
 
 
-const TabsTemplate = () => {
+const MyPageTabs = () => {
     const [activeTabIndex, setActiveTabIndex] = useState(0);
 
     const handleTabSelect = (index) => {
@@ -52,4 +52,4 @@ const TabsTemplate = () => {
     );
 };
 
-export default TabsTemplate;
+export default MyPageTabs;
