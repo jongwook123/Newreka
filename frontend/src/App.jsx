@@ -5,6 +5,7 @@ import { theme } from "styles/Theme"
 import { GlobalStyle } from "styles/GlobalStyle"
 
 import MainPage from "pages/mainPage"
+import MyPage from "pages/myPage"
 import LoginPage from "pages/mainPage/LoginPage"
 import KakaoRedirectPage from "pages/mainPage/KakaoRedirectPage"
 import HeaderLayout from "component/layouts/headerlayout"
@@ -23,10 +24,11 @@ export default function App() {
                     <Route path="/login" element={<LoginPage />}></Route>
                     <Route path="/oauth/redirected/kakao" element={<KakaoRedirectPage />}></Route>
                     {/* 헤더 */}
-                    
+
                     <Route element={<HeaderLayout />} />
                     <Route path="/" element={<MainPage />} />
-                    
+                    <Route path="/mypage" element={<MyPage />} />
+
                 </Routes>
             </BrowserRouter>
         </ThemeProvider>
