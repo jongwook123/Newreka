@@ -6,4 +6,5 @@ export const Main = styled.main`
     height : 600px;
     background-color : #F5ECE5;
     border-radius: 20px;
+    
 `

@@ -5,7 +5,7 @@ import { theme } from "styles/Theme"
 import { GlobalStyle } from "styles/GlobalStyle"
 
 import MainPage from "pages/mainPage"
-import LoginPage from "pages/mainPage/LoginPage"
+import LoginPage from "pages/userPages/LoginPage/LoginPage"
 import KakaoRedirectPage from "pages/mainPage/KakaoRedirectPage"
 import HeaderLayout from "component/layouts/headerlayout"
 export default function App() {
