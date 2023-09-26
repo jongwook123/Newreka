@@ -8,6 +8,7 @@ import MainPage from "pages/mainPage"
 import MyPage from "pages/myPage"
 import LoginPage from "pages/userPages/LoginPage/LoginPage"
 import HeaderLayout from "component/layouts/headerlayout"
+import SignupPage from "pages/userPages/SignupPage/SignupPage"
 
 export default function App() {
     return (
@@ -22,8 +23,7 @@ export default function App() {
                 </header>
                 <Routes>
                     <Route path="/login" element={<LoginPage />}></Route>
-                    {/* 헤더 */}
-
+                    <Route path="/signup" element={<SignupPage />}></Route>
                     <Route element={<HeaderLayout />} />
                     <Route path="/" element={<MainPage />} />
                     <Route path="/mypage" element={<MyPage />} />
