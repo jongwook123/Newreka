@@ -12,9 +12,19 @@ export const GlobalStyle = createGlobalStyle`
 
     button, a, label {
         cursor: pointer;
+        padding: 0;
     }
 
     input {
         padding: 0;
+    }
+
+    ul, li, ol {
+        list-style: none;
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none;
     }
 `
