@@ -7,7 +7,7 @@ import MainPageTabs from 'component/tabs/mainPageTabs';
 export default function MainPage() {
     return (
         <S.Main>
-            <Header>
+            <Header menu_name="My Page">
             </Header>
             <S.BodySection>
                 <S.Body>
