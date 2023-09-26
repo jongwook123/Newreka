@@ -7,7 +7,7 @@ import Body2Page from './Body2Page';
 export default function MainPage() {
     return (
         <S.Main>
-            <Header>
+            <Header menu_name="menuName">
             </Header>
             <S.Body1>
                 <h2>Hot 10</h2>

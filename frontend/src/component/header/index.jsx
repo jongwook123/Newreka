@@ -1,6 +1,6 @@
 import * as S from './style';
 
-export default function Header() {
+export default function Header(props) {
 
     return (
         <S.Main>
@@ -12,7 +12,7 @@ export default function Header() {
                 <S.Title>NewReka</S.Title>
                 {/* Login 후 */}
                 <S.Sub_menu>
-                    My page
+                    {props.menu_name}
                 </S.Sub_menu>
                 {/* Login 전 */}
                 

@@ -7,7 +7,7 @@ export default function Body1Page() {
     return (
         <S.Main>
             <S.Title>
-                HOT 10
+                HOT Topic 10
             </S.Title>
             <S.Body>
                 <WordCloudPage/>
