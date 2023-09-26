@@ -2,6 +2,7 @@ import * as S from './style';
 import { useState } from 'react';
 import NewsPreview from 'component/previews';
 import Card from 'component/newscards/card';
+import Quiz from 'pages/mainPage/Quiz';
 
 
 const MainPageTabs = () => {
