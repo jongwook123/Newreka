@@ -1,11 +1,10 @@
-from konlpy.tag import Okt
 from konlpy.tag import Komoran
 import re
 from datetime import datetime, timedelta
 import os
 import string
-import pandas as pd
 from collections import Counter
+import math
 
 komoran = Komoran()
 
@@ -39,27 +38,6 @@ def finalpreprocess(text):
   return final(preprocess(text))
 
 if __name__ == '__main__':
-    # 현재시간 가져오기
-    # 2023-09-22 00:53:10.181418
-    now = datetime.now()
-
-    # 폴더 생성
-    directory = '/home/ubuntu/bigdata'
-    # createFolder(directory_path)
-
-    try:
-        # 해당 경로에 폴더가 존재하지 않으면 폴더 생성
-        if not os.path.exists(directory):
-            os.makedirs(directory)
-    except OSError:
-        print ('Error: Creating directory. ' +  directory)
-
-    # 년월일시 2023092213 : 2023년 09월 22일 13시
-    file_date = now.strftime("%Y%m%d%H")
-    file_name_template = file_date
-
-    # 한 시간 단위
-    start_time = str(now.strftime('%Y-%m-%d %H')) + ":00:00"
 
     # 불용어 리스트
     stopword_file = open('/home/ubuntu/stopwords.txt', 'r', encoding='utf-8')
@@ -72,10 +50,12 @@ if __name__ == '__main__':
     cur_news_data_list = []
     # 현재 시간에서 10분 단위로 내림하여 설정
     now = datetime.now()
+    #now = datetime(2023, 9, 25, 10, 00)
     now_minutes_floor = (now.minute // 10) * 10
     now = now.replace(minute=now_minutes_floor)
     
     start_time = now - timedelta(hours=3, minutes = 10)
+    print("데이터시작: " + str(start_time.strftime("%Y%m%d %H%M")))
     
     while start_time < now:
         file_path = "/home/ubuntu/news_title/{date}/{hour}/news_title_{date}_{time}.txt".format(
@@ -83,7 +63,6 @@ if __name__ == '__main__':
             hour=start_time.strftime("%H"),
             time=start_time.strftime("%H%M")
         )
-        #print(file_path)
         
         # 데이터 읽고 추가
         with open(file_path, 'r', encoding='utf-8') as cur_news_file:
@@ -91,27 +70,46 @@ if __name__ == '__main__':
         
         # 10분 단위
         start_time += timedelta(minutes=10)
-
+    print("데이터종료: " + str(start_time.strftime("%Y%m%d %H%M")))
 
     # 제목 띄워쓰기로 합치기
     cur_news_data = ' '.join(cur_news_data_list)
 
     # 데이터 전처리
     processed_news_data = finalpreprocess(cur_news_data)
-    #print(processed_news_data)
-
-    # Compute frequency distribution
-    freq_dist = Counter(processed_news_data)
-
-    # Print the top-10 words
-    top_10_keywords = freq_dist.most_common(10)
-    print(top_10_keywords)
     
-    # KeyBert 모델 초기화
-    #model = KeyBERT('distilbert-base-nli-mean-tokens')
+    # 빈도수 계산
+    freq_dist = Counter()
 
-    # 대표 키워드 추출하기
-    #top_10_keywords_with_scores= model.extract_keywords(processed_news_data, keyphrase_ngram_range=(1,2), stop_words=None, use_maxsum=True,nr_candidates=20,top_n=10)
+    time_index = 0    # 시간 인덱스 (0부터 시작)
+    time_decay_rate = 0.1    # 시간 경과에 따른 감소율
+    
+    for news_title in reversed(cur_news_data_list):
+        processed_words_in_title=set(final(preprocess(news_title)))
+       
+        for word in processed_words_in_title:
+            freq_dist[word] += time_index * time_decay_rate
+    
+        time_index += 1   # 다음 뉴스로 넘어갈 때마다 시간 인덱스 증가
+    
+    # 모든 키워드 저장
+    all_keywords = freq_dist.most_common()
+    
+    top_10_keywords = []
+    index = 0
+    
+    # 제목 단어 집합을 생성 (중복 제거를 위한 작업)
+    cur_news_data_set_list = [set(title.split(' ')) for title in cur_news_data_list]
+    
+    while len(top_10_keywords) < 10:
+        current_keyword = all_keywords[index][0]
+        
+        # Check if keyword is already covered by other keywords in top_10_keywords
+        if not any(current_keyword in news_title_set for news_title_set in cur_news_data_set_list for keyword, _ in top_10_keywords if keyword in news_title_set):
+            top_10_keywords.append(all_keywords[index])
+            
+        index += 1
+    
+    print(top_10_keywords)
 
-    #print(top_10_keywords_with_scores)
-
+    
