@@ -12,7 +12,7 @@ export const Date = styled.header`
 
 export const Title = styled.h1`
     text-align: center;
-    font-size: 50px;
+    font-size: 60px;
     width: 60%;
     
 `
