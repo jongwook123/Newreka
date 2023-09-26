@@ -40,6 +40,6 @@ public class Quiz {
 
 	@ManyToOne
 	@JoinColumn(name = "keyWord_id", nullable = false)
-	private KeyWord keyWordId;
+	private KeyWord keyword;
 
 }

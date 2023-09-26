@@ -37,5 +37,5 @@ public class Article {
 
 	@ManyToOne
 	@JoinColumn(name = "keyWord_id", nullable = false)
-	private KeyWord keyWordId;
+	private KeyWord keyWord;
 }

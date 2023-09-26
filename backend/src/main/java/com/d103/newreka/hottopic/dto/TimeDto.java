@@ -13,6 +13,6 @@ import java.time.LocalDateTime;
 public class TimeDto {
 
     Long timeId;
-    LocalDateTime time;
+    String time;
 
 }

@@ -16,6 +16,6 @@ public class ArticleDto {
     String company;
     String link;
     LocalDateTime time;
-    KeyWord keyWordId;
+    Long keyWordId;
 
 }

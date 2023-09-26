@@ -35,17 +35,19 @@ public class KeyWord {
 	private String name;
 	@Column(nullable = false, columnDefinition = "varchar(100)")
 	private String summary;
+	@Column(nullable = false, columnDefinition = "varchar(30)")
+	private String category;
 
 	@ManyToOne
 	@JoinColumn(name = "time_id", nullable = false)
-	private Time timeId;
+	private Time time;
 
 	@Builder.Default
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "keyWordId", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "keyWord", cascade = CascadeType.ALL)
 	private List<Article> articles = new ArrayList<>();
 
 	@Builder.Default
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "keyWordId", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "keyword", cascade = CascadeType.ALL)
 	private List<Quiz> quizs = new ArrayList<>();
 
 }

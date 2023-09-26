@@ -20,6 +20,7 @@ public class KeyWordDto {
     Long keyWordId;
     String name;
     String summary;
-    Time timeId;
+    String category;
+    Long timeId;
 
 }

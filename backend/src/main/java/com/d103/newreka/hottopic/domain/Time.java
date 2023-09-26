@@ -33,7 +33,7 @@ public class Time {
 	private LocalDateTime time;
 
 	@Builder.Default
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "timeId", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "time", cascade = CascadeType.ALL)
 	private List<KeyWord> keyWords = new ArrayList<>();
 
 }
