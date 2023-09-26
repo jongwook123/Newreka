@@ -1,4 +1,4 @@
-package com.d103.newreka.user.domain;
+package com.d103.newreka.scrap.domain;
 
 import java.time.LocalDateTime;
 
@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.d103.newreka.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
