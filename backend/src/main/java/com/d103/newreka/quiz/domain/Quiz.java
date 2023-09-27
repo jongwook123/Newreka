@@ -41,6 +41,6 @@ public class Quiz {
 	private KeyWord keyword;
 
 	@Builder.Default
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "quiz_id", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "quiz", cascade = CascadeType.ALL)
 	private List<QuizState> quizStates = new ArrayList<>();
 }
