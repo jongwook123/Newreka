@@ -75,7 +75,10 @@ public class UserService {
 
 		setHeader(response, tokenDto);
 
-		return new GlobalResDto("Success Login", HttpStatus.OK.value());
+		GlobalResDto globalResponse = new GlobalResDto("Success Login", HttpStatus.OK.value());
+		globalResponse.setAccessToken(tokenDto.getAccessToken());  // AccessToken 설정
+
+		return globalResponse;
 	}
 
 	private void setHeader(HttpServletResponse response, TokenDto tokenDto) {
