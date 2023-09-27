@@ -32,6 +32,6 @@ public class KeyWordService {
         keyWordRepo.save(keyWord);
     }
     @Transactional
-    public List<KeyWord> getKeyWordList(){return keyWordRepo.findAllByOrderByTime_TimeIdDesc();}
+    public List<KeyWord> getKeyWordList(){return keyWordRepo.findTop10ByOrderByKeyWordIddDesc();}
 
 }

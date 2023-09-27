@@ -32,6 +32,8 @@ public class Article {
 	private String company;
 	@Column(nullable = false, columnDefinition = "varchar(50)")
 	private String link;
+	@Column(nullable = false, columnDefinition = "varchar(50)")
+	private String thumbnail;
 	@Column(nullable = false, columnDefinition = "date")
 	private LocalDateTime time;
 

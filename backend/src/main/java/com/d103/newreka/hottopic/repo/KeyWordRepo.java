@@ -11,5 +11,5 @@ public interface KeyWordRepo extends JpaRepository<KeyWord, Long> {
 
 //    KeyWord findById(Long id);
 
-    List<KeyWord> findAllByOrderByTime_TimeIdDesc();
+    List<KeyWord> findTop10ByOrderByKeyWordIddDesc();
 }
