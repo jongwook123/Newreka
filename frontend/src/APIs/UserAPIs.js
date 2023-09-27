@@ -13,14 +13,14 @@ export const TryLogin = async (email, password) => {
         });
 
         const result = await response.json();
-
+        console.log(result)
         return result;
     } catch (e) {
         console.log(e);
     }
 }
 
-export const TrySignup = async (email, name, nickname, password, pwck) => {
+export const TrySignup = async (email, name, nickname, password,pwck) => {
     try {
         const response = await FetchTemplate({
             path: process.env.REACT_APP_BASE_SERVER + '/user/signup',

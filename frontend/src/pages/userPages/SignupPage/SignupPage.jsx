@@ -3,16 +3,22 @@ import * as S from './style';
 import { useState } from 'react';
 import LongInput1 from 'component/inputs/longinput1';
 import LongButton1 from 'component/buttons/longbutton1';
-import { Link } from 'react-router-dom';
-import { TryLogin, TrySignup } from 'APIs/UserAPIs';
+import { TrySignup } from 'APIs/UserAPIs';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
+import { signinUser } from 'redux/slice/userSlice';
 
 export default function SignupPage() {
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const [inputs, setInputs] = useState({
         email: "",
         name: "",
         nickname:"",
         password: "",
-        pwc: "",
+        pwck: "",
     });
 
     const onChangeHandler = (e) => {
@@ -46,35 +52,24 @@ export default function SignupPage() {
 
             return;
         }
-        if (!inputs.pwc) {
+        if (!inputs.pwck) {
             alert("Confirm your Password.");
 
             return;
         }
 
-        const regex = new RegExp(/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/);
-
-        if (!regex.test(inputs.email)) {
-            alert("Invalid E-mail.");
-
-            return;
-        }
-
         try {
-            const result = await TrySignup(inputs.email, inputs.name,inputs.nickname,inputs.password, inputs.pwc);
-
-            if (!result.success) {
-                alert("Check your E-mail or password.")
+            const result = await TrySignup(inputs.email, inputs.name, inputs.nickname, inputs.password, inputs.pwck);
+            if (result.msg !== "Success signup") {
+                alert("result.error.message")
             } else {
-                // dispatch(signinUser({
-                //     "accessToken": result.response.accessToken,
-                //     "refreshToken": result.response.refreshToken,
-                // }));
-
-                // navigate("/");
+                navigate("/signin");
             }
+            
+            // 성공 시 다른 작업을 수행할 수 있습니다.
         } catch (error) {
-            console.log(error)
+            // 회원 가입 실패 시 에러 처리
+            console.error('Signup failed:', error);
         }
     }
 
@@ -84,11 +79,11 @@ export default function SignupPage() {
             <Header />
         </S.Header>
             <S.SigninForm action="">
-            <LongInput1 props={{ id: "email", desc: "Insert your e-mail", color: "orange", placeholder: "Your E-mail", type: "text", value: inputs.email, callback: onChangeHandler }} />
+            <LongInput1 props={{ id: "email", desc: "Insert your e-mail", color: "orange", placeholder: "Your E-mail", type: "email", value: inputs.email, callback: onChangeHandler }} />
                 <LongInput1 props={{ id: "name", desc: "Insert your name", color: "blue", placeholder:"Your Name", type:"text" ,value : inputs.name ,callback :onChangeHandler}} />
                 <LongInput1 props={{ id: "nickname", desc: "Insert your nickname", color: "blue", placeholder:"Your Nickname", type:"text" ,value : inputs.nickname ,callback :onChangeHandler}} />
                 <LongInput1 props={{ id: "password", desc: "Insert your password", color: "blue", placeholder:"Your Password", type:"password" ,value : inputs.password ,callback :onChangeHandler}} />
-                <LongInput1 props={{ id: "pwc", desc: "Insert your password", color: "blue", placeholder:"Confirm your Password", type:"password" ,value : inputs.pwc ,callback :onChangeHandler}} />
+                <LongInput1 props={{ id: "pwck", desc: "Insert your password", color: "blue", placeholder:"Confirm your Password", type:"password" ,value : inputs.pwck ,callback :onChangeHandler}} />
                 <LongButton1 props={{color:"rgb(245, 236, 229)" ,text :"Sign up" ,callback :buttonClickHandler}}/>
             </S.SigninForm>
             <S.Footer>@SSAFY D103. All rights reserved.</S.Footer>
