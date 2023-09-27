@@ -29,7 +29,7 @@ function WordCloudPage() {
       .map(([text, size]) => ({ text: text, size: size }));
 
     const layout = cloud()
-      .size([1000, 700])
+      .size([1000, 650])
       .words(words)
       .rotate(() => ~~(3000))
       .fontSize(d => Math.sqrt(d.size))
@@ -39,16 +39,17 @@ function WordCloudPage() {
 
     function draw(words) {
       const top5Words = words.slice(0, 5); // Select top 5 words
-      const top5Color = 'blue'; // Change this to the desired color for top 5 words
-      const otherColor = 'gray'; // Change this to the desired color for other words
-
+      const svgWidth = layout.size()[0];
+      const svgHeight = layout.size()[1];
+      const svgCenterX = svgWidth / 2;
+      const svgCenterY = svgHeight / 2;
       let group = d3
         .select(wordRef.current)
         .append('svg')
         .attr('width', layout.size()[0])
         .attr('height', layout.size()[1])
         .append('g')
-        .attr('transform', 'translate(' + layout.size()[0] / 2 + ',' + layout.size()[1] / 2 + ')');
+        .attr('transform', `translate(${svgCenterX},${svgCenterY})`);
 
       // Modify position based on size (z-index based on size)
       words.forEach(d => {
@@ -79,14 +80,15 @@ function WordCloudPage() {
         .on('click', handleCircleClick);
 
       group
-        .selectAll('.word-text')
+        .selectAll('text')
         .data(words)
         .enter()
         .append('text')
         .attr('font-size', d => Math.sqrt(d.size) * 2.5)
         .style('fill', 'white')
+        .attr('font-family',"pretendard")
         .attr('text-anchor', 'middle')
-        .attr('class', 'word-text')
+        // .attr('class', 'text')
         .attr('transform', d => `translate(${d.x},${d.y})`)
         .attr('z', d => d.z)
         .attr('cursor', 'default')

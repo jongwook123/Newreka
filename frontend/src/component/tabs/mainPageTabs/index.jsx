@@ -2,6 +2,7 @@ import * as S from './style';
 import { useState } from 'react';
 import NewsPreview from 'component/previews';
 import Card from 'component/newscards/card';
+import Quiz from 'pages/mainPage/Quiz';
 
 
 const MainPageTabs = () => {
@@ -46,7 +47,7 @@ const MainPageTabs = () => {
             </S.CustomTabPanel>
             <S.CustomTabPanel>
                 <S.QuizSection>
-                    <Quiz />
+                    <Quiz/>
                 </S.QuizSection>
             </S.CustomTabPanel>
         </S.CustomTabs>

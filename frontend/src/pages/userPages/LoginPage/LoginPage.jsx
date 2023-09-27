@@ -3,10 +3,15 @@ import * as S from './style';
 import { useState } from 'react';
 import LongInput1 from 'component/inputs/longinput1';
 import LongButton1 from 'component/buttons/longbutton1';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { TryLogin } from 'APIs/UserAPIs';
+import { useDispatch } from 'react-redux';
+import { signinUser } from 'redux/slice/userSlice';
 
 export default function LoginPage() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const [inputs, setInputs] = useState({
         email: "",
         password: "",
@@ -33,18 +38,11 @@ export default function LoginPage() {
             return;
         }
 
-        const regex = new RegExp(/[a-z0-9]+@[a-z]+\.[a-z]{2,3}/);
-
-        if (!regex.test(inputs.email)) {
-            alert("Invalid E-mail.");
-
-            return;
-        }
 
         try {
             const result = await TryLogin(inputs.email, inputs.password);
-
-            if (!result.success) {
+            console.log(result.msg)
+            if (result.msg !== "Success Login") {
                 alert("Check your E-mail or password.")
             } else {
                 // dispatch(signinUser({
@@ -52,7 +50,7 @@ export default function LoginPage() {
                 //     "refreshToken": result.response.refreshToken,
                 // }));
 
-                // navigate("/");
+                navigate("/");
             }
         } catch (error) {
             console.log(error)
@@ -71,10 +69,9 @@ export default function LoginPage() {
                     Don't have an account?&nbsp;
                     <Link to='/signup'>Sign up</Link> 
                 </S.TextWrapper>
-                <LongButton1 props={{color:"rgb(245, 236, 229)" ,text :"Sign in" ,callback :buttonClickHandler}}/>
+                <LongButton1 props={{color:"rgb(245, 236, 229)" ,text :"Login" ,callback :buttonClickHandler}}/>
             </S.SigninForm>
             <S.Footer>@SSAFY D103. All rights reserved.</S.Footer>
-
       </S.Main>
 
    )
