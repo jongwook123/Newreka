@@ -26,12 +26,12 @@ public class UserDetailsImpl implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		return null;
+		return this.user.getPassword();
 	}
 
 	@Override
 	public String getUsername() {
-		return null;
+		return this.user.getEmail();
 	}
 
 	@Override
