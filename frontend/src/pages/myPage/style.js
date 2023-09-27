@@ -5,7 +5,7 @@ export const Main = styled.main`
     flex-direction: column;
     justify-content: center;
     margin: 0 auto;
-    width: 70%;
+    width: 60%;
     
 `
 

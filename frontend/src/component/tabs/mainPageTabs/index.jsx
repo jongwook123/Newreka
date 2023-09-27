@@ -5,6 +5,7 @@ import Card from 'component/newscards/card';
 import Quizzes from 'pages/mainPage/Quizzes';
 
 
+
 const MainPageTabs = () => {
     const [activeTabIndex, setActiveTabIndex] = useState(0);
 
@@ -47,7 +48,11 @@ const MainPageTabs = () => {
             </S.CustomTabPanel>
             <S.CustomTabPanel>
                 <S.QuizSection>
+<<<<<<< HEAD
                     <Quizzes />
+=======
+                    <Quiz/>
+>>>>>>> 9b820e46c445909dfc1750aaaf21f0d30eae3649
                 </S.QuizSection>
             </S.CustomTabPanel>
         </S.CustomTabs>

@@ -17,7 +17,7 @@ export const CustomTabList = styled(TabList)`
 export const CustomTab = styled(Tab)`
     padding: 8px 16px;
     background-color: ${(props) => (props.selected ? '#F7DAC4' : '#F5ECE5')};
-    
+    font-size:25px;
     &:focus {
         outline: none; /* 탭 클릭 시 검은 테두리 제거 */
     }
