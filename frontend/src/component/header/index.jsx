@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import * as S from './style';
 
 export default function Header(props) {
@@ -9,12 +10,14 @@ export default function Header(props) {
                 <S.Dummy>
                     
                 </S.Dummy>
-                <S.Title>NewReka</S.Title>
-                {/* Login 후 */}
+                <S.Title><Link to='/'>NewReka</Link></S.Title>
                 <S.Sub_menu>
-                    {props.menu_name}
+                {props.menuname === 'My page' ? (
+                        <Link to='/mypage'>My Page</Link>
+                    ) : props.menuname === 'Login' ? (
+                        <Link to='/login'>Login</Link>
+                    ) : null}
                 </S.Sub_menu>
-                {/* Login 전 */}
                 
             </S.Title_div>
         </S.Main>

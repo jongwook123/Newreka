@@ -4,10 +4,18 @@ import * as S from './style';
 import WordCloudPage from './WordCloud';
 import MainPageTabs from 'component/tabs/mainPageTabs';
 
+
+
 export default function MainPage() {
+    const isLoggedIn = false; // Replace with your actual login logic
+    const menuname = isLoggedIn ? 'My page' : 'Login';
+    
+
+
+
     return (
         <S.Main>
-            <Header>
+             <Header menuname={menuname}>
             </Header>
             <S.BodySection>
                 <S.Body>
