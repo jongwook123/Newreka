@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -26,12 +28,13 @@ public class ArticleService {
                 .title(articleDto.getTitle())
                 .company(articleDto.getCompany())
                 .link(articleDto.getLink())
+                .thumbnail(articleDto.getThumbnail())
                 .time(articleDto.getTime())
                 .keyWord(keyWord)
                 .build();
 
         articleRepo.save(article);
     }
-
+    public List<Article> getArticleList(Long articleId){return articleRepo.findAllByKeyWord_keyWordId(articleId);}
 
 }

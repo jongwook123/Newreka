@@ -1,19 +1,17 @@
 package com.d103.newreka.quiz.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 import com.d103.newreka.hottopic.domain.KeyWord;
 
+import com.d103.newreka.user.domain.QuizState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -42,4 +40,7 @@ public class Quiz {
 	@JoinColumn(name = "keyWord_id", nullable = false)
 	private KeyWord keyword;
 
+	@Builder.Default
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "quiz_id", cascade = CascadeType.ALL)
+	private List<QuizState> quizStates = new ArrayList<>();
 }

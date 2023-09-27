@@ -29,6 +29,7 @@ public class QuizDto {
                 .answer2(quiz.getAnswer2())
                 .answer3(quiz.getAnswer3())
                 .answer4(quiz.getAnswer4())
+                .keyword(quiz.getKeyword().getKeyWordId())
                 .build();
     }
 

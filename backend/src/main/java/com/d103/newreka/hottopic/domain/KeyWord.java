@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 
 import com.d103.newreka.quiz.domain.Quiz;
 
+import com.d103.newreka.user.domain.Scrap;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -49,5 +50,9 @@ public class KeyWord {
 	@Builder.Default
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "keyword", cascade = CascadeType.ALL)
 	private List<Quiz> quizs = new ArrayList<>();
+
+	@Builder.Default
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "keyWordId", cascade = CascadeType.ALL)
+	private List<Scrap> scraps = new ArrayList<>();
 
 }
