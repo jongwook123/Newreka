@@ -34,9 +34,9 @@ public class KeyWord {
 	private Long keyWordId;
 	@Column(nullable = false, columnDefinition = "varchar(30)")
 	private String name;
-	@Column(nullable = false, columnDefinition = "varchar(100)")
+	@Column(columnDefinition = "varchar(100)")
 	private String summary;
-	@Column(nullable = false, columnDefinition = "varchar(30)")
+	@Column(columnDefinition = "varchar(30)")
 	private String category;
 
 	@ManyToOne

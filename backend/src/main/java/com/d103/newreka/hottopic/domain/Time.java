@@ -29,7 +29,7 @@ public class Time {
 	@Column(name = "time_id", nullable = false)
 	private Long timeId;
 
-	@Column(nullable = false, columnDefinition = "date")
+	@Column(nullable = false, columnDefinition = "datetime")
 	private LocalDateTime time;
 
 	@Builder.Default
