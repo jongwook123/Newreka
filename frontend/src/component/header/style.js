@@ -12,7 +12,7 @@ export const Date = styled.header`
 
 export const Title = styled.h1`
     text-align: center;
-    font-size: 50px;
+    font-size: 60px;
     width: 60%;
     
 `
@@ -34,6 +34,7 @@ export const Sub_menu = styled.span`
     text-align: right; /* 오른쪽 정렬 */
     font-size: 30px;
     width: 20%;
+    padding-right: 30px;
 `
 export const Dummy = styled.span`
     text-align: right; /* 오른쪽 정렬 */
