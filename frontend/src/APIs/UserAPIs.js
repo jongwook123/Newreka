@@ -5,13 +5,17 @@ export const TryLogin = async (email, password) => {
         const response = await FetchTemplate({
             path: process.env.REACT_APP_BASE_SERVER + '/user/login',
             method: "POST",
-            headers: {},
+            headers: {
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify({
                 "email": email,
                 "password": password,
             })
-        });
+        })
 
+        console.log(response);
+        
         const result = await response.json();
         console.log(result)
         return result;
@@ -34,7 +38,7 @@ export const TrySignup = async (email, name, nickname, password,pwck) => {
                 "pwck": pwck,
             })
         });
-
+        
         const result = await response.json();
 
         return result;

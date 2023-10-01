@@ -41,14 +41,12 @@ export default function LoginPage() {
 
         try {
             const result = await TryLogin(inputs.email, inputs.password);
-            console.log(result.msg)
             if (result.msg !== "Success Login") {
                 alert("Check your E-mail or password.")
             } else {
-                // dispatch(signinUser({
-                //     "accessToken": result.response.accessToken,
-                //     "refreshToken": result.response.refreshToken,
-                // }));
+                dispatch(signinUser({
+                    "accessToken": result.accessToken,
+                }));
 
                 navigate("/");
             }

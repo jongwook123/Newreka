@@ -63,7 +63,7 @@ export default function SignupPage() {
             if (result.msg !== "Success signup") {
                 alert("result.error.message")
             } else {
-                navigate("/signin");
+                navigate("/login");
             }
             
             // 성공 시 다른 작업을 수행할 수 있습니다.
