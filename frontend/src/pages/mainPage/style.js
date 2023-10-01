@@ -21,7 +21,7 @@ export const BodySection = styled.section`
 `
 
 
-export const Body = styled.body`
+export const Body = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;

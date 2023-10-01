@@ -17,7 +17,7 @@ export default function App() {
             <BrowserRouter basename={process.env.PUBLIC_URL}>
                 <header>
                     <meta
-                        http-equiv="Content-Security-Policy"
+                        httpEquiv="Content-Security-Policy"
                         content="upgrade-insecure-requests"
                     />
                 </header>
