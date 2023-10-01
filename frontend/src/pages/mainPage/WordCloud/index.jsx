@@ -3,22 +3,28 @@ import * as d3 from 'd3';
 import cloud from 'd3-cloud';
 
 const dummydata = {
-  '바위': 3500,
-  '귤': 3500,
-  '이재명 구속': 3500,
-  '윤우혁 다이아': 3500,
-  '천병찬...': 3500,
-  '이걸 올라가?': 6000,
-  '6일 황금연휴': 7000,
-  '박종욱<<<<': 8000,
-  '에메랄드 =': 10000,
-  '짤리려나?': 20000,
+  '바위': 2000,
+  '귤': 2000,
+  '이재명 구속': 2000,
+  '윤우혁 다이아': 2000,
+  '천병찬...': 2000,
+  '이걸 올라가?': 5000,
+  '6일 황금연휴': 6000,
+  '박종욱<<<<': 7000,
+  '에메랄드 =': 8000,
+  '짤리려나?': 15000,
 };
 
 function handleCircleClick(event, d) {
-  console.log('Circle clicked:', d.text);
-  // Add your custom event handling logic here
+  console.log(d.text);
+  
+  // Scroll to the target section (Body2 in this case)
+  const targetElement = document.getElementById('body2');
+  if (targetElement) {
+    targetElement.scrollIntoView({ behavior: 'smooth' });
+  }
 }
+
 
 function WordCloudPage() {
   const wordRef = useRef(null);
@@ -29,7 +35,7 @@ function WordCloudPage() {
       .map(([text, size]) => ({ text: text, size: size }));
 
     const layout = cloud()
-      .size([1000, 650])
+      .size([750, 650])
       .words(words)
       .rotate(() => ~~(3000))
       .fontSize(d => Math.sqrt(d.size))
@@ -61,11 +67,11 @@ function WordCloudPage() {
         .range(d3.schemeCategory10);
 
       const simulation = d3.forceSimulation(words)
-        .force('charge', d3.forceManyBody().strength(50))
+        .force('charge', d3.forceManyBody().strength(100))
         .force('collide', d3.forceCollide().radius(d => Math.max(10, Math.abs(d.size * 0.95)))) // Adjust the additional radius
         .stop();
 
-      for (let i = 0; i < 70; ++i) simulation.tick();
+      for (let i = 0; i < 5000; ++i) simulation.tick();
       group
         .selectAll('.word-circle')
         .data(words)
@@ -80,7 +86,7 @@ function WordCloudPage() {
         .on('click', handleCircleClick);
 
       group
-        .selectAll('text')
+        .selectAll('word-text')
         .data(words)
         .enter()
         .append('text')
@@ -88,7 +94,7 @@ function WordCloudPage() {
         .style('fill', 'white')
         .attr('font-family',"pretendard")
         .attr('text-anchor', 'middle')
-        // .attr('class', 'text')
+        .attr('class', 'text')
         .attr('transform', d => `translate(${d.x},${d.y})`)
         .attr('z', d => d.z)
         .attr('cursor', 'default')
@@ -98,7 +104,16 @@ function WordCloudPage() {
         .append('tspan')
         .attr('x', 0)
         .attr('y', (d, i) => i * 15)  // Adjust the line height as needed
-        .text(d => d);
+        .text(d => d)
+        .on('click', function(event, d) {
+          // 이곳에 클릭 이벤트 핸들러를 작성
+          console.log(d);
+          // 원하는 동작을 추가하세요
+          const targetElement = document.getElementById('body2');
+          if (targetElement) {
+            targetElement.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
 
       // Append circles after text, so they visually appear on top
     }
@@ -112,9 +127,6 @@ function WordCloudPage() {
       }
       return color;
     }
-
-    // Append circles after text, so they visually appear on top
-
 
   }, []);
 
