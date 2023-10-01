@@ -17,7 +17,7 @@ export const CustomTabList = styled(TabList)`
 export const CustomTab = styled(Tab)`
     padding: 8px 16px;
     background-color: ${(props) => (props.selected ? '#F7DAC4' : '#F5ECE5')};
-    
+    font-size:25px;
     &:focus {
         outline: none; /* 탭 클릭 시 검은 테두리 제거 */
     }
@@ -61,11 +61,10 @@ export const CardItem = styled.li`
         }
 `
 export const QuizSection = styled.section`
-  border: 3px solid ${(props) => props.theme.colors.theme.green_light};
   border-radius: ${(props) => props.theme.border_radius.lv2};
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  background-color: white;
   padding: 15px;
-  max-width: 400px;
   max-height: 500px;
-  margin: 200px 0px 0px 50px;
   height: 60%;
 `;
