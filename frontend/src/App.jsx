@@ -15,12 +15,12 @@ export default function App() {
         <ThemeProvider theme={theme}>
             <GlobalStyle />
             <BrowserRouter basename={process.env.PUBLIC_URL}>
-                <header>
+                {/* <head>
                     <meta
-                        http-equiv="Content-Security-Policy"
+                        httpEquiv="Content-Security-Policy"
                         content="upgrade-insecure-requests"
                     />
-                </header>
+                </head> */}
                 <Routes>
                     <Route path="/login" element={<LoginPage />}></Route>
                     <Route path="/signup" element={<SignupPage />}></Route>
