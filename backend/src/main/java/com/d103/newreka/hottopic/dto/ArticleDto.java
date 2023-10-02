@@ -21,6 +21,7 @@ public class ArticleDto {
 	String company;
 	String link;
 	String thumbnail;
+	String category;
 	LocalDateTime time;
 	Long keyWordId;
 	String content;
@@ -31,6 +32,7 @@ public class ArticleDto {
 			.title(article.getTitle())
 			.company(article.getCompany())
 			.link(article.getLink())
+			.category(article.getCategory())
 			.thumbnail(article.getImgLink())
 			.time(article.getTime())
 			.content(article.getContent())

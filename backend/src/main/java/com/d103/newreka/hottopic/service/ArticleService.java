@@ -34,6 +34,7 @@ public class ArticleService {
 			.link(articleDto.getLink())
 			.imgLink(articleDto.getThumbnail())
 			.time(articleDto.getTime())
+			.category((articleDto.getCategory()))
 			.content(articleDto.getContent())
 			.keyWord(keyWord)
 			.build();
@@ -42,9 +43,7 @@ public class ArticleService {
 	}
 
 	public List<Article> getArticleList(Long articleId) throws IOException, ParseException {
-		newsService.searchWithClusters();
-		// return articleRepo.findAllByKeyWord_keyWordId(articleId);
-		return null;
+		return articleRepo.findAllByKeyWord_keyWordId(articleId);
 	}
 
 }

@@ -15,17 +15,19 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.d103.newreka.quiz.domain.Quiz;
-
 import com.d103.newreka.user.domain.Scrap;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @Builder
 public class KeyWord {
 	@Id

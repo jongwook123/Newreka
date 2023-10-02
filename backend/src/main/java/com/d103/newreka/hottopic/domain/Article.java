@@ -26,17 +26,19 @@ public class Article {
 	@Column(name = "article_Id", nullable = false)
 	private Long articleId;
 
-	@Column(nullable = false, columnDefinition = "varchar(50)")
+	@Column(nullable = false, columnDefinition = "varchar(100)")
 	private String title;
 	@Column(nullable = false, columnDefinition = "varchar(30)")
 	private String company;
-	@Column(nullable = false, columnDefinition = "varchar(50)")
+	@Column(nullable = false, columnDefinition = "varchar(255)")
 	private String link;
-	@Column(nullable = false, columnDefinition = "varchar(50)")
+	@Column(nullable = false, columnDefinition = "varchar(255)")
 	private String imgLink;
+	@Column(columnDefinition = "varchar(30)")
+	private String category;
 	@Column(nullable = false, columnDefinition = "text")
 	private String content;
-	@Column(nullable = false, columnDefinition = "date")
+	@Column(nullable = false, columnDefinition = "datetime")
 	private LocalDateTime time;
 
 	@ManyToOne

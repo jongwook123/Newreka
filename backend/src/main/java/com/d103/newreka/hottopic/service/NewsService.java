@@ -70,6 +70,8 @@ public class NewsService {
 				.company(source.path("news_comp").asText())
 				.link(source.path("url").asText())
 				.thumbnail(source.path("img_url").asText())
+				.category(source.path("category").asText())
+				.time(LocalDateTime.now())
 				.content(source.path("content").asText())
 				.build();
 
@@ -118,12 +120,10 @@ public class NewsService {
 		LocalDate today = now.toLocalDate();
 
 		if (now.toLocalTime().isBefore(LocalTime.of(3, 30))) {
-			// If current time is before 03:30, use the previous day's date and today's date
 			LocalDate yesterday = today.minusDays(1);
 
 			return formatIndexName(today) + "," + formatIndexName(yesterday);
 		} else {
-			// Otherwise, use today's date
 			return formatIndexName(today);
 		}
 	}
