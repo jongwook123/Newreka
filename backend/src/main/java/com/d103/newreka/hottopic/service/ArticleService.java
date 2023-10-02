@@ -1,40 +1,50 @@
 package com.d103.newreka.hottopic.service;
 
-import com.d103.newreka.hottopic.domain.Article;
-import com.d103.newreka.hottopic.domain.KeyWord;
-import com.d103.newreka.hottopic.domain.Time;
-import com.d103.newreka.hottopic.dto.ArticleDto;
-import com.d103.newreka.hottopic.repo.ArticleRepo;
-import com.d103.newreka.hottopic.repo.KeyWordRepo;
-import com.d103.newreka.hottopic.repo.TimeRepo;
-import lombok.RequiredArgsConstructor;
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.d103.newreka.hottopic.domain.Article;
+import com.d103.newreka.hottopic.domain.KeyWord;
+import com.d103.newreka.hottopic.dto.ArticleDto;
+import com.d103.newreka.hottopic.repo.ArticleRepo;
+import com.d103.newreka.hottopic.repo.KeyWordRepo;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ArticleService {
 
-    private final ArticleRepo articleRepo;
-    private final KeyWordRepo keyWordRepo;
-    @Transactional
-    public void saveArticle(ArticleDto articleDto){
-        KeyWord keyWord = keyWordRepo.getReferenceById(articleDto.getKeyWordId());
-        Article article = Article.builder()
-                .articleId(articleDto.getArticleId())
-                .title(articleDto.getTitle())
-                .company(articleDto.getCompany())
-                .link(articleDto.getLink())
-                .thumbnail(articleDto.getThumbnail())
-                .time(articleDto.getTime())
-                .keyWord(keyWord)
-                .build();
+	private final ArticleRepo articleRepo;
+	private final KeyWordRepo keyWordRepo;
+	private final NewsService newsService;
 
-        articleRepo.save(article);
-    }
-    public List<Article> getArticleList(Long articleId){return articleRepo.findAllByKeyWord_keyWordId(articleId);}
+	@Transactional
+	public void saveArticle(ArticleDto articleDto) {
+		KeyWord keyWord = keyWordRepo.getReferenceById(articleDto.getKeyWordId());
+		Article article = Article.builder()
+			.articleId(articleDto.getArticleId())
+			.title(articleDto.getTitle())
+			.company(articleDto.getCompany())
+			.link(articleDto.getLink())
+			.imgLink(articleDto.getThumbnail())
+			.time(articleDto.getTime())
+			.content(articleDto.getContent())
+			.keyWord(keyWord)
+			.build();
+
+		articleRepo.save(article);
+	}
+
+	public List<Article> getArticleList(Long articleId) throws IOException, ParseException {
+		newsService.searchWithClusters();
+		// return articleRepo.findAllByKeyWord_keyWordId(articleId);
+		return null;
+	}
 
 }
