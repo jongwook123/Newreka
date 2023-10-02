@@ -24,7 +24,7 @@ public class ArticleBatchUtil {
 
 	private static final Logger logger = LoggerFactory.getLogger(ArticleBatchUtil.class);
 
-	@Scheduled(cron = "0 0/10 * * * ?")
+	@Scheduled(cron = "0 2/10 * * * ?")
 	public void insertData() {
 		try {
 			List<KeyWord> keywordList = keyWordRepo.findTop10ByOrderByKeyWordIdDesc();
@@ -38,6 +38,8 @@ public class ArticleBatchUtil {
 
 				// 헤드라인 뉴스 선정
 				ArticleDto headLineArticle = articleDtos.get(0);
+
+				// 여기 !!!!!!!
 
 				// 키워드에 카테고리 저장
 				k.setCategory(headLineArticle.getCategory());
