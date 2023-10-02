@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -37,17 +38,14 @@ public class NewsService {
 		this.client = client;
 	}
 
-	public String searchWithClusters() throws IOException, ParseException {
-		String indexName = "news-" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
-		Request request = getRequest(indexName);
+	public List<ArticleDto> searchWithClusters(String keyword) throws IOException, ParseException {
+		Request request = getRequest(keyword);
 
 		Response response = client.getLowLevelClient().performRequest(request);
 
 		int statusCode = response.getStatusLine().getStatusCode();
 		String jsonResponse = EntityUtils.toString(response.getEntity());
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-		System.out.println(jsonResponse);
 
 		ObjectMapper objectMapper = new ObjectMapper();
 
@@ -88,25 +86,25 @@ public class NewsService {
 			existingUrls.add(url);
 			articleDtos.add(articleDto);
 
-			System.out.println(articleDto);
-
 			if (existingUrls.size() == 5) {
 				break;
 			}
 		}
 
-		return "";
+		return articleDtos;
 	}
 
-	private static Request getRequest(String indexName) {
+	private static Request getRequest(String keyword) {
+		String indexName = calculateDateOfIndex();
+
 		Request request = new Request("POST", "/" + indexName + "/_search_with_clusters");
 
 		String jsonRequestBody = "{"
 			+ "\"search_request\": {"
 			+ "\"_source\": [\"url\", \"title\", \"content\", \"img_url\", \"category\", \"time\", \"news_comp\"],"
-			+ "\"query\": {\"match\": {\"content\": \"연휴\"}},"
+			+ "\"query\": {\"match\": {\"content\": \"" + keyword + "\"}},"
 			+ "\"size\": 20},"
-			+ "\"query_hint\": \"연휴\","
+			+ "\"query_hint\": \"" + keyword + "\","
 			+ "\"field_mapping\": {\"title\":[\"_source.title\"], \"content\":[\"_source.content\"]},"
 			+ "\"algorithm\":\"Lingo\""
 			+ " }";
@@ -114,4 +112,24 @@ public class NewsService {
 		request.setJsonEntity(jsonRequestBody);
 		return request;
 	}
+
+	private static String calculateDateOfIndex() {
+		LocalDateTime now = LocalDateTime.now();
+		LocalDate today = now.toLocalDate();
+
+		if (now.toLocalTime().isBefore(LocalTime.of(3, 30))) {
+			// If current time is before 03:30, use the previous day's date and today's date
+			LocalDate yesterday = today.minusDays(1);
+
+			return formatIndexName(today) + "," + formatIndexName(yesterday);
+		} else {
+			// Otherwise, use today's date
+			return formatIndexName(today);
+		}
+	}
+
+	private static String formatIndexName(LocalDate date) {
+		return "news-" + date.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+	}
+
 }
