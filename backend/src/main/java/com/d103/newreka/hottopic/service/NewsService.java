@@ -80,6 +80,7 @@ public class NewsService {
 			try {
 				date = formatter.parse(timeStr);
 				LocalDateTime localDateTime = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+				localDateTime = localDateTime.minusHours(9);
 				articleDto.setTime(localDateTime);
 			} catch (ParseException e) {
 				logger.error(e.getMessage(), e);
