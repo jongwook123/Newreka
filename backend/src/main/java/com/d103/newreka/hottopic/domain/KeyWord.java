@@ -41,7 +41,7 @@ public class KeyWord {
 	@Column(columnDefinition = "varchar(30)")
 	private String category;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "time_id", nullable = false)
 	private Time time;
 

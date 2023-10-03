@@ -3,7 +3,6 @@ package com.d103.newreka.hottopic.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,10 +45,7 @@ public class KeyWordController {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		try {
-			List<KeyWordDto> keyWordList = keyWordService.getKeyWordList()
-				.stream()
-				.map(m -> KeyWordDto.fromEntity(m))
-				.collect(Collectors.toList());
+			List<KeyWordDto> keyWordList = keyWordService.getKeyWordList();
 			resultMap.put("quizList", keyWordList);
 			resultMap.put("message", "success");
 			status = HttpStatus.ACCEPTED;
