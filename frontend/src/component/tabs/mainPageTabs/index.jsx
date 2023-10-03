@@ -3,14 +3,62 @@ import { useState } from 'react';
 import NewsPreview from 'component/previews';
 import Card from 'component/newscards/card';
 import Quizzes from 'pages/mainPage/Quizzes';
+import { useEffect } from 'react';
+import { TryGetQuiz } from 'APIs/QuizAPIs';
+import { useSelector } from 'react-redux';
+import { TryGetArticles } from 'APIs/ArticleAPIs';
 
 
-const MainPageTabs = () => {
+const MainPageTabs = ({ selectedKeyword, data }) => {
+    const accessToken = useSelector(state => state.user.accessToken);
     const [activeTabIndex, setActiveTabIndex] = useState(0);
+    const [selectedKeywordId, setSelectedKeywordId] = useState({});
+    const [selectedSummary, setSelectedSummary] = useState('요약 준비중입니다...');
+    const [quizData, setQuizData] = useState({})
+    const [articleData, setArticleData] = useState([])
 
     const handleTabSelect = (index) => {
         setActiveTabIndex(index);
     };
+
+    useEffect(() => {
+        if (data && data.quizList) {
+            const selectedData = data.quizList.find(quiz => quiz.name === selectedKeyword);
+            if (selectedData) {
+                setSelectedKeywordId(selectedData.keyWordId)
+                setSelectedSummary(selectedData.summary)
+            }
+        }
+    }, [selectedKeyword, data]);
+
+    useEffect(() => {
+        if (selectedKeywordId) {
+            (async () => {
+                try {
+                    const fetchedData = await TryGetQuiz(accessToken, selectedKeywordId);
+                    setQuizData(fetchedData.quizList);
+                } catch (error) {
+                    console.error(error);
+                }
+            })()
+        }
+    }, [selectedKeywordId]);
+
+    useEffect(() => {
+        if (selectedKeywordId) {
+            (async () => {
+                try {
+                    const fetchedData = await TryGetArticles(selectedKeywordId);
+                    setArticleData(fetchedData.quizList);
+                } catch (error) {
+                    console.error(error);
+                }
+            })()
+        }
+    }, [selectedKeywordId]);
+
+    console.log(articleData)
+
 
     return (
         <S.CustomTabs onSelect={handleTabSelect} selectedIndex={activeTabIndex}>
@@ -21,33 +69,28 @@ const MainPageTabs = () => {
             </S.CustomTabList>
 
             <S.CustomTabPanel>
+                {selectedSummary ? <p>{selectedSummary}</p> : <p>요약 준비중입니다...</p>}
             </S.CustomTabPanel>
             <S.CustomTabPanel>
 
                 <S.CardList>
-                    <S.CardItem>
-                        <Card props={{ title: `“고향 가느니 용돈 벌래요”…황금연휴, 최대 200만원 단기 일자리 찾는 청년들`, img_src: "https://imgnews.pstatic.net/image/366/2023/09/26/0000935186_001_20230926061101337.jpg?type=w647", url: "https://n.news.naver.com/article/001/0014219992?ntype=RANKING" }} />
-                    </S.CardItem>
-                    <S.CardItem>
-                        <Card props={{
-                            title: `장학금 받고 이공계 이탈 '먹튀'…1천200일 넘게 미납도
-`, img_src: "https://imgnews.pstatic.net/image/001/2023/09/26/PCM20220103000176990_P4_20230926060154706.jpg?type=w647", url: "https://n.news.naver.com/article/001/0014219992?ntype=RANKING"
-                        }} />
-                    </S.CardItem>
-                    <S.CardItem>
-                        <Card props={{ title: `“고향 가느니 용돈 벌래요”…황금연휴, 최대 200만원 단기 일자리 찾는 청년들`, img_src: "https://imgnews.pstatic.net/image/366/2023/09/26/0000935186_001_20230926061101337.jpg?type=w647", url: "https://n.news.naver.com/article/001/0014219992?ntype=RANKING" }} />
-                    </S.CardItem>
-                    <S.CardItem>
-                        <Card props={{ title: `“고향 가느니 용돈 벌래요”…황금연휴, 최대 200만원 단기 일자리 찾는 청년들`, img_src: "https://imgnews.pstatic.net/image/366/2023/09/26/0000935186_001_20230926061101337.jpg?type=w647", url: "https://n.news.naver.com/article/001/0014219992?ntype=RANKING" }} />
-                    </S.CardItem>
-                    <S.CardItem>
-                        <Card props={{ title: `“고향 가느니 용돈 벌래요”…황금연휴, 최대 200만원 단기 일자리 찾는 청년들`, img_src: "https://imgnews.pstatic.net/image/366/2023/09/26/0000935186_001_20230926061101337.jpg?type=w647", url: "https://n.news.naver.com/article/001/0014219992?ntype=RANKING" }} />
-                    </S.CardItem>
+                    {articleData?.map((quiz, index) => (
+                        <S.CardItem key={index}>
+                            <Card props={{
+                                title: quiz.title,
+                                img_src: quiz.thumbnail,
+                                url: quiz.link
+                            }} />
+                        </S.CardItem>
+                    ))}
                 </S.CardList>
+
+
+
             </S.CustomTabPanel>
             <S.CustomTabPanel>
                 <S.QuizSection>
-                    <Quizzes />
+                    {quizData && <Quizzes quizData={quizData} />}
                 </S.QuizSection>
             </S.CustomTabPanel>
         </S.CustomTabs>
