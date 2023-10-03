@@ -1,28 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import cloud from 'd3-cloud';
-import { GetKeyword } from 'APIs/GetKeywordAPIs';
-import { data } from 'pages/myPage/keywords';
 
+function WordCloudPage({ onWordClick, data }) {
 
-
-function WordCloudPage({ onWordClick }) {
-  
   function handleCircleClick(event, d) {
-    console.log(d.text);
-  
-    // Scroll to the target section (Body2 in this case)
     const targetElement = document.getElementById('body2');
     if (targetElement) {
       targetElement.scrollIntoView({ behavior: 'smooth' });
     }
-  
-    // Invoke the callback function with the selected word
+
     onWordClick(d.text);
   }
   const wordRef = useRef(null);
   const [keywords, setKeywords] = useState();
-  const  [dummydata, setDummydata] = useState({
+  const [dummydata, setDummydata] = useState({
     '0': 2000,
     '1': 2000,
     '2': 2000,
@@ -36,31 +28,21 @@ function WordCloudPage({ onWordClick }) {
   });
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await GetKeyword();
-        console.log(data["quizList"]);
-        setKeywords(data["quizList"]); // quizList만 저장
-      } catch (error) {
-        console.log(error);
-      }
-    };
-  
-    fetchData();
-  }, []);
-  
+    setKeywords(data["quizList"]);
+  }, [data]);
+
   useEffect(() => {
-    if (keywords && keywords.length > 9) {
-      let dummyData = {};
+    if (data && data.quizList && data.quizList.length > 9) {
+      let newDummyData = {};
       for (let i = 0; i < 10; i++) {
-        if (keywords[i]) {
-          dummyData[keywords[i].name] = i < 5 ? 2000 : (i + 1) * 1000;
+        if (data.quizList[i]) {
+          newDummyData[data.quizList[i].name] = i < 5 ? 2000 : (i + 1) * 1000;
         }
       }
-      setDummydata(dummyData);
+      setDummydata(newDummyData);
     }
-  }, [keywords]);
-  
+  }, [data]);
+
   useEffect(() => {
     if (!wordRef.current) return;
 
@@ -93,7 +75,7 @@ function WordCloudPage({ onWordClick }) {
         .attr('transform', `translate(${svgCenterX},${svgCenterY})`);
 
       words.forEach(d => {
-        d.z = Math.sqrt(d.size); 
+        d.z = Math.sqrt(d.size);
         d.maxFontSize = Math.min(24, Math.max(10, (Math.abs(d.size) / 2.5))); // Limit the max font size to 24
       });
       const colorScale = d3.scaleOrdinal()
@@ -126,7 +108,7 @@ function WordCloudPage({ onWordClick }) {
         .append('text')
         .attr('font-size', d => Math.sqrt(d.size) * 2.5)
         .style('fill', 'white')
-        .attr('font-family',"pretendard")
+        .attr('font-family', "pretendard")
         .attr('text-anchor', 'middle')
         .attr('class', 'text')
         .attr('transform', d => `translate(${d.x},${d.y})`)
@@ -137,23 +119,18 @@ function WordCloudPage({ onWordClick }) {
         .enter()
         .append('tspan')
         .attr('x', 0)
-        .attr('y', (d, i) => i * 15) 
+        .attr('y', (d, i) => i * 15)
         .text(d => d)
-        .on('click', function(event, d) {
-          // 이곳에 클릭 이벤트 핸들러를 작성
-          console.log(d);
-          // 원하는 동작을 추가하세요
+        .on('click', function (event, d) {
           const targetElement = document.getElementById('body2');
           if (targetElement) {
             targetElement.scrollIntoView({ behavior: 'smooth' });
           }
         });
-
-      // Append circles after text, so they visually appear on top
     }
 
     draw(words);
-    // Function to generate a random color
+
     function getRandomColor() {
       const letters = '0123456789ABCDEF';
       let color = '#';
@@ -165,7 +142,6 @@ function WordCloudPage({ onWordClick }) {
 
   }, [dummydata]);
 
-  console.log(dummydata)
   return <div ref={wordRef} />;
 }
 
