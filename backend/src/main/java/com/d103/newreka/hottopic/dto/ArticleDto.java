@@ -4,27 +4,23 @@ import java.time.LocalDateTime;
 
 import com.d103.newreka.hottopic.domain.Article;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 @Builder
-@Getter
-@Setter
 @Data
-@ToString
+@AllArgsConstructor
 public class ArticleDto {
-	Long articleId;
-	String title;
-	String company;
-	String link;
-	String thumbnail;
-	String category;
-	LocalDateTime time;
-	Long keyWordId;
-	String content;
+	private Long articleId;
+	private String title;
+	private String company;
+	private String link;
+	private String thumbnail;
+	private String category;
+	private LocalDateTime time;
+	private Long keyWordId;
+	private String content;
 
 	public static ArticleDto fromEntity(Article article) {
 		return ArticleDto.builder()
