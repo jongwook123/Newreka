@@ -64,8 +64,10 @@ public class ArticleBatchUtil {
 					headLineArticle.setContent(headLineArticle.getContent().substring(0, 1998));
 				}
 
+				/* API 사용량 이슈로 잠시 멈춤
 				String summary = getSummary(headLineArticle.getContent());
 				k.setSummary(summary);
+				*/
 				k.setCategory(headLineArticle.getCategory());
 				keyWordRepo.save(k); // 키워드 업데이트
 
