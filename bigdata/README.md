@@ -1,9 +1,10 @@
 # 실행 명령어
 
-## Elasticsearch & Kibana
+## Crawler
 
-1. `sudo docker build -t my-elasticsearch .`
-2. `sudo docker-compose up -d`
+`sudo nohup python3 news.py &`
+
+- 백그라운드에서 터미널이 종료되어도 계속 실행이 되는코드 (nohup, &)
 
 ## Filebeat
 
@@ -13,8 +14,11 @@
 
 `sudo docker-compose up -d`
 
-## Crawler
+## Logstash
 
-`sudo nohup python3 news.py &`
+`nohup ./bin/logstash -f ./config/newreka.conf &`
 
-- 백그라운드에서 터미널이 종료되어도 계속 실행이 되는코드 (nohup, &)
+## Elasticsearch & Kibana
+
+1. `sudo docker build -t my-elasticsearch .`
+2. `sudo docker-compose up -d`
