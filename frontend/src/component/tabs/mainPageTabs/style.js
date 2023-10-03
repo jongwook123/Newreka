@@ -64,7 +64,9 @@ export const QuizSection = styled.section`
   border-radius: ${(props) => props.theme.border_radius.lv2};
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
   background-color: white;
-  padding: 15px;
+  padding: 30px;
   max-height: 500px;
+  overflow-y:auto;
   height: 60%;
+  width: 90%;
 `;

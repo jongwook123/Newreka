@@ -1,20 +1,18 @@
-import { createRoot } from "react-dom/client";
-import App from "./App";
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux';
+import store from './redux/store'; // 실제 Redux store 경로에 따라 수정
+import App from './App';
 
-import { PersistGate } from "redux-persist/integration/react";
-import { Provider } from "react-redux";
-import store, { persistor } from 'redux/store/index.js';
+const root = document.getElementById('root');
 
-import ImportFonts from "utils/ImportFonts";
+if (root !== null) {
+  const hydrate = root.hasChildNodes();
+  const rootContainer = createRoot(root, {hydrate});
 
-const container = document.getElementById("root");
-const root = createRoot(container);
-ImportFonts();
-
-root.render(
+  rootContainer.render(
     <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-            <App />
-        </PersistGate>
+      <App />
     </Provider>
-);
+  );
+}
