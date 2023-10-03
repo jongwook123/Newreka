@@ -1,9 +1,9 @@
 import FetchTemplate from "utils/FetchTemplate";
 
-export const GetKeyword = async (category) => {
+export const GetKeyword = async () => {
     try {
         const response = await FetchTemplate({
-            path: process.env.REACT_APP_BASE_SERVER + `/member/${category}`,
+            path: process.env.REACT_APP_BASE_SERVER + '/hottopic/keyword/keyWordList',
             headers: {},
             method: "GET",
         });

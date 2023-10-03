@@ -1,35 +1,69 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import cloud from 'd3-cloud';
+import { GetKeyword } from 'APIs/GetKeywordAPIs';
+import { data } from 'pages/myPage/keywords';
 
-const dummydata = {
-  '바위': 2000,
-  '귤': 2000,
-  '이재명 구속': 2000,
-  '윤우혁 다이아': 2000,
-  '천병찬...': 2000,
-  '이걸 올라가?': 5000,
-  '6일 황금연휴': 6000,
-  '박종욱<<<<': 7000,
-  '에메랄드 =': 8000,
-  '짤리려나?': 15000,
-};
 
-function handleCircleClick(event, d) {
-  console.log(d.text);
+
+function WordCloudPage({ onWordClick }) {
   
-  // Scroll to the target section (Body2 in this case)
-  const targetElement = document.getElementById('body2');
-  if (targetElement) {
-    targetElement.scrollIntoView({ behavior: 'smooth' });
+  function handleCircleClick(event, d) {
+    console.log(d.text);
+  
+    // Scroll to the target section (Body2 in this case)
+    const targetElement = document.getElementById('body2');
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  
+    // Invoke the callback function with the selected word
+    onWordClick(d.text);
   }
-}
-
-
-function WordCloudPage() {
   const wordRef = useRef(null);
+  const [keywords, setKeywords] = useState();
+  const  [dummydata, setDummydata] = useState({
+    '0': 2000,
+    '1': 2000,
+    '2': 2000,
+    '3': 2000,
+    '4': 2000,
+    '5': 5000,
+    '6': 6000,
+    '7': 7000,
+    '8': 8000,
+    '9': 15000,
+  });
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await GetKeyword();
+        console.log(data["quizList"]);
+        setKeywords(data["quizList"]); // quizList만 저장
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+  
+  useEffect(() => {
+    if (keywords && keywords.length > 9) {
+      let dummyData = {};
+      for (let i = 0; i < 10; i++) {
+        if (keywords[i]) {
+          dummyData[keywords[i].name] = i < 5 ? 2000 : (i + 1) * 1000;
+        }
+      }
+      setDummydata(dummyData);
+    }
+  }, [keywords]);
+  
+  useEffect(() => {
+    if (!wordRef.current) return;
+
     const words = Object.entries(dummydata)
       .sort(([, a], [, b]) => b - a)
       .map(([text, size]) => ({ text: text, size: size }));
@@ -44,6 +78,7 @@ function WordCloudPage() {
     layout.start();
 
     function draw(words) {
+      d3.select(wordRef.current).selectAll('*').remove();
       const top5Words = words.slice(0, 5); // Select top 5 words
       const svgWidth = layout.size()[0];
       const svgHeight = layout.size()[1];
@@ -57,9 +92,8 @@ function WordCloudPage() {
         .append('g')
         .attr('transform', `translate(${svgCenterX},${svgCenterY})`);
 
-      // Modify position based on size (z-index based on size)
       words.forEach(d => {
-        d.z = Math.sqrt(d.size); // Adjust the function based on your preference
+        d.z = Math.sqrt(d.size); 
         d.maxFontSize = Math.min(24, Math.max(10, (Math.abs(d.size) / 2.5))); // Limit the max font size to 24
       });
       const colorScale = d3.scaleOrdinal()
@@ -103,7 +137,7 @@ function WordCloudPage() {
         .enter()
         .append('tspan')
         .attr('x', 0)
-        .attr('y', (d, i) => i * 15)  // Adjust the line height as needed
+        .attr('y', (d, i) => i * 15) 
         .text(d => d)
         .on('click', function(event, d) {
           // 이곳에 클릭 이벤트 핸들러를 작성
@@ -118,6 +152,7 @@ function WordCloudPage() {
       // Append circles after text, so they visually appear on top
     }
 
+    draw(words);
     // Function to generate a random color
     function getRandomColor() {
       const letters = '0123456789ABCDEF';
@@ -128,8 +163,9 @@ function WordCloudPage() {
       return color;
     }
 
-  }, []);
+  }, [dummydata]);
 
+  console.log(dummydata)
   return <div ref={wordRef} />;
 }
 
