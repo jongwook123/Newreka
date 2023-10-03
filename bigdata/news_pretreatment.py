@@ -119,7 +119,7 @@ def hottopic():
 def save(top_10_keywords):
 
     db = mysql.connector.connect(
-      host="52.78.20.109",
+      host="43.202.33.232",
       user="d103",
       password="1234",
       database="newreka"
@@ -132,9 +132,12 @@ def save(top_10_keywords):
         now_minutes_floor = (now.minute // 10) * 10
         floored_time = now.replace(minute=now_minutes_floor, second=0, microsecond=0)
         
-        sql_insert_time_query = """INSERT INTO time (time) VALUES (%s)"""
+        sql_insert_time_query = """INSERT INTO time (time) VALUES ('%s')"""
         insert_time_value = (floored_time,)
-    
+
+        with open('sql_queries.sql', 'a') as f:
+            f.write(f"{sql_insert_time_query % insert_time_value};\n")
+
         cursor.execute(sql_insert_time_query, insert_time_value)
     
         last_inserted_id = cursor.lastrowid
@@ -147,10 +150,12 @@ def save(top_10_keywords):
 
     try:
        for keyword_name, _ in top_10_keywords:
-           sql_insert_key_word_query = """INSERT INTO key_word (name, summary, time_id)
-                                          VALUES (%s, %s, %s)"""
+           sql_insert_key_word_query = """INSERT INTO key_word (name, summary, time_id) VALUES ('%s', '%s', %s)"""
            
            insert_key_word_values = (keyword_name[:30], "", last_inserted_id)
+        
+           with open('sql_queries.sql', 'a') as f:
+               f.write(f"{sql_insert_key_word_query % insert_key_word_values};\n")
     
            cursor.execute(sql_insert_key_word_query, insert_key_word_values)
            
