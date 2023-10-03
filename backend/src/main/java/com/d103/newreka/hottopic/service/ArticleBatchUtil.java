@@ -50,9 +50,20 @@ public class ArticleBatchUtil {
 			for (KeyWord k : keywordList) {
 				String keyword = k.getName();
 				List<ArticleDto> articleDtos = newsService.searchWithClusters(keyword);
-
+				int count=0;
+				ArticleDto headLineArticle = null;
 				// 헤드라인 뉴스 선정
-				ArticleDto headLineArticle = articleDtos.get(0);
+				for(int i=0;i<5;i++){
+					if(articleDtos.get(i).getContent().length()<=2000){
+						headLineArticle = articleDtos.get(i);
+						count=1;
+						break;
+					}
+				}
+				if(count==0){
+					headLineArticle = articleDtos.get(0);
+					headLineArticle.setContent(articleDtos.get(0).getContent().substring(0,1998));
+				}
 
 				//요약
 				CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -86,7 +97,7 @@ public class ArticleBatchUtil {
 
 				HttpEntity et = response.getEntity();
 				String content = EntityUtils.toString(et, "UTF-8");
-
+				content.substring(11,content.length()-2);
 				k.setSummary(content);
 				// 키워드에 카테고리 저장
 				k.setCategory(headLineArticle.getCategory());

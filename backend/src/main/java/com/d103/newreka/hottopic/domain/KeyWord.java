@@ -36,7 +36,7 @@ public class KeyWord {
 	private Long keyWordId;
 	@Column(nullable = false, columnDefinition = "varchar(30)")
 	private String name;
-	@Column(columnDefinition = "varchar(100)")
+	@Column(columnDefinition = "text")
 	private String summary;
 	@Column(columnDefinition = "varchar(30)")
 	private String category;
