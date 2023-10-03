@@ -7,10 +7,12 @@ import com.d103.newreka.hottopic.domain.Article;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Builder
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class ArticleDto {
 	private Long articleId;
 	private String title;

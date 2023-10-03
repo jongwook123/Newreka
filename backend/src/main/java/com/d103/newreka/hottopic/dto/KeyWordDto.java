@@ -5,9 +5,10 @@ import com.d103.newreka.hottopic.domain.KeyWord;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Builder
-// @NoArgsConstructor
+@NoArgsConstructor
 @AllArgsConstructor
 @Data
 public class KeyWordDto {

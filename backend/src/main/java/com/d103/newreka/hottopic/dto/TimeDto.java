@@ -1,18 +1,15 @@
 package com.d103.newreka.hottopic.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import java.time.LocalDateTime;
-
-@Getter
-@Setter
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TimeDto {
 
-    Long timeId;
-    String time;
+	private Long timeId;
+	private String time;
 
 }
