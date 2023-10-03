@@ -132,7 +132,7 @@ def save(top_10_keywords):
         now_minutes_floor = (now.minute // 10) * 10
         floored_time = now.replace(minute=now_minutes_floor, second=0, microsecond=0)
         
-        sql_insert_time_query = """INSERT INTO time (time) VALUES ('%s')"""
+        sql_insert_time_query = """INSERT INTO time (time) VALUES (%s)"""
         insert_time_value = (floored_time,)
 
         with open('sql_queries.sql', 'a') as f:
@@ -150,7 +150,7 @@ def save(top_10_keywords):
 
     try:
        for keyword_name, _ in top_10_keywords:
-           sql_insert_key_word_query = """INSERT INTO key_word (name, summary, time_id) VALUES ('%s', '%s', %s)"""
+           sql_insert_key_word_query = """INSERT INTO key_word (name, summary, time_id) VALUES (%s, %s, %s)"""
            
            insert_key_word_values = (keyword_name[:30], "", last_inserted_id)
         
