@@ -1,6 +1,5 @@
 import * as S from './style';
 import { useState } from 'react';
-import NewsPreview from 'component/previews';
 import WideCard from 'component/newscards/widecard';
 
 
