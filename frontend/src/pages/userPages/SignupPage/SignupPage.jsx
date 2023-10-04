@@ -4,13 +4,11 @@ import { useState } from 'react';
 import LongInput1 from 'component/inputs/longinput1';
 import LongButton1 from 'component/buttons/longbutton1';
 import { TrySignup } from 'APIs/UserAPIs';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
-import { signinUser } from 'redux/slice/userSlice';
+
 
 export default function SignupPage() {
 
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const [inputs, setInputs] = useState({
@@ -66,9 +64,7 @@ export default function SignupPage() {
                 navigate("/login");
             }
             
-            // 성공 시 다른 작업을 수행할 수 있습니다.
         } catch (error) {
-            // 회원 가입 실패 시 에러 처리
             console.error('Signup failed:', error);
         }
     }

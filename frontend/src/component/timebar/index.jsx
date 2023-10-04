@@ -1,19 +1,38 @@
+import { useEffect, useState } from 'react';
 import * as S from './style';
-import { useState } from 'react';
 
-const TimeBar = ({ baseTime }) => {
-    const [selectedTime, setSelectedTime] = useState(null);
+const TimeBar = ({ formattedTime, setSelectedTime }) => {
+    const [selectedTimeString, setSelectedTimeString] = useState('');
+    const [times, setTimes] = useState([]);
 
-    let date = new Date(baseTime);
-    date.setHours(date.getHours() + 8);
+    useEffect(() => {
+        if (formattedTime) {
+            const year = parseInt(formattedTime.substring(0, 4));
+            const month = parseInt(formattedTime.substring(4, 6)) - 1; // JS에서 월은 0부터 시작합니다.
+            const day = parseInt(formattedTime.substring(6, 8));
+            const hour = parseInt(formattedTime.substring(8, 10));
+            const minute = parseInt(formattedTime.substring(10));
 
-    let times = [];
+            let date = new Date(year, month, day, hour + 8 /* add hours */, minute);
 
-    for (let i = 0; i <= 6; i++) {
-        let timeSlot = new Date(date.getTime() + (i * 10 * 60 * 1000));
-        times.push(timeSlot);
+            let tempTimes = [];
 
-    }
+            for (let i = 0; i <= 6; i++) {
+                let timeSlot = new Date(date.getTime() + (i * 10 * 60 * 1000));
+                tempTimes.push(timeSlot);
+            }
+
+            setTimes(tempTimes);
+
+            let lastTimeslot = tempTimes[tempTimes.length - 1];
+
+            let hoursString = String(lastTimeslot.getHours()).padStart(2, '0');
+            let minutesString = String(lastTimeslot.getMinutes()).padStart(2, '0');
+
+            setSelectedTimeString(`${hoursString}:${minutesString}`);
+        }
+    }, [formattedTime]);
+
 
     return (
         <S.TimeBarContainer>
@@ -24,7 +43,14 @@ const TimeBar = ({ baseTime }) => {
                 let timeString = `${hours}:${minutes}`;
 
                 return (
-                    <S.TimeSlot key={time} selected={selectedTime === timeString} onClick={() => setSelectedTime(timeString)}>
+                    <S.TimeSlot
+                        key={timeString}
+                        selected={selectedTimeString === timeString}
+                        onClick={() => {
+                            setSelectedTime(time);
+                            setSelectedTimeString(timeString);
+                        }}
+                    >
                         {`${hours}:${minutes}`}
                     </S.TimeSlot>
                 )
@@ -34,4 +60,3 @@ const TimeBar = ({ baseTime }) => {
 };
 
 export default TimeBar;
-
