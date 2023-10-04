@@ -14,18 +14,7 @@ function WordCloudPage({ onWordClick, data }) {
   }
   const wordRef = useRef(null);
   const [keywords, setKeywords] = useState();
-  const [dummydata, setDummydata] = useState({
-    '0': 2000,
-    '1': 2000,
-    '2': 2000,
-    '3': 2000,
-    '4': 2000,
-    '5': 5000,
-    '6': 6000,
-    '7': 7000,
-    '8': 8000,
-    '9': 15000,
-  });
+  const [dummydata, setDummydata] = useState({});
 
   useEffect(() => {
     setKeywords(data["quizList"]);
