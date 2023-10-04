@@ -57,7 +57,6 @@ const MainPageTabs = ({ selectedKeyword, data }) => {
         }
     }, [selectedKeywordId]);
 
-    console.log(articleData)
 
 
     return (
@@ -76,11 +75,11 @@ const MainPageTabs = ({ selectedKeyword, data }) => {
                 <S.CardList>
                     {articleData?.map((quiz, index) => (
                         <S.CardItem key={index}>
-                            <Card props={{
-                                title: quiz.title,
-                                img_src: quiz.thumbnail,
-                                url: quiz.link
-                            }} />
+                            <Card
+                                title={quiz.title}
+                                img_src={quiz.thumbnail}
+                                url={quiz.link}
+                            />
                         </S.CardItem>
                     ))}
                 </S.CardList>
