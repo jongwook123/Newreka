@@ -31,10 +31,10 @@ function WordCloudPage({ onWordClick, data }) {
       setDummydata(newDummyData);
     }
   }, [data]);
-
+  
   useEffect(() => {
-    if (!wordRef.current) return;
-
+    if (keywords){
+      
     const words = Object.entries(dummydata)
       .sort(([, a], [, b]) => b - a)
       .map(([text, size]) => ({ text: text, size: size }));
@@ -119,17 +119,9 @@ function WordCloudPage({ onWordClick, data }) {
     }
 
     draw(words);
-
-    function getRandomColor() {
-      const letters = '0123456789ABCDEF';
-      let color = '#';
-      for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-      }
-      return color;
-    }
-
-  }, [dummydata]);
+  }
+  
+}, [keywords, dummydata]);
 
   return <div ref={wordRef} />;
 }
