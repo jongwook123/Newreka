@@ -8,7 +8,6 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { GetKeyword, GetTimeKeyword } from 'APIs/KeywordAPIs';
 import TimeBar from 'component/timebar';
-import { GetTimeKeyword } from 'APIs/KeywordAPIs';
 
 export default function MainPage() {
   const accessToken = useSelector(state => state.user.accessToken);
@@ -18,13 +17,13 @@ export default function MainPage() {
   const [data, setData] = useState({ quizList: [] });
   const [selectedTime, setSelectedTime] = useState(null);
   const [baseTime, setBaseTime] = useState(null);
-  
+
   const getCurrentTimeFormatted = () => {
     const currentDate = new Date();
     let minutes = currentDate.getMinutes();
-  
+
     let adjustedMinutes;
-  
+
     if (minutes >= 2 && minutes <= 11) {
       adjustedMinutes = '00';
     } else if (minutes >= 12 && minutes <= 21) {
@@ -38,12 +37,12 @@ export default function MainPage() {
     } else {
       adjustedMinutes = '50';
     }
-  
+
     const year = currentDate.getFullYear();
     const month = String(currentDate.getMonth() + 1).padStart(2, '0');
     const day = String(currentDate.getDate()).padStart(2, '0');
     const hours = String(currentDate.getHours()).padStart(2, '0');
-  
+
     return `${year}${month}${day}${hours}${adjustedMinutes}`;
   };
 
@@ -92,14 +91,14 @@ export default function MainPage() {
 
   useEffect(() => {
     // 함수를 만들어서 현재 시간의 분 끝자리가 2일 때 fetchData를 호출하도록 설정
-    
+
     const fetchDataOn2ndMinute = () => {
       const currentMinute = new Date().getMinutes();
       if (currentMinute % 10 === 2) {
         fetchData();
       }
     };
-    
+
     fetchTimeData();
     // 최초 실행
 
@@ -113,7 +112,7 @@ export default function MainPage() {
   const handleWordClick = (selectedWord) => {
     setSelectedKeyword(selectedWord);
   }
-
+  console.log(baseTime, data, formattedTime)
   return (
     <S.Main>
       <Header menuname={menuname} />
@@ -123,7 +122,7 @@ export default function MainPage() {
           {data && data.quizList && data.quizList.length > 0 &&
             <>
               <WordCloudPage onWordClick={handleWordClick} data={data} />
-              {baseTime && <TimeBar baseTime={baseTime} setSelectedTime={setSelectedTime} selectedTime={selectedTime} />}
+              {formattedTime && <TimeBar formattedTime={formattedTime} setSelectedTime={setSelectedTime} selectedTime={selectedTime} />}
             </>
           }
 
