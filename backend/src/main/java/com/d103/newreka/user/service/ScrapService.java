@@ -37,7 +37,7 @@ public class ScrapService {
     public List<Scrap> search(String userEmail){
 
         User user = userRepository.findByEmail(userEmail).orElseThrow();
-        List<Scrap> list = scrapRepo.findByUser_Id(user.getId());
+        List<Scrap> list = scrapRepo.findByUserId(user);
 
         return list;
     }
