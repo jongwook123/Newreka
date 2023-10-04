@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { GetKeyword } from 'APIs/KeywordAPIs';
-
+import TimeBar from 'component/timebar';
 
 export default function MainPage() {
   const accessToken = useSelector(state => state.user.accessToken);
@@ -15,7 +15,8 @@ export default function MainPage() {
   const menuname = isLoggedIn ? 'My page' : 'Login';
 
   const [selectedKeyword, setSelectedKeyword] = useState('');
-  const [data, setData] = useState({});
+  const [data, setData] = useState({ quizList: [] });
+
 
   const fetchData = async () => {
     try {
@@ -55,7 +56,13 @@ export default function MainPage() {
       <S.BodySection>
         <S.Body>
           <h2>HOT 10</h2>
-          {data && <WordCloudPage onWordClick={handleWordClick} data={data} />}
+          {data && data.quizList && data.quizList.length > 0 &&
+            <>
+              <WordCloudPage onWordClick={handleWordClick} data={data} />
+              <TimeBar baseTime={data.quizList[0].time} />
+            </>
+          }
+
         </S.Body>
         <S.Body id="body2">
           <h2>{selectedKeyword}</h2>
