@@ -28,6 +28,7 @@ public class QuizService {
                 .answer2(quizDto.getAnswer2())
                 .answer3(quizDto.getAnswer3())
                 .answer4(quizDto.getAnswer4())
+                .correctAnswer(quizDto.getCorrectAnswer())
                 .keyword(keyWord)
                 .build();
         quizRepo.save(quiz);

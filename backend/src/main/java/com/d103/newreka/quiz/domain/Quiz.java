@@ -24,17 +24,19 @@ public class Quiz {
 	@Column(name = "quiz_id", nullable = false)
 	private Long quizId;
 
-	@Column(nullable = false, columnDefinition = "varchar(100)")
+	@Column(nullable = false, columnDefinition = "varchar(200)")
 	private String title;
 
-	@Column(nullable = false, columnDefinition = "varchar(20)")
+	@Column(nullable = false, columnDefinition = "varchar(100)")
 	private String answer1;
-	@Column(nullable = false, columnDefinition = "varchar(20)")
+	@Column(nullable = false, columnDefinition = "varchar(100)")
 	private String answer2;
-	@Column(nullable = false, columnDefinition = "varchar(20)")
+	@Column(nullable = false, columnDefinition = "varchar(100)")
 	private String answer3;
-	@Column(nullable = false, columnDefinition = "varchar(20)")
+	@Column(nullable = false, columnDefinition = "varchar(100)")
 	private String answer4;
+	@Column(nullable = false, columnDefinition = "varchar(10)")
+	private String correctAnswer;
 
 	@ManyToOne
 	@JoinColumn(name = "keyWord_id", nullable = false)
