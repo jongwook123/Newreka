@@ -5,8 +5,6 @@ import { useState } from "react";
 export default function Quizzes({ quizData }) {
   const [userAnswers, setUserAnswers] = useState([]);
 
-  console.log(quizData)
-
   const handleOptionClick = (quizIndex, optionKey) => {
     setUserAnswers(prev => {
       const newAnswers = [...prev];

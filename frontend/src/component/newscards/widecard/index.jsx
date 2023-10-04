@@ -9,7 +9,7 @@ function WideCard({ props: { title, img_src, url } }) {
         <S.CardSection onClick={handleClick}>
             <img
                 src={img_src}
-                alt=""
+                alt="https://img.kbs.co.kr/kbs/620/news.kbs.co.kr/resources/images/topimg/program/0011.jpg"
             />
             <S.TextContainer>
                 <h2>{title}</h2>

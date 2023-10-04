@@ -13,11 +13,9 @@ export const TryLogin = async (email, password) => {
                 "password": password,
             })
         })
-
-        console.log(response);
         
         const result = await response.json();
-        console.log(result)
+
         return result;
     } catch (e) {
         console.log(e);
