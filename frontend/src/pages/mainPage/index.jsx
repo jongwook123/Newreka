@@ -8,7 +8,6 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { GetKeyword, GetTimeKeyword } from 'APIs/KeywordAPIs';
 import TimeBar from 'component/timebar';
->>>>>>> frontend/src/pages/mainPage/index.jsx
 
 export default function MainPage() {
   const accessToken = useSelector(state => state.user.accessToken);
