@@ -10,7 +10,7 @@ function Card({ title, img_src, url }) {
   };
 
   const handleImageError = (e) => {
-    e.target.src = "https://img.kbs.co.kr/kbs/620/news.kbs.co.kr/resources/images/topimg/program/0011.jpg";
+    e.target.src = "https://imgnews.pstatic.net/image/origin/119/2023/10/04/2754807.jpg?type=nf106_72";
   };
 
   const [isScrapped, setIsScrapped] = useState(false);
@@ -26,6 +26,7 @@ function Card({ title, img_src, url }) {
         src={img_src}
         alt=""
         onError={handleImageError}
+        style={{ maxWidth: '100%', height: 'auto' }}
       />
       <S.TextContainer>
         {title}
