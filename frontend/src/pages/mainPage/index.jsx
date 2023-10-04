@@ -15,7 +15,7 @@ export default function MainPage() {
   const menuname = isLoggedIn ? 'My page' : 'Login';
 
   const [selectedKeyword, setSelectedKeyword] = useState('');
-  const [data, setData] = useState(null);
+  const [data, setData] = useState({});
 
   useEffect(() => {
     (async () => {
@@ -27,7 +27,6 @@ export default function MainPage() {
       }
     })();
   }, []);
-  
 
   const handleWordClick = (selectedWord) => {
     setSelectedKeyword(selectedWord);
