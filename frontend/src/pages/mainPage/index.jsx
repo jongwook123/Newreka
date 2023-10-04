@@ -6,7 +6,7 @@ import MainPageTabs from 'component/tabs/mainPageTabs';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { GetKeyword } from 'APIs/KeywordAPIs';
+import { GetKeyword, GetTimeKeyword } from 'APIs/KeywordAPIs';
 import TimeBar from 'component/timebar';
 import { GetTimeKeyword } from 'APIs/KeywordAPIs';
 
@@ -14,11 +14,38 @@ export default function MainPage() {
   const accessToken = useSelector(state => state.user.accessToken);
   const isLoggedIn = !!accessToken;
   const menuname = isLoggedIn ? 'My page' : 'Login';
-
   const [selectedKeyword, setSelectedKeyword] = useState('');
   const [data, setData] = useState({ quizList: [] });
   const [selectedTime, setSelectedTime] = useState(null);
   const [baseTime, setBaseTime] = useState(null);
+  
+  const getCurrentTimeFormatted = () => {
+    const currentDate = new Date();
+    let minutes = currentDate.getMinutes();
+  
+    let adjustedMinutes;
+  
+    if (minutes >= 2 && minutes <= 11) {
+      adjustedMinutes = '00';
+    } else if (minutes >= 12 && minutes <= 21) {
+      adjustedMinutes = '10';
+    } else if (minutes >= 22 && minutes <= 31) {
+      adjustedMinutes = '20';
+    } else if (minutes >= 32 && minutes <= 41) {
+      adjustedMinutes = '30';
+    } else if (minutes >= 42 && minutes <= 51) {
+      adjustedMinutes = '40';
+    } else {
+      adjustedMinutes = '50';
+    }
+  
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    const hours = String(currentDate.getHours()).padStart(2, '0');
+  
+    return `${year}${month}${day}${hours}${adjustedMinutes}`;
+  };
 
   const fetchData = async () => {
     try {
@@ -32,7 +59,6 @@ export default function MainPage() {
       console.log(error);
     }
   };
-
 
   useEffect(() => {
     if (selectedTime) {
@@ -53,19 +79,29 @@ export default function MainPage() {
     }
   }, [selectedTime]);
 
-  console.log(data)
+  const formattedTime = getCurrentTimeFormatted()
+  const fetchTimeData = async () => {
+    try {
+      const fetchedData = await GetTimeKeyword(formattedTime);
+      setData(fetchedData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 
   useEffect(() => {
     // 함수를 만들어서 현재 시간의 분 끝자리가 2일 때 fetchData를 호출하도록 설정
+    
     const fetchDataOn2ndMinute = () => {
       const currentMinute = new Date().getMinutes();
       if (currentMinute % 10 === 2) {
         fetchData();
       }
     };
-
+    
+    fetchTimeData();
     // 최초 실행
-    fetchData();
 
     // 1분마다 fetchDataOn2ndMinute를 호출하여 분 끝자리가 2일 때 fetchData 호출
     const intervalId = setInterval(fetchDataOn2ndMinute, 60000);

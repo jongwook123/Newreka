@@ -16,10 +16,10 @@ export const GetKeyword = async () => {
     }
 }
 
-export const GetTimeKeyword = async (time) => {
+export const GetTimeKeyword = async (formattedTime) => {
     try {
         const response = await FetchTemplate({
-            path: process.env.REACT_APP_BASE_SERVER + `/hottopic/keyword/keyWordList/${time}`,
+            path: process.env.REACT_APP_BASE_SERVER + `/hottopic/keyword/keyWordList/${formattedTime}`,
             headers: {},
             method: "GET",
         });
