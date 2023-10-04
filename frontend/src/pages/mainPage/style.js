@@ -32,7 +32,8 @@ export const Body = styled.div`
     background-color : #F5ECE5;
     border-radius: 20px;
     & h2 {
-        font-size: 40px;
+        font-weight: bold;
+        font-size: 30px;
         padding-top: 20px;
         padding-left: 20px;
     }
