@@ -17,15 +17,32 @@ export default function MainPage() {
   const [selectedKeyword, setSelectedKeyword] = useState('');
   const [data, setData] = useState(null);
 
+  const fetchData = async () => {
+    try {
+      const fetchedData = await GetKeyword();
+      setData(fetchedData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    (async () => {
-      try {
-        const fetchedData = await GetKeyword();
-        setData(fetchedData);
-      } catch (error) {
-        console.log(error);
+    // 함수를 만들어서 현재 시간의 분 끝자리가 2일 때 fetchData를 호출하도록 설정
+    const fetchDataOn2ndMinute = () => {
+      const currentMinute = new Date().getMinutes();
+      if (currentMinute % 10 === 2) {
+        fetchData();
       }
-    })();
+    };
+
+    // 최초 실행
+    fetchData();
+
+    // 1분마다 fetchDataOn2ndMinute를 호출하여 분 끝자리가 2일 때 fetchData 호출
+    const intervalId = setInterval(fetchDataOn2ndMinute, 60000);
+
+    // 컴포넌트가 언마운트될 때 clearInterval하여 타이머 정리
+    return () => clearInterval(intervalId);
   }, []);
   
 

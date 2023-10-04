@@ -45,8 +45,7 @@ function WordCloudPage({ onWordClick, data }) {
   
   useEffect(() => {
     if (keywords){
-    if (!wordRef.current) return;
-
+      
     const words = Object.entries(dummydata)
       .sort(([, a], [, b]) => b - a)
       .map(([text, size]) => ({ text: text, size: size }));
@@ -132,7 +131,8 @@ function WordCloudPage({ onWordClick, data }) {
 
     draw(words);
   }
-  }, [dummydata]);
+  
+}, [keywords, dummydata]);
 
   return <div ref={wordRef} />;
 }
