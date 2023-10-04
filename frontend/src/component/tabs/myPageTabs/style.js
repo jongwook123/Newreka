@@ -19,7 +19,7 @@ export const CustomTab = styled(Tab)`
     background-color: ${(props) => (props.selected ? '#F7DAC4' : '#F5ECE5')};
     
     &:focus {
-        outline: none; /* 탭 클릭 시 검은 테두리 제거 */
+        outline: none; 
     }
     
     flex-basis: calc(100% / 7);
