@@ -20,15 +20,28 @@ export default function MainPage() {
     const currentDate = new Date();
     let minutes = currentDate.getMinutes();
   
-    minutes = Math.floor(minutes / 10) * 10;
+    let adjustedMinutes;
+  
+    if (minutes >= 2 && minutes <= 11) {
+      adjustedMinutes = '00';
+    } else if (minutes >= 12 && minutes <= 21) {
+      adjustedMinutes = '10';
+    } else if (minutes >= 22 && minutes <= 31) {
+      adjustedMinutes = '20';
+    } else if (minutes >= 32 && minutes <= 41) {
+      adjustedMinutes = '30';
+    } else if (minutes >= 42 && minutes <= 51) {
+      adjustedMinutes = '40';
+    } else {
+      adjustedMinutes = '50';
+    }
   
     const year = currentDate.getFullYear();
-    const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
     const day = String(currentDate.getDate()).padStart(2, '0');
     const hours = String(currentDate.getHours()).padStart(2, '0');
-    const formattedMinutes = String(minutes).padStart(2, '0');
   
-    return `${year}${month}${day}${hours}${formattedMinutes}`;
+    return `${year}${month}${day}${hours}${adjustedMinutes}`;
   };
 
   
@@ -52,7 +65,7 @@ export default function MainPage() {
     }
   };
 
-  
+  console.log(formattedTime)
 
   useEffect(() => {
     // 함수를 만들어서 현재 시간의 분 끝자리가 2일 때 fetchData를 호출하도록 설정
