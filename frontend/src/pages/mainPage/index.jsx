@@ -6,17 +6,33 @@ import MainPageTabs from 'component/tabs/mainPageTabs';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { GetKeyword } from 'APIs/KeywordAPIs';
+import { GetKeyword, GetTimeKeyword } from 'APIs/KeywordAPIs';
 import TimeBar from 'component/timebar';
+>>>>>>> frontend/src/pages/mainPage/index.jsx
 
 export default function MainPage() {
   const accessToken = useSelector(state => state.user.accessToken);
   const isLoggedIn = !!accessToken;
   const menuname = isLoggedIn ? 'My page' : 'Login';
-
   const [selectedKeyword, setSelectedKeyword] = useState('');
   const [data, setData] = useState({ quizList: [] });
+  
+  const getCurrentTimeFormatted = () => {
+    const currentDate = new Date();
+    let minutes = currentDate.getMinutes();
+  
+    minutes = Math.floor(minutes / 10) * 10;
+  
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    const hours = String(currentDate.getHours()).padStart(2, '0');
+    const formattedMinutes = String(minutes).padStart(2, '0');
+  
+    return `${year}${month}${day}${hours}${formattedMinutes}`;
+  };
 
+  
 
   const fetchData = async () => {
     try {
@@ -27,17 +43,30 @@ export default function MainPage() {
     }
   };
 
+  const formattedTime = getCurrentTimeFormatted()
+  const fetchTimeData = async () => {
+    try {
+      const fetchedData = await GetTimeKeyword(formattedTime);
+      setData(fetchedData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  
+
   useEffect(() => {
     // 함수를 만들어서 현재 시간의 분 끝자리가 2일 때 fetchData를 호출하도록 설정
+    
     const fetchDataOn2ndMinute = () => {
       const currentMinute = new Date().getMinutes();
       if (currentMinute % 10 === 2) {
         fetchData();
       }
     };
-
+    
+    fetchTimeData();
     // 최초 실행
-    fetchData();
 
     // 1분마다 fetchDataOn2ndMinute를 호출하여 분 끝자리가 2일 때 fetchData 호출
     const intervalId = setInterval(fetchDataOn2ndMinute, 60000);

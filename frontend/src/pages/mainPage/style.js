@@ -1,6 +1,4 @@
 import styled from "styled-components";
-// import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
-
 export const Main = styled.main`
     display: flex;
     flex-direction: column;
