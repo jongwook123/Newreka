@@ -1,6 +1,5 @@
 import * as S from './style';
 import { useState } from 'react';
-import NewsPreview from 'component/previews';
 import Card from 'component/newscards/card';
 import Quizzes from 'pages/mainPage/Quizzes';
 import { useEffect } from 'react';

@@ -30,10 +30,6 @@ export const ToggleButton = styled.button`
   background-color: transparent;
   color: ${(props) => (props.scrap ? 'green' : 'black')};
   border: none;
-  /* padding-bottom: 15px;
-  padding-right: 15px;
-  margin-top: auto;
-  margin-left: auto; */
   margin-top: auto;
   margin-left: auto;
   margin-bottom: 15px;

@@ -11,21 +11,6 @@ export const FieldSet = styled.fieldset`
         ${IROnly}
     }
 
-    /* & > label {
-        width: fit-content;
-        position: absolute;
-        font-family: 'Righteous', sans-serif;
-        top: ${props => props.isFill ? "0" : "50%"};
-        left: ${props => props.isFill ? "10px" : "6px"};
-        transform: translate(0, -50%);
-        transition: all 0.15s;
-        z-index: 200;
-        padding: 0 5px;
-        background-color: ${props => props.theme.colors.background_color.white};
-        color: ${props => props.isFill ? props.color === 'orange' ? `${props.theme.colors.theme.orange_dark}` : props.color === 'green' ? `${props.theme.colors.theme.green_dark}` : `${props.theme.colors.theme.blue_dark}` : props.theme.colors.font.light_gray};
-        font-size: ${props => props.isFill ? props.theme.font_size.lv3 : props.theme.font_size.lv4};
-    } */
-
     &:focus-within > label {
         top: 0;
         left: 10px;

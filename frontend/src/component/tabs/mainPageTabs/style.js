@@ -21,7 +21,7 @@ export const CustomTab = styled(Tab)`
     font-size:18px;
     font-weight: bold;
     &:focus {
-        outline: none; /* 탭 클릭 시 검은 테두리 제거 */
+        outline: none; 
     }
     
     flex-basis: calc(100% / 5);
