@@ -1,19 +1,30 @@
+import { useEffect, useState } from 'react';
 import * as S from './style';
-import { useState } from 'react';
 
-const TimeBar = ({ baseTime }) => {
-    const [selectedTime, setSelectedTime] = useState(null);
+const TimeBar = ({ baseTime, setSelectedTime }) => {
+    const [selectedTimeString, setSelectedTimeString] = useState('');
+    const [times, setTimes] = useState([]);
 
-    let date = new Date(baseTime);
-    date.setHours(date.getHours() + 8);
+    useEffect(() => {
+        let date = new Date(baseTime);
+        date.setHours(date.getHours() + 8);
 
-    let times = [];
+        let tempTimes = [];
 
-    for (let i = 0; i <= 6; i++) {
-        let timeSlot = new Date(date.getTime() + (i * 10 * 60 * 1000));
-        times.push(timeSlot);
+        for (let i = 0; i <= 6; i++) {
+            let timeSlot = new Date(date.getTime() + (i * 10 * 60 * 1000));
+            tempTimes.push(timeSlot);
+        }
 
-    }
+        setTimes(tempTimes);
+
+        let lastTimeslot = tempTimes[tempTimes.length - 1];
+        let hours = String(lastTimeslot.getHours()).padStart(2, '0');
+        let minutes = String(lastTimeslot.getMinutes()).padStart(2, '0');
+
+        setSelectedTimeString(`${hours}:${minutes}`);
+    }, [baseTime]);
+    console.log(times)
 
     return (
         <S.TimeBarContainer>
@@ -24,7 +35,14 @@ const TimeBar = ({ baseTime }) => {
                 let timeString = `${hours}:${minutes}`;
 
                 return (
-                    <S.TimeSlot key={time} selected={selectedTime === timeString} onClick={() => setSelectedTime(timeString)}>
+                    <S.TimeSlot
+                        key={timeString}
+                        selected={selectedTimeString === timeString}
+                        onClick={() => {
+                            setSelectedTime(time);
+                            setSelectedTimeString(timeString);
+                        }}
+                    >
                         {`${hours}:${minutes}`}
                     </S.TimeSlot>
                 )
@@ -34,4 +52,3 @@ const TimeBar = ({ baseTime }) => {
 };
 
 export default TimeBar;
-

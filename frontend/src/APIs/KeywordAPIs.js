@@ -28,7 +28,6 @@ export const GetTimeKeyword = async (formattedTime) => {
         return result;
 
     } catch (e) {
-        console.log(formattedTime)
         console.log(e);
     }
 }
