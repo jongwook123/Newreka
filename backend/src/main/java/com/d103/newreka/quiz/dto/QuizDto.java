@@ -18,6 +18,7 @@ public class QuizDto {
 	private String answer2;
 	private String answer3;
 	private String answer4;
+	private int collectAnswer;
 	private Long keyword;
 
 	public static QuizDto fromEntity(Quiz quiz) {
@@ -30,6 +31,7 @@ public class QuizDto {
 			.answer2(quiz.getAnswer2())
 			.answer3(quiz.getAnswer3())
 			.answer4(quiz.getAnswer4())
+			.collectAnswer(quiz.getCollectAnswer())
 			.keyword(quiz.getKeyword().getKeyWordId())
 			.build();
 	}
