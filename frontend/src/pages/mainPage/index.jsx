@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { GetKeyword } from 'APIs/KeywordAPIs';
 import TimeBar from 'component/timebar';
+import { GetTimeKeyword } from 'APIs/KeywordAPIs';
 
 export default function MainPage() {
   const accessToken = useSelector(state => state.user.accessToken);
@@ -16,16 +17,43 @@ export default function MainPage() {
 
   const [selectedKeyword, setSelectedKeyword] = useState('');
   const [data, setData] = useState({ quizList: [] });
-
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [baseTime, setBaseTime] = useState(null);
 
   const fetchData = async () => {
     try {
       const fetchedData = await GetKeyword();
       setData(fetchedData);
+
+      if (baseTime === null && fetchedData.quizList.length > 0) {
+        setBaseTime(fetchedData.quizList[0].time);
+      }
     } catch (error) {
       console.log(error);
     }
   };
+
+
+  useEffect(() => {
+    if (selectedTime) {
+      const date = new Date(selectedTime);
+      date.setHours(date.getHours() - 9);
+
+      const year = date.getFullYear(); // 년도
+      const month = String(date.getMonth() + 1).padStart(2, '0'); // 월 (월은 0부터 시작하므로 +1 필요)
+      const day = String(date.getDate()).padStart(2, '0'); // 일
+      const hours = String(date.getHours()).padStart(2, '0'); // 시간
+      const minutes = String(date.getMinutes()).padStart(2, '0'); // 분
+
+      const formattedDate = `${year}${month}${day}${hours}${minutes}`;
+      console.log(formattedDate)
+      GetTimeKeyword(formattedDate)
+        .then(fetchedData => setData(fetchedData))
+        .catch(error => console.log(error));
+    }
+  }, [selectedTime]);
+
+  console.log(data)
 
   useEffect(() => {
     // 함수를 만들어서 현재 시간의 분 끝자리가 2일 때 fetchData를 호출하도록 설정
@@ -59,7 +87,7 @@ export default function MainPage() {
           {data && data.quizList && data.quizList.length > 0 &&
             <>
               <WordCloudPage onWordClick={handleWordClick} data={data} />
-              <TimeBar baseTime={data.quizList[0].time} />
+              {baseTime && <TimeBar baseTime={baseTime} setSelectedTime={setSelectedTime} selectedTime={selectedTime} />}
             </>
           }
 
