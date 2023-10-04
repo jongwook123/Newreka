@@ -26,7 +26,7 @@ public class Article {
 	@Column(name = "article_Id", nullable = false)
 	private Long articleId;
 
-	@Column(nullable = false, columnDefinition = "varchar(100)")
+	@Column(nullable = false, columnDefinition = "varchar(200)")
 	private String title;
 	@Column(nullable = false, columnDefinition = "varchar(30)")
 	private String company;
