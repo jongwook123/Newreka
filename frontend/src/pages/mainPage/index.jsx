@@ -15,7 +15,7 @@ export default function MainPage() {
   const menuname = isLoggedIn ? 'My page' : 'Login';
 
   const [selectedKeyword, setSelectedKeyword] = useState('');
-  const [data, setData] = useState(null);
+  const [data, setData] = useState({});
 
   const fetchData = async () => {
     try {
@@ -44,7 +44,6 @@ export default function MainPage() {
     // 컴포넌트가 언마운트될 때 clearInterval하여 타이머 정리
     return () => clearInterval(intervalId);
   }, []);
-  
 
   const handleWordClick = (selectedWord) => {
     setSelectedKeyword(selectedWord);
