@@ -13,7 +13,7 @@ const TimeBar = ({ formattedTime, setSelectedTime }) => {
             const hour = parseInt(formattedTime.substring(8, 10));
             const minute = parseInt(formattedTime.substring(10));
 
-            let date = new Date(year, month, day, hour + 8 /* add hours */, minute);
+            let date = new Date(year, month, day, hour-1, minute);
 
             let tempTimes = [];
 
