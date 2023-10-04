@@ -5,7 +5,7 @@ export default function Header(props) {
 
     return (
         <S.Main>
-            <S.Date>April 26, 2023</S.Date>
+            <S.Date>{new Date().toLocaleDateString()}</S.Date>
             <S.Title_div>
                 <S.Dummy>
                     
