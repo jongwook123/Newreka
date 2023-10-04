@@ -7,19 +7,20 @@ import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { GetKeyword, GetTimeKeyword } from 'APIs/KeywordAPIs';
+import TimeBar from 'component/timebar';
+>>>>>>> frontend/src/pages/mainPage/index.jsx
 
 export default function MainPage() {
   const accessToken = useSelector(state => state.user.accessToken);
   const isLoggedIn = !!accessToken;
   const menuname = isLoggedIn ? 'My page' : 'Login';
   const [selectedKeyword, setSelectedKeyword] = useState('');
-  const [data, setData] = useState({});
+  const [data, setData] = useState({ quizList: [] });
   
   const getCurrentTimeFormatted = () => {
     const currentDate = new Date();
     let minutes = currentDate.getMinutes();
   
-    // Round down to the nearest multiple of 10
     minutes = Math.floor(minutes / 10) * 10;
   
     const year = currentDate.getFullYear();
@@ -31,6 +32,8 @@ export default function MainPage() {
     return `${year}${month}${day}${hours}${formattedMinutes}`;
   };
 
+  
+
   const fetchData = async () => {
     try {
       const fetchedData = await GetKeyword();
@@ -41,7 +44,6 @@ export default function MainPage() {
   };
 
   const formattedTime = getCurrentTimeFormatted()
-  // const formattedTimeAsNumber = parseInt(formattedTime, 10);
   const fetchTimeData = async () => {
     try {
       const fetchedData = await GetTimeKeyword(formattedTime);
@@ -83,7 +85,13 @@ export default function MainPage() {
       <S.BodySection>
         <S.Body>
           <h2>HOT 10</h2>
-          {data && <WordCloudPage onWordClick={handleWordClick} data={data} />}
+          {data && data.quizList && data.quizList.length > 0 &&
+            <>
+              <WordCloudPage onWordClick={handleWordClick} data={data} />
+              <TimeBar baseTime={data.quizList[0].time} />
+            </>
+          }
+
         </S.Body>
         <S.Body id="body2">
           <h2>{selectedKeyword}</h2>
