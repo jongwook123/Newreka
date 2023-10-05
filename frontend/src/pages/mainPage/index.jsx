@@ -17,11 +17,15 @@ export default function MainPage() {
   const [data, setData] = useState({ quizList: [] });
   const [selectedTime, setSelectedTime] = useState(null);
   const [baseTime, setBaseTime] = useState(null);
-
+  useEffect(() => { 
+    window.onbeforeunload = function pushRefresh() {
+      window.scrollTo(0, 0);
+    };
+  }, []);
   const getCurrentTimeFormatted = () => {
     const currentDate = new Date();
     let minutes = currentDate.getMinutes();
-
+    
     let adjustedMinutes;
 
     if (minutes >= 2 && minutes <= 11) {
@@ -46,6 +50,7 @@ export default function MainPage() {
     return `${year}${month}${day}${hours}${adjustedMinutes}`;
   };
 
+  
   const fetchData = async () => {
     try {
       const fetchedData = await GetKeyword();
@@ -60,6 +65,7 @@ export default function MainPage() {
   };
 
   useEffect(() => {
+    
     if (selectedTime) {
       const date = new Date(selectedTime);
       date.setHours(date.getHours());
