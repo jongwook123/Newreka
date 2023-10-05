@@ -74,6 +74,9 @@ export const QuizSection = styled.section`
   width: 90%;
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
+  & p {
+    line-height: 1.6;
+  }
 `;
 
 export const Button = styled.div`
