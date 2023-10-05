@@ -1,51 +1,175 @@
 import * as S from './style';
 import { useState } from 'react';
 import WideCard from 'component/newscards/widecard';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { TryGetAllScrapped } from 'APIs/ArticleAPIs';
 
 
 const MyPageTabs = () => {
     const [activeTabIndex, setActiveTabIndex] = useState(0);
-
+    const [scrapData, setScrapData] =useState([])
     const handleTabSelect = (index) => {
         setActiveTabIndex(index);
     };
+    
+    const accessToken = useSelector((state) => state.user.accessToken);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const result = await TryGetAllScrapped(accessToken);
+                setScrapData(result.scrapList)
+            } catch (error) {
+                console.error('Error fetching keyword count:', error);
+            }
+        };
 
+        fetchData();
+    }, [accessToken,scrapData]);
     return (
         <S.CustomTabs onSelect={handleTabSelect} selectedIndex={activeTabIndex}>
             <S.CustomTabList>
                 <S.CustomTab>전체</S.CustomTab>
+                <S.CustomTab>오피니언</S.CustomTab>
+                <S.CustomTab>세계</S.CustomTab>
+                <S.CustomTab>생활</S.CustomTab>
+                <S.CustomTab>사회</S.CustomTab>
                 <S.CustomTab>경제</S.CustomTab>
                 <S.CustomTab>정치</S.CustomTab>
-                <S.CustomTab>연예</S.CustomTab>
-                <S.CustomTab>사회</S.CustomTab>
                 <S.CustomTab>IT</S.CustomTab>
-                <S.CustomTab>세계</S.CustomTab>
             </S.CustomTabList>
 
             <S.CustomTabPanel>
-                {/* <NewsPreview /> */}
-                <WideCard props={{ title: `“고향 가느니 용돈 벌래요”…황금연휴, 최대 200만원 단기 일자리 찾는 청년들`, img_src: "https://imgnews.pstatic.net/image/366/2023/09/26/0000935186_001_20230926061101337.jpg?type=w647", url: "https://n.news.naver.com/article/001/0014219992?ntype=RANKING" }} />
-                <WideCard props={{
-                    title: `장학금 받고 이공계 이탈 '먹튀'…1천200일 넘게 미납도
-`, img_src: "https://imgnews.pstatic.net/image/001/2023/09/26/PCM20220103000176990_P4_20230926060154706.jpg?type=w647"
-                }} />
+                {scrapData.map((scrapItem) => (
+                    <WideCard
+                        props={{
+                            title: scrapItem.article.title,
+                            img_src: scrapItem.article.thumbnail === "NaN"
+                                ? "https://imgnews.pstatic.net/image/origin/119/2023/10/04/2754807.jpg?type=nf106_72"
+                                : scrapItem.article.thumbnail,
+                            url: scrapItem.article.link,
+                        }}
+                    />
+                ))}
             </S.CustomTabPanel>
             <S.CustomTabPanel>
-                <WideCard props={{ title: `“고향 가느니 용돈 벌래요”…황금연휴, 최대 200만원 단기 일자리 찾는 청년들`, img_src: "https://imgnews.pstatic.net/image/366/2023/09/26/0000935186_001_20230926061101337.jpg?type=w647", url: "https://n.news.naver.com/article/001/0014219992?ntype=RANKING" }} />
-                <WideCard props={{
-                    title: `장학금 받고 이공계 이탈 '먹튀'…1천200일 넘게 미납도
-`, img_src: "https://imgnews.pstatic.net/image/001/2023/09/26/PCM20220103000176990_P4_20230926060154706.jpg?type=w647", url: "https://n.news.naver.com/article/001/0014219992?ntype=RANKING"
-                }} />
-                <WideCard props={{ title: `“고향 가느니 용돈 벌래요”…황금연휴, 최대 200만원 단기 일자리 찾는 청년들`, img_src: "https://imgnews.pstatic.net/image/366/2023/09/26/0000935186_001_20230926061101337.jpg?type=w647", url: "https://n.news.naver.com/article/001/0014219992?ntype=RANKING" }} />
+                {scrapData
+                    .filter(scrapItem => scrapItem.article.category === "오피니언")
+                    .map((scrapItem, index) => (
+                        <WideCard
+                            key={index}
+                            props={{
+                                title: scrapItem.article.title,
+                                img_src: scrapItem.article.thumbnail === "NaN"
+                                    ? "https://imgnews.pstatic.net/image/origin/119/2023/10/04/2754807.jpg?type=nf106_72"
+                                    : scrapItem.article.thumbnail,
+                                url: scrapItem.article.link,
+                            }}
+                        />
+                    ))
+                }
             </S.CustomTabPanel>
             <S.CustomTabPanel>
-                <WideCard props={{ title: `“고향 가느니 용돈 벌래요”…황금연휴, 최대 200만원 단기 일자리 찾는 청년들`, img_src: "https://imgnews.pstatic.net/image/366/2023/09/26/0000935186_001_20230926061101337.jpg?type=w647", url: "https://n.news.naver.com/article/001/0014219992?ntype=RANKING" }} />
-                <WideCard props={{
-                    title: `장학금 받고 이공계 이탈 '먹튀'…1천200일 넘게 미납도
-`, img_src: "https://imgnews.pstatic.net/image/001/2023/09/26/PCM20220103000176990_P4_20230926060154706.jpg?type=w647", url: "https://n.news.naver.com/article/001/0014219992?ntype=RANKING"
-                }} />
-                <WideCard props={{ title: `“고향 가느니 용돈 벌래요”…황금연휴, 최대 200만원 단기 일자리 찾는 청년들`, img_src: "https://imgnews.pstatic.net/image/366/2023/09/26/0000935186_001_20230926061101337.jpg?type=w647", url: "https://n.news.naver.com/article/001/0014219992?ntype=RANKING" }} />
-                <WideCard props={{ title: `“고향 가느니 용돈 벌래요”…황금연휴, 최대 200만원 단기 일자리 찾는 청년들`, img_src: "https://imgnews.pstatic.net/image/366/2023/09/26/0000935186_001_20230926061101337.jpg?type=w647", url: "https://n.news.naver.com/article/001/0014219992?ntype=RANKING" }} />
+                {scrapData
+                    .filter(scrapItem => scrapItem.article.category === "세계")
+                    .map((scrapItem, index) => (
+                        <WideCard
+                            key={index}
+                            props={{
+                                title: scrapItem.article.title,
+                                img_src: scrapItem.article.thumbnail === "NaN"
+                                    ? "https://imgnews.pstatic.net/image/origin/119/2023/10/04/2754807.jpg?type=nf106_72"
+                                    : scrapItem.article.thumbnail,
+                                url: scrapItem.article.link,
+                            }}
+                        />
+                    ))
+                }
+            </S.CustomTabPanel>
+            <S.CustomTabPanel>
+                {scrapData
+                        .filter(scrapItem => scrapItem.article.category === "생활")
+                        .map((scrapItem, index) => (
+                            <WideCard
+                                key={index}
+                                props={{
+                                    title: scrapItem.article.title,
+                                    img_src: scrapItem.article.thumbnail === "NaN"
+                                        ? "https://imgnews.pstatic.net/image/origin/119/2023/10/04/2754807.jpg?type=nf106_72"
+                                        : scrapItem.article.thumbnail,
+                                    url: scrapItem.article.link,
+                                }}
+                            />
+                        ))
+                    }
+            </S.CustomTabPanel>
+            <S.CustomTabPanel>
+                {scrapData
+                        .filter(scrapItem => scrapItem.article.category === "사회")
+                        .map((scrapItem, index) => (
+                            <WideCard
+                                key={index}
+                                props={{
+                                    title: scrapItem.article.title,
+                                    img_src: scrapItem.article.thumbnail === "NaN"
+                                        ? "https://imgnews.pstatic.net/image/origin/119/2023/10/04/2754807.jpg?type=nf106_72"
+                                        : scrapItem.article.thumbnail,
+                                    url: scrapItem.article.link,
+                                }}
+                            />
+                        ))
+                    }
+            </S.CustomTabPanel>
+            <S.CustomTabPanel>
+                {scrapData
+                        .filter(scrapItem => scrapItem.article.category === "경제")
+                        .map((scrapItem, index) => (
+                            <WideCard
+                                key={index}
+                                props={{
+                                    title: scrapItem.article.title,
+                                    img_src: scrapItem.article.thumbnail === "NaN"
+                                        ? "https://imgnews.pstatic.net/image/origin/119/2023/10/04/2754807.jpg?type=nf106_72"
+                                        : scrapItem.article.thumbnail,
+                                    url: scrapItem.article.link,
+                                }}
+                            />
+                        ))
+                    }
+            </S.CustomTabPanel>
+            <S.CustomTabPanel>
+                {scrapData
+                        .filter(scrapItem => scrapItem.article.category === "정치")
+                        .map((scrapItem, index) => (
+                            <WideCard
+                                key={index}
+                                props={{
+                                    title: scrapItem.article.title,
+                                    img_src: scrapItem.article.thumbnail === "NaN"
+                                        ? "https://imgnews.pstatic.net/image/origin/119/2023/10/04/2754807.jpg?type=nf106_72"
+                                        : scrapItem.article.thumbnail,
+                                    url: scrapItem.article.link,
+                                }}
+                            />
+                        ))
+                    }
+            </S.CustomTabPanel>
+            <S.CustomTabPanel>
+                {scrapData
+                        .filter(scrapItem => scrapItem.article.category === "IT")
+                        .map((scrapItem, index) => (
+                            <WideCard
+                                key={index}
+                                props={{
+                                    title: scrapItem.article.title,
+                                    img_src: scrapItem.article.thumbnail === "NaN"
+                                        ? "https://imgnews.pstatic.net/image/origin/119/2023/10/04/2754807.jpg?type=nf106_72"
+                                        : scrapItem.article.thumbnail,
+                                    url: scrapItem.article.link,
+                                }}
+                            />
+                        ))
+                    }
             </S.CustomTabPanel>
         </S.CustomTabs>
     );
