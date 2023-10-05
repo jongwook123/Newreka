@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.d103.newreka.user.dto.ScrapLoadDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -70,12 +71,12 @@ public class ScrapController {
 
 			User user = userDetails.getUser();
 
-			List<ScrapDto> scraplist = scrapService.getScrapList(user)
+			List<ScrapLoadDto> scraplist = scrapService.getScrapList(user)
 				.stream()
-				.map(m -> ScrapDto.fromEntity(m))
+				.map(m -> ScrapLoadDto.fromEntity(m))
 				.collect(Collectors.toList());
 
-			for(ScrapDto s : scraplist){
+			for(ScrapLoadDto s : scraplist){
 				System.out.println(s);
 			}
 			resultMap.put("scrapList", scraplist);
@@ -103,12 +104,12 @@ public class ScrapController {
 
 			User user = userDetails.getUser();
 
-			List<ScrapDto> scrapCategorylist = scrapService.getScrapCategoryList(user, category)
+			List<ScrapLoadDto> scrapCategorylist = scrapService.getScrapCategoryList(user, category)
 					.stream()
-					.map(m -> ScrapDto.fromEntity(m))
+					.map(m -> ScrapLoadDto.fromEntity(m))
 					.collect(Collectors.toList());
 
-			for(ScrapDto s : scrapCategorylist){
+			for(ScrapLoadDto s : scrapCategorylist){
 				System.out.println(s);
 			}
 			resultMap.put("scrapCategoryList", scrapCategorylist);
