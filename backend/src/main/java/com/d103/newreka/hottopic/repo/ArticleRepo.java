@@ -1,13 +1,14 @@
 package com.d103.newreka.hottopic.repo;
 
-import java.util.List;
-
+import com.d103.newreka.hottopic.domain.Article;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.d103.newreka.hottopic.domain.Article;
+import java.util.List;
 
 @Repository
 public interface ArticleRepo extends JpaRepository<Article, Long> {
-	List<Article> findAllByKeyWord_keyWordId(Long id);
+
+    List<Article> findTop5ByKeyWord_keyWordIdOrderByArticleIdDesc(Long id);
+
 }
