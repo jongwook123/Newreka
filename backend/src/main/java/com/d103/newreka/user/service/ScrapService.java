@@ -28,9 +28,9 @@ public class ScrapService {
 	private final ArticleRepo articleRepo;
 
 	@Transactional
-	public void saveScrap(ScrapDto scrapDto) {
+	public void saveScrap(ScrapDto scrapDto, User user) {
 		KeyWord keyWord = keyWordRepo.getReferenceById(scrapDto.getKeyWord());
-		User user = userRepository.getReferenceById(scrapDto.getUser());
+		// User user = userRepository.getReferenceById(scrapDto.getUser());
 		Article article = articleRepo.getReferenceById(scrapDto.getArticle());
 		Scrap scrap = Scrap.builder()
 			// .link(scrapDto.getLink())
