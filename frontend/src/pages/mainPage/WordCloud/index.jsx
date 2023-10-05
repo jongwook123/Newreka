@@ -3,13 +3,15 @@ import * as d3 from 'd3';
 import cloud from 'd3-cloud';
 
 function WordCloudPage({ onWordClick, data }) {
-
+  
   function handleCircleClick(event, d) {
-    const targetElement = document.getElementById('body2');
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: 'smooth' });
-    }
-
+    setTimeout(() => {
+      const targetElement = document.getElementById('body2');
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 0);
+  
     onWordClick(d.text);
   }
   const wordRef = useRef(null);
