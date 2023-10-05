@@ -50,7 +50,7 @@ public class ArticleBatchUtil {
     private static String gpt = "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";
     private static CloseableHttpClient httpClient = HttpClients.createDefault();
 
-    @Scheduled(cron = "0 6/10 * * * ?") // 1분, 11분, 21분, ... 단위로 스케줄러 등록
+    @Scheduled(cron = "0 4/10 * * * ?") // 1분, 11분, 21분, ... 단위로 스케줄러 등록
     public void insertData() {
         try {
             List<KeyWord> keywordList = keyWordRepo.findTop10ByOrderByKeyWordIdDesc();
@@ -59,7 +59,6 @@ public class ArticleBatchUtil {
             for (KeyWord k : keywordList) {
                 String keyword = k.getName();
                 List<ArticleDto> articleDtos = newsService.searchWithClusters(keyword);
-                Quiz quiz = new Quiz();
 
                 // 헤드라인 뉴스 선정
                 ArticleDto headLineArticle = null;
@@ -81,28 +80,38 @@ public class ArticleBatchUtil {
                 k.setCategory(headLineArticle.getCategory());
                 keyWordRepo.save(k); // 키워드 업데이트
                 ArrayList<String> list = getQuiz(headLineArticle.getContent());
-				quiz.setTitle(list.get(0));
-				quiz.setAnswer1(list.get(1));
-				quiz.setAnswer2(list.get(2));
-				quiz.setAnswer3(list.get(3));
-				quiz.setAnswer4(list.get(4));
-				quiz.setCorrectAnswer(Integer.valueOf(list.get(5)));
-				quiz.setKeyword(k);
-				quizRepo.save(quiz);
-				quiz.setTitle(list.get(6));
-				quiz.setAnswer1(list.get(7));
-				quiz.setAnswer2(list.get(8));
-				quiz.setAnswer3(list.get(9));
-				quiz.setAnswer4(list.get(10));
-				quiz.setCorrectAnswer(Integer.valueOf(list.get(11)));
-				quizRepo.save(quiz);
-				quiz.setTitle(list.get(12));
-				quiz.setAnswer1(list.get(13));
-				quiz.setAnswer2(list.get(14));
-				quiz.setAnswer3(list.get(15));
-				quiz.setAnswer4(list.get(16));
-				quiz.setCorrectAnswer(Integer.valueOf(list.get(17)));
-				quizRepo.save(quiz);
+
+                Quiz quiz1 = new Quiz();
+                Quiz quiz2 = new Quiz();
+                Quiz quiz3 = new Quiz();
+
+                quiz1.setTitle(list.get(0));
+                quiz1.setAnswer1(list.get(1));
+                quiz1.setAnswer2(list.get(2));
+                quiz1.setAnswer3(list.get(3));
+                quiz1.setAnswer4(list.get(4));
+                quiz1.setCorrectAnswer(Integer.valueOf(list.get(5)));
+                quiz1.setKeyword(k);
+                quizRepo.save(quiz1);
+
+                quiz2.setTitle(list.get(6));
+                quiz2.setAnswer1(list.get(7));
+                quiz2.setAnswer2(list.get(8));
+                quiz2.setAnswer3(list.get(9));
+                quiz2.setAnswer4(list.get(10));
+                quiz2.setCorrectAnswer(Integer.valueOf(list.get(11)));
+                quiz2.setKeyword(k);
+                quizRepo.save(quiz2);
+
+                quiz3.setTitle(list.get(12));
+                quiz3.setAnswer1(list.get(13));
+                quiz3.setAnswer2(list.get(14));
+                quiz3.setAnswer3(list.get(15));
+                quiz3.setAnswer4(list.get(16));
+                quiz3.setCorrectAnswer(Integer.valueOf(list.get(17)));
+                quiz3.setKeyword(k);
+                quizRepo.save(quiz3);
+
                 // 연관 뉴스 저장
                 for (ArticleDto articleDto : articleDtos) {
                     articleDto.setKeyWordId(k.getKeyWordId());
@@ -266,18 +275,18 @@ public class ArticleBatchUtil {
                     String[] b = i.split(": ");
                     a.add(b[1]);
                 } else if (i.charAt(1) == '.') {
-                    String[] b = i.split(". ");
+                    String[] b = i.split("\\. ");
                     a.add(b[1]);
                 } else if (i.charAt(1) == '답') {
                     String[] b = i.split(": ");
                     if (b[1].charAt(0) == 'A')
                         a.add("1");
-					else if (b[1].charAt(0) == 'B')
-						a.add("2");
-					else if (b[1].charAt(0) == 'C')
-						a.add("3");
-					else if (b[1].charAt(0) == 'D')
-						a.add("4");
+                    else if (b[1].charAt(0) == 'B')
+                        a.add("2");
+                    else if (b[1].charAt(0) == 'C')
+                        a.add("3");
+                    else if (b[1].charAt(0) == 'D')
+                        a.add("4");
                     else {
                         a.add("11");
                     }

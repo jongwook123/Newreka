@@ -1,12 +1,10 @@
 package com.d103.newreka.quiz.domain;
 
-import javax.persistence.*;
-
 import com.d103.newreka.hottopic.domain.KeyWord;
-
 import com.d103.newreka.user.domain.QuizState;
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,30 +15,30 @@ import java.util.List;
 @Getter
 @Builder
 public class Quiz {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "quiz_id", nullable = false)
-	private Long quizId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "quiz_id", nullable = false)
+    private Long quizId;
 
-	@Column(nullable = false, columnDefinition = "varchar(200)")
-	private String title;
+    @Column(nullable = false, columnDefinition = "varchar(200)")
+    private String title;
 
-	@Column(nullable = false, columnDefinition = "varchar(100)")
-	private String answer1;
-	@Column(nullable = false, columnDefinition = "varchar(100)")
-	private String answer2;
-	@Column(nullable = false, columnDefinition = "varchar(100)")
-	private String answer3;
-	@Column(nullable = false, columnDefinition = "varchar(100)")
-	private String answer4;
-	@Column(nullable = false, columnDefinition = "varchar(10)")
-	private String correctAnswer;
+    @Column(nullable = false, columnDefinition = "varchar(100)")
+    private String answer1;
+    @Column(nullable = false, columnDefinition = "varchar(100)")
+    private String answer2;
+    @Column(nullable = false, columnDefinition = "varchar(100)")
+    private String answer3;
+    @Column(nullable = false, columnDefinition = "varchar(100)")
+    private String answer4;
+    @Column(nullable = false, columnDefinition = "int")
+    private Integer correctAnswer;
 
-	@ManyToOne
-	@JoinColumn(name = "keyWord_id", nullable = false)
-	private KeyWord keyword;
+    @ManyToOne
+    @JoinColumn(name = "keyWord_id", nullable = false)
+    private KeyWord keyword;
 
-	@Builder.Default
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "quiz", cascade = CascadeType.ALL)
-	private List<QuizState> quizStates = new ArrayList<>();
+    @Builder.Default
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "quiz", cascade = CascadeType.ALL)
+    private List<QuizState> quizStates = new ArrayList<>();
 }

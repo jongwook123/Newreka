@@ -1,11 +1,11 @@
 package com.d103.newreka.quiz.dto;
 
-import com.d103.newreka.hottopic.domain.KeyWord;
 import com.d103.newreka.quiz.domain.Quiz;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
+
 @Builder
 @Getter
 @Data
@@ -17,10 +17,10 @@ public class QuizDto {
     String answer2;
     String answer3;
     String answer4;
-    String correctAnswer;
+    Integer correctAnswer;
     Long keyword;
 
-    public static QuizDto fromEntity(Quiz quiz){
+    public static QuizDto fromEntity(Quiz quiz) {
 //        TeamRepo teamRepo = null;
 //        StadiumRepo stadiumRepo = null;
         return QuizDto.builder()
