@@ -1,13 +1,13 @@
 package com.d103.newreka.user.repo;
 
-import com.d103.newreka.user.domain.Scrap;
-import com.d103.newreka.user.domain.User;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.d103.newreka.user.domain.Scrap;
 
 @Repository
-public interface ScrapRepo extends JpaRepository<Scrap, User> {
-    List<Scrap> findByUserId(User user);
+public interface ScrapRepo extends JpaRepository<Scrap, Long> {
+	List<Scrap> findByUserId_Id(Long id);
 }

@@ -44,4 +44,9 @@ public class Article {
 	@ManyToOne
 	@JoinColumn(name = "keyWord_id", nullable = false)
 	private KeyWord keyWord;
+
+	// @Builder.Default
+	// @OneToMany(fetch = FetchType.LAZY, mappedBy = "article", cascade = CascadeType.ALL)
+	// private List<Article> articles = new ArrayList<>();
+
 }
