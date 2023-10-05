@@ -28,6 +28,7 @@ export const Body = styled.div`
     height : 100%;
     background-color : #F5ECE5;
     border-radius: 20px;
+    box-shadow: 0 5px 5px #E3C3A6; 
     & h2 {
         font-weight: bold;
         font-size: 30px;

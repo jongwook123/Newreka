@@ -19,15 +19,21 @@ ChartJS.register(RadialLinearScale, ArcElement, Tooltip, Legend);
 
 export default function Keywords() {
     const accessToken = useSelector((state) => state.user.accessToken);
+
+    // 카테고리별 키워드 개수
     const [keywords, setKeywords] = useState({
-        오피니언:0,
-        세계:0,
-        생활:0,
-        사회:0,
-        경제:0,
-        정치:0,
-        IT:0,
+        오피니언: 0,
+        세계: 0,
+        생활: 0,
+        사회: 0,
+        경제: 0,
+        정치: 0,
+        IT: 0,
     })
+
+    // 전체 키워드
+    const [keywordList, setKeywordList] = useState([])
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -41,6 +47,8 @@ export default function Keywords() {
                     정치: result.keyWordList["정치"],
                     IT: result.keyWordList["IT"],
                 });
+                setKeywordList(result.keyWordList["getKeyWord"]
+                )
             } catch (error) {
                 console.error('Error fetching keyword count:', error);
             }
@@ -49,20 +57,22 @@ export default function Keywords() {
         fetchData();
     }, [accessToken]);
 
+    console.log(keywordList)
+
     const data = {
         labels: ['오피니언', '세계', '생활', '사회', '경제', '정치', 'IT'],
         datasets: [
             {
                 label: '',
                 data: [
-                    keywords["오피니언"], 
-                    keywords["세계"], 
-                    keywords["생활"], 
-                    keywords["사회"], 
-                    keywords["경제"], 
-                    keywords["정치"], 
-                    keywords["IT"], 
-                    ],
+                    keywords["오피니언"],
+                    keywords["세계"],
+                    keywords["생활"],
+                    keywords["사회"],
+                    keywords["경제"],
+                    keywords["정치"],
+                    keywords["IT"],
+                ],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.5)',
                     'rgba(54, 162, 235, 0.5)',
@@ -76,8 +86,8 @@ export default function Keywords() {
             },
         ],
     };
-    
-    
+
+
     const options = {
         plugins: {
             legend: {
@@ -88,7 +98,12 @@ export default function Keywords() {
 
     return (
         <S.Main>
-            <PolarArea data={data} options={options}/>
+            <PolarArea data={data} options={options} />
+            <S.KeywordListContainer>
+                {keywordList.map((keyword, index) => (
+                    <S.Keyword key={index}>{keyword}</S.Keyword>
+                ))}
+            </S.KeywordListContainer>
         </S.Main>
     )
 }
