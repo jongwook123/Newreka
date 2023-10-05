@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -43,8 +43,17 @@ public class ArticleService {
 
     public List<Article> getArticleList(Long articleId) throws IOException, ParseException {
         List<Article> result = articleRepo.findTop5ByKeyWord_keyWordIdOrderByArticleIdDesc(articleId);
-        Collections.reverse(result);
-        return result;
+
+        // URL 기준으로 중복 제거
+        List<Article> distinctArticles = result.stream()
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Article::getLink))),
+                        ArrayList::new
+                ));
+
+        Collections.reverse(distinctArticles);
+
+        return distinctArticles;
     }
 
 }
