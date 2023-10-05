@@ -44,10 +44,12 @@ export default function Quizzes({ quizData, selectedKeyword }) {
     navigate('/mypage', { state: { scrollToTop: true } });
   }
 
+  console.log(quizData)
+
   if (submitResult === null) {
     return (
       <div>
-        {quizData && quizData.length > 0 ? (
+        {quizData && (
           <>
             {quizData.map((quiz, index) => (
               <S.EachQuiz key={index}>
@@ -77,8 +79,7 @@ export default function Quizzes({ quizData, selectedKeyword }) {
               </S.SubmitButton>
             </S.Button>
           </>)
-          :
-          <p>문제 준비중입니다...</p>}
+        }
       </div>);
   } else if (submitResult === false) {
     return (<S.ResultSection>

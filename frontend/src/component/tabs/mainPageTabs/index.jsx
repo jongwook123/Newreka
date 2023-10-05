@@ -12,7 +12,7 @@ const MainPageTabs = ({ selectedKeyword, data }) => {
     const accessToken = useSelector(state => state.user.accessToken);
     const navigate = useNavigate();
     const [activeTabIndex, setActiveTabIndex] = useState(0);
-    const [selectedKeywordId, setSelectedKeywordId] = useState({});
+    const [selectedKeywordId, setSelectedKeywordId] = useState(0);
     const [selectedSummary, setSelectedSummary] = useState('요약 준비중입니다...');
     const [quizData, setQuizData] = useState({})
     const [articleData, setArticleData] = useState([])
@@ -44,35 +44,25 @@ const MainPageTabs = ({ selectedKeyword, data }) => {
         }
     }, [selectedKeyword, data]);
 
+    // 키워드 선택시 관련기사와 퀴즈 불러오기
     useEffect(() => {
         if (selectedKeywordId) {
             (async () => {
                 try {
-                    const fetchedData = await TryGetQuiz(accessToken, selectedKeywordId);
-                    setQuizData(fetchedData.quizList);
-                } catch (error) {
-                    console.error(error);
-                }
-            })()
+                    const articlePromise = TryGetArticles(selectedKeywordId);
+                    const quizPromise = TryGetQuiz(accessToken, selectedKeywordId);
 
-        }
-    }, [selectedKeywordId]);
+                    const [articleData, quizData] = await Promise.all([articlePromise, quizPromise]);
 
-    useEffect(() => {
-        if (selectedKeywordId) {
-            (async () => {
-                try {
-                    const fetchedData = await TryGetArticles(selectedKeywordId);
-                    setArticleData(fetchedData.quizList);
+                    setArticleData(articleData.quizList);
+                    setQuizData(quizData.quizList);
 
                 } catch (error) {
                     console.error(error);
                 }
             })()
         }
-
     }, [selectedKeywordId]);
-
 
     return (
         <S.CustomTabs onSelect={handleTabSelect} selectedIndex={activeTabIndex}>
@@ -111,16 +101,30 @@ const MainPageTabs = ({ selectedKeyword, data }) => {
             <S.CustomTabPanel>
                 {isQuizStarted ? (
                     <S.QuizSection>
-                        {quizData && <Quizzes quizData={quizData} selectedKeyword={selectedKeyword} />}
+                        {quizData?.length > 0 ? (
+                            <Quizzes quizData={quizData} selectedKeyword={selectedKeyword} />
+                        ) : (
+                            <p>문제 준비중입니다...</p>
+                        )}
                     </S.QuizSection>
                 ) : (
-                    <S.Button>
-                        <S.QuizButton onClick={handleStartQuiz}>
-                            <p>문제 보기</p>
-                        </S.QuizButton>
-                    </S.Button>
+                    <>
+                        {quizData?.length > 0 ? (
+                            <S.Button>
+                                <S.QuizButton onClick={handleStartQuiz}>
+                                    <p>문제 보기</p>
+                                </S.QuizButton>
+                            </S.Button>
+                        ) : (
+                            <S.QuizSection>
+                                <p>문제 준비중입니다...</p>
+                            </S.QuizSection>
+                        )}
+                    </>
                 )}
             </S.CustomTabPanel>
+
+
         </S.CustomTabs>
     );
 };
