@@ -6,6 +6,7 @@ export const Main = styled.main`
     justify-content: center;
     margin: 0 auto;
     width: 60%;
+
     
 `
 
@@ -30,6 +31,15 @@ export const Body = styled.body`
     height : 100%;
     background-color : #F5ECE5;
     border-radius: 20px;
+    & h2 {
+        font-weight: bold;
+        font-size: 30px;
+        padding-top: 20px;
+        padding-left: 20px;
+    }
+    & p {
+        font-size: 20px;
+    }
 `
 
 export const KeywordSection = styled.section`
