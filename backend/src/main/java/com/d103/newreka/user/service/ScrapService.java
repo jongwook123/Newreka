@@ -50,13 +50,15 @@ public class ScrapService {
 
     @Transactional
     public List<Scrap> getScrapCategoryList(User user, String category) {
+
+        String firstPart = category.split(",")[0];
+
         List<Scrap> scr = scrapRepo.findByUserId_Id(user.getId());
         List<Scrap> scraps = new ArrayList<>();
-        System.out.println("category: " + category + " userid: " + user.getId());
+
         for (int i = 0; i < scr.size(); i++) {
             Scrap curScr = scr.get(i);
 
-            System.out.println(curScr.getArticleId().getCategory());
             if (scr.get(i).getArticleId().getCategory().equals(category))
                 scraps.add(scr.get(i));
         }
