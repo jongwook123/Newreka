@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -35,29 +36,64 @@ public class QuizStateService {
     }
 
     @Transactional
-    public HashMap<String,Integer> myKeyWord(User user){
+    public HashMap<String,Object> myKeyWord(User user){
 
-        HashMap<String,Integer> keyWordList = new HashMap<>();
+        HashMap<String,Object> keyWordList = new HashMap<>();
+
+        List<String> getKeyWord = new LinkedList<>();
 
         System.out.println("잘 들어는 옴");
 
         List<QuizState> list = quizStateRepo.findByUser_IdAndCategory(user.getId(),"사회");
         keyWordList.put("사회",list.size());
+        for(QuizState temp : list){
+            String name = keyWordRepo.findById(temp.getKeyWord().getKeyWordId()).orElseThrow().getName();
+            getKeyWord.add(name);
+        }
+
         list = quizStateRepo.findByUser_IdAndCategory(user.getId(),"경제");
         keyWordList.put("경제",list.size());
+        for(QuizState temp : list){
+            String name = keyWordRepo.findById(temp.getKeyWord().getKeyWordId()).orElseThrow().getName();
+            getKeyWord.add(name);
+        }
+
         list = quizStateRepo.findByUser_IdAndCategory(user.getId(),"정치");
         keyWordList.put("정치",list.size());
+        for(QuizState temp : list){
+            String name = keyWordRepo.findById(temp.getKeyWord().getKeyWordId()).orElseThrow().getName();
+            getKeyWord.add(name);
+        }
+
         list = quizStateRepo.findByUser_IdAndCategory(user.getId(),"세계");
         keyWordList.put("세계",list.size());
+        for(QuizState temp : list){
+            String name = keyWordRepo.findById(temp.getKeyWord().getKeyWordId()).orElseThrow().getName();
+            getKeyWord.add(name);
+        }
+
         list = quizStateRepo.findByUser_IdAndCategory(user.getId(),"IT");
         keyWordList.put("IT",list.size());
+        for(QuizState temp : list){
+            String name = keyWordRepo.findById(temp.getKeyWord().getKeyWordId()).orElseThrow().getName();
+            getKeyWord.add(name);
+        }
+
         list = quizStateRepo.findByUser_IdAndCategory(user.getId(),"생활");
         keyWordList.put("생활",list.size());
+        for(QuizState temp : list){
+            String name = keyWordRepo.findById(temp.getKeyWord().getKeyWordId()).orElseThrow().getName();
+            getKeyWord.add(name);
+        }
+
         list = quizStateRepo.findByUser_IdAndCategory(user.getId(),"오피니언");
         keyWordList.put("오피니언",list.size());
+        for(QuizState temp : list){
+            String name = keyWordRepo.findById(temp.getKeyWord().getKeyWordId()).orElseThrow().getName();
+            getKeyWord.add(name);
+        }
 
-        System.out.println("실행 잘 됨");
-
+        keyWordList.put("getKeyWord", getKeyWord);
         return keyWordList;
     }
     //사회, 경제, 정치, 세계, IT, 생활, 오피니언

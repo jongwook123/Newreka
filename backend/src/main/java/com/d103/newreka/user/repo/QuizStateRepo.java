@@ -11,4 +11,6 @@ import java.util.List;
 public interface QuizStateRepo extends JpaRepository<QuizState, Long> {
 
     List<QuizState> findByUser_IdAndCategory(Long id, String category);
+
+    QuizState findByKeyWord_keyWordIdAndUser_Id(Long keyWordid, Long userId);
 }

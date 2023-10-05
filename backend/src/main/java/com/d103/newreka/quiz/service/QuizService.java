@@ -54,7 +54,7 @@ public class QuizService {
      * 퀴즈 정답 비교 후 정답시 true, 오답시 false
      */
     @Transactional
-    public boolean compareAnswer(QuizCompareDto quizCompareDto, User user) {
+    public String compareAnswer(QuizCompareDto quizCompareDto, User user) {
 
         // 퀴즈 정보 저장
         List<Long> quizIdList = quizCompareDto.getQuizIdList();
@@ -71,11 +71,23 @@ public class QuizService {
                     .orElseThrow(() -> new NoSuchElementException("No Quiz found with id: " + quizId));
 
             keyword = quiz.getKeyword();
+            System.out.println(keyword.getKeyWordId());
+            System.out.println(user.getId());
+
+            if(i==0){
+                QuizState check = quizStateRepo.findByKeyWord_keyWordIdAndUser_Id(keyword.getKeyWordId(), user.getId());
+
+                System.out.println(check);
+
+                if(check!=null){
+                    return "already solved";
+                }
+            }
 
             int realAnswer = quiz.getCorrectAnswer();
 
             if (userAnswer != realAnswer) {
-                return false;
+                return "false";
             }
         }
         System.out.println("문제 비교는 다 끝남");
@@ -91,9 +103,7 @@ public class QuizService {
 
         quizStateRepo.save(quizState);
 
-        System.out.println("문제 넣기가 안 됨");
-
-        return true;
+        return "true";
     }
 
 }

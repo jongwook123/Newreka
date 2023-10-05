@@ -92,7 +92,7 @@ public class QuizController {
 			UserDetailsImpl userDetails = (UserDetailsImpl)userDetailsService.loadUserByUsername(userEmail);
 			User user = userDetails.getUser();
 
-			boolean result = quizService.compareAnswer(quizCompareDto, user);
+			String result = quizService.compareAnswer(quizCompareDto, user);
 			resultMap.put("message", "success");
 			resultMap.put("result", result);
 			status = HttpStatus.ACCEPTED;

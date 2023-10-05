@@ -42,7 +42,7 @@ public class QuizStateController {
 
             User user = userDetails.getUser();
 
-            Map<String,Integer> myKeyWord = quizStateService.myKeyWord(user);
+            Map<String,Object> myKeyWord = quizStateService.myKeyWord(user);
 
             resultMap.put("message", "success");
             resultMap.put("keyWordList", myKeyWord);
