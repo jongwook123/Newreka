@@ -96,6 +96,6 @@ export default function Quizzes({ quizData, selectedKeyword }) {
     return (<S.ResultSection>
       <h1>완료.</h1>
     </S.ResultSection>)
-  }
+
 
 };
