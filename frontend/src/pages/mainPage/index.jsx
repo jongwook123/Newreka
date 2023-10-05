@@ -111,6 +111,7 @@ export default function MainPage() {
   const handleWordClick = (selectedWord) => {
     setSelectedKeyword(selectedWord);
   }
+
   return (
     <S.Main>
       <Header menuname={menuname} />
@@ -125,10 +126,12 @@ export default function MainPage() {
           }
 
         </S.Body>
-        <S.Body id="body2">
-          <h2>{selectedKeyword}</h2>
-          {data && <MainPageTabs selectedKeyword={selectedKeyword} data={data} />}
-        </S.Body>
+        {selectedKeyword && (
+          <S.Body id="body2">
+            <h2>{selectedKeyword}</h2>
+            {data && <MainPageTabs selectedKeyword={selectedKeyword} data={data} />}
+          </S.Body>
+        )}
       </S.BodySection>
       <Footer />
     </S.Main>
