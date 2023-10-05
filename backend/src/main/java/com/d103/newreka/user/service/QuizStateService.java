@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class QuizStateService {
 
         HashMap<String,Object> keyWordList = new HashMap<>();
 
-        List<String> getKeyWord = new LinkedList<>();
+        HashSet<String> getKeyWord = new HashSet<>();
 
         System.out.println("잘 들어는 옴");
 
