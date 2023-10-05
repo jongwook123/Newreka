@@ -81,17 +81,28 @@ public class ArticleBatchUtil {
                 k.setCategory(headLineArticle.getCategory());
                 keyWordRepo.save(k); // 키워드 업데이트
                 ArrayList<String> list = getQuiz(headLineArticle.getContent());
-                for (int i = 0; i < 3; i++) {
-                    int x = i * 6;
-                    quiz.setTitle(list.get(0 + x));
-                    quiz.setAnswer1(list.get(1 + x));
-                    quiz.setAnswer2(list.get(2 + x));
-                    quiz.setAnswer3(list.get(3 + x));
-                    quiz.setAnswer4(list.get(4 + x));
-                    quiz.setCorrectAnswer(list.get(5 + x));
-                    quiz.setKeyword(k);
-                    quizRepo.save(quiz);
-                }
+				quiz.setTitle(list.get(0));
+				quiz.setAnswer1(list.get(1));
+				quiz.setAnswer2(list.get(2));
+				quiz.setAnswer3(list.get(3));
+				quiz.setAnswer4(list.get(4));
+				quiz.setCorrectAnswer(list.get(5));
+				quiz.setKeyword(k);
+				quizRepo.save(quiz);
+				quiz.setTitle(list.get(6));
+				quiz.setAnswer1(list.get(7));
+				quiz.setAnswer2(list.get(8));
+				quiz.setAnswer3(list.get(9));
+				quiz.setAnswer4(list.get(10));
+				quiz.setCorrectAnswer(list.get(11));
+				quizRepo.save(quiz);
+				quiz.setTitle(list.get(12));
+				quiz.setAnswer1(list.get(13));
+				quiz.setAnswer2(list.get(14));
+				quiz.setAnswer3(list.get(15));
+				quiz.setAnswer4(list.get(16));
+				quiz.setCorrectAnswer(list.get(17));
+				quizRepo.save(quiz);
                 // 연관 뉴스 저장
                 for (ArticleDto articleDto : articleDtos) {
                     articleDto.setKeyWordId(k.getKeyWordId());
@@ -189,8 +200,8 @@ public class ArticleBatchUtil {
         // "를 '로 변경
         String context = article.replace("\"", "'");
 
-        System.out.println("아래 context");
-        System.out.println(context);
+//        System.out.println("아래 context");
+//        System.out.println(context);
         HttpPost httpPost = new HttpPost(url2);
 
         httpPost.setHeader("Content-Type", "application/json");
@@ -219,7 +230,7 @@ public class ArticleBatchUtil {
                 "    ]\n" +
                 "  }";
 
-        System.out.println(t);
+//        System.out.println(t);
 //		System.out.println(t);
         JSONObject mainObj = new JSONObject();
         mainObj.put("model", "gpt-3.5-turbo");
@@ -241,13 +252,13 @@ public class ArticleBatchUtil {
         String line = null;
         for (int i = 0; i < 11; i++) {
             line = r.readLine().toString();
-            System.out.println(line);
+//            System.out.println(line);
         }
 
         String[] qu = line.split("\\\\n");
-        for (String i : qu) {
-            System.out.println(i);
-        }
+//        for (String i : qu) {
+//            System.out.println(i);
+//        }
         ArrayList<String> a = new ArrayList<>();
         for (String i : qu) {
             if (i.length() > 3) {
