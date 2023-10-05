@@ -2,10 +2,9 @@ import styled from "styled-components";
 export const Main = styled.main`
     display: flex;
     flex-direction: column;
-    justify-content: center;
     margin: 0 auto;
     width: 60%;
-    
+    height: 2000px;
 `
 
 export const Header = styled.header`
