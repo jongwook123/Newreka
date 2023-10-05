@@ -5,10 +5,7 @@ import javax.persistence.*;
 import com.d103.newreka.hottopic.domain.KeyWord;
 
 import com.d103.newreka.user.domain.QuizState;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +13,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Setter
 @Getter
 @Builder
 public class Quiz {
