@@ -44,6 +44,7 @@ export const CardList = styled.ul`
     box-sizing: border-box;
     grid-template-columns : repeat(3 , minmax(0 , auto));
 	grid-gap :30px ;
+    line-height: 1.3;
     
     `
 

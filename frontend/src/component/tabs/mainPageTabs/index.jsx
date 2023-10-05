@@ -54,6 +54,7 @@ const MainPageTabs = ({ selectedKeyword, data }) => {
                     console.error(error);
                 }
             })()
+            
         }
     }, [selectedKeywordId]);
 
@@ -63,14 +64,15 @@ const MainPageTabs = ({ selectedKeyword, data }) => {
                 try {
                     const fetchedData = await TryGetArticles(selectedKeywordId);
                     setArticleData(fetchedData.quizList);
+                    
                 } catch (error) {
                     console.error(error);
                 }
             })()
         }
+        
     }, [selectedKeywordId]);
 
-    console.log(selectedKeywordId)
 
     return (
         <S.CustomTabs onSelect={handleTabSelect} selectedIndex={activeTabIndex}>
@@ -81,7 +83,9 @@ const MainPageTabs = ({ selectedKeyword, data }) => {
             </S.CustomTabList>
 
             <S.CustomTabPanel>
-                {selectedSummary ? <p>{selectedSummary}</p> : <p>요약 준비중입니다...</p>}
+                <S.QuizSection>
+                   {selectedSummary ? <p>{selectedSummary}</p> : <p>요약 준비중입니다...</p>}
+                </S.QuizSection>
             </S.CustomTabPanel>
             <S.CustomTabPanel>
 
@@ -89,6 +93,7 @@ const MainPageTabs = ({ selectedKeyword, data }) => {
                     {articleData?.map((quiz, index) => (
                         <S.CardItem key={index}>
                             <Card
+                                quiz = {quiz}
                                 title={quiz.title}
                                 img_src={quiz.thumbnail}
                                 url={quiz.link}

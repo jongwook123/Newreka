@@ -28,11 +28,17 @@ export const data = {
         },
     ],
 };
-
+const options = {
+    plugins: {
+        legend: {
+            position: 'bottom',  // Place legend below the chart
+        },
+    },
+};
 export default function Keywords() {
     return (
         <S.Main>
-            <PolarArea data={data} />
+            <PolarArea data={data} options={options}/>
         </S.Main>
     )
 }
