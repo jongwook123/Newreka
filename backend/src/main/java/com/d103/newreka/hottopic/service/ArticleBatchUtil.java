@@ -45,21 +45,17 @@ public class ArticleBatchUtil {
 			List<KeyWord> keywordList = keyWordRepo.findTop10ByOrderByKeyWordIdDesc();
 			Collections.reverse(keywordList); // 순서가 반대로 불러와져서 있어서 뒤집기
 
-			int cnt = 0;
 			for (KeyWord k : keywordList) {
 				String keyword = k.getName();
 
-				System.out.println(++cnt);
-				if (cnt == 2) {
-					keyword = "결승";
-				}
 				List<ArticleDto> articleDtos = newsService.searchWithClusters(keyword);
 
 				// 헤드라인 뉴스 선정
 				ArticleDto headLineArticle = null;
 				int count = 0;
 				for (int i = 0; i < Math.min(5, articleDtos.size()) && count == 0; i++) {
-					if (articleDtos.get(i).getContent().length() <= 2000) {
+					if (articleDtos.get(i).getContent().length() >= 500
+						&& articleDtos.get(i).getContent().length() <= 2000) {
 						headLineArticle = articleDtos.get(i);
 						count++;
 					}
@@ -68,9 +64,14 @@ public class ArticleBatchUtil {
 				if (count == 0) {
 					headLineArticle = articleDtos.get(0);
 					headLineArticle.setContent(headLineArticle.getContent().substring(0, 1998));
-				}
 
-				System.out.println(headLineArticle.getContent());
+					if (headLineArticle.getContent().length() <= 500) {
+						int lengthToFill = 500 - headLineArticle.getContent().length();
+						for (int i = 0; i < lengthToFill; i++) {
+							headLineArticle.setContent(headLineArticle.getContent() + " ");
+						}
+					}
+				}
 
 				String summary = getSummary(headLineArticle.getContent());
 				k.setSummary(summary);
