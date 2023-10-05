@@ -45,7 +45,7 @@ public class ScrapService {
 	}
 
 	@Transactional
-	public List<Scrap> getScrapList(Long user) {
-		return scrapRepo.findByUserId_Id(user);
+	public List<Scrap> getScrapList(User user) {
+		return scrapRepo.findByUserId_Id(user.getId());
 	}
 }

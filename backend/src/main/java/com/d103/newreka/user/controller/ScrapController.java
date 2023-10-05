@@ -37,7 +37,6 @@ public class ScrapController {
 
 	@PostMapping("/add")
 	public ResponseEntity<Map<String, Object>> add(@RequestBody ScrapDto scrapDto, HttpServletRequest request) {
-		System.out.println(scrapDto);
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		try {
@@ -58,15 +57,27 @@ public class ScrapController {
 	}
 
 	@GetMapping("/scrapList")
-	public ResponseEntity<Map<String, Object>> add(@RequestParam(required = false) Long user) {
+	public ResponseEntity<Map<String, Object>> add(HttpServletRequest request) {
 		//        String accessToken = request.getHeader("Authorization");
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
+
 		try {
+
+			String accessToken = request.getHeader("Authorization");
+			String userEmail = jwtUtil.getEmailFromToken(accessToken);
+			UserDetailsImpl userDetails = (UserDetailsImpl)userDetailsService.loadUserByUsername(userEmail);
+
+			User user = userDetails.getUser();
+
 			List<ScrapDto> scraplist = scrapService.getScrapList(user)
 				.stream()
 				.map(m -> ScrapDto.fromEntity(m))
 				.collect(Collectors.toList());
+
+			for(ScrapDto s : scraplist){
+				System.out.println(s);
+			}
 			resultMap.put("scrapList", scraplist);
 			resultMap.put("message", "success");
 			status = HttpStatus.ACCEPTED;

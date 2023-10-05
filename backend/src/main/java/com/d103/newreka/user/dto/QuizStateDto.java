@@ -17,6 +17,6 @@ public class QuizStateDto {
     String category;
     LocalDateTime createTime;
     Long user;
-    Long quiz;
+    Long keyWord;
 
 }

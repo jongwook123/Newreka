@@ -1,5 +1,6 @@
 package com.d103.newreka.user.service;
 
+import com.d103.newreka.hottopic.repo.KeyWordRepo;
 import com.d103.newreka.quiz.repo.QuizRepo;
 import com.d103.newreka.user.domain.QuizState;
 import com.d103.newreka.user.dto.QuizStateDto;
@@ -16,8 +17,7 @@ public class QuizStateService {
 
     private final QuizStateRepo quizStateRepo;
     private final UserRepository userRepository;
-    private final QuizRepo quizRepo;
-
+    private final KeyWordRepo keyWordRepo;
     @Transactional
     public void saveQuizState(QuizStateDto quizStateDto){
         QuizState quizState = QuizState.builder()
@@ -25,7 +25,7 @@ public class QuizStateService {
                 .category(quizStateDto.getCategory())
                 .createTime(quizStateDto.getCreateTime())
                 .user(userRepository.getReferenceById(quizStateDto.getUser()))
-                .quiz(quizRepo.getReferenceById(quizStateDto.getQuiz()))
+                .keyWord(keyWordRepo.getReferenceById(quizStateDto.getKeyWord()))
                 .build();
         quizStateRepo.save(quizState);
     }

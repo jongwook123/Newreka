@@ -38,7 +38,5 @@ public class Quiz {
     @JoinColumn(name = "keyWord_id", nullable = false)
     private KeyWord keyword;
 
-    @Builder.Default
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "quiz", cascade = CascadeType.ALL)
-    private List<QuizState> quizStates = new ArrayList<>();
+
 }

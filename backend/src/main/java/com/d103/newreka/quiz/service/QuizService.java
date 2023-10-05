@@ -1,15 +1,23 @@
 package com.d103.newreka.quiz.service;
 
+import com.d103.newreka.hottopic.domain.Article;
 import com.d103.newreka.hottopic.domain.KeyWord;
 import com.d103.newreka.hottopic.repo.KeyWordRepo;
 import com.d103.newreka.quiz.domain.Quiz;
 import com.d103.newreka.quiz.dto.QuizCompareDto;
 import com.d103.newreka.quiz.dto.QuizDto;
 import com.d103.newreka.quiz.repo.QuizRepo;
+import com.d103.newreka.user.domain.QuizState;
+import com.d103.newreka.user.domain.Scrap;
+import com.d103.newreka.user.domain.User;
+import com.d103.newreka.user.dto.QuizStateDto;
+import com.d103.newreka.user.repo.QuizStateRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -19,6 +27,7 @@ import java.util.NoSuchElementException;
 public class QuizService {
 
     private final QuizRepo quizRepo;
+    private final QuizStateRepo quizStateRepo;
     private final KeyWordRepo keyWordRepo;
 
     @Transactional
@@ -44,11 +53,14 @@ public class QuizService {
     /**
      * 퀴즈 정답 비교 후 정답시 true, 오답시 false
      */
-    public boolean compareAnswer(QuizCompareDto quizCompareDto) {
+    @Transactional
+    public boolean compareAnswer(QuizCompareDto quizCompareDto, User user) {
 
         // 퀴즈 정보 저장
         List<Long> quizIdList = quizCompareDto.getQuizIdList();
         List<Integer> userAnswerList = quizCompareDto.getAnswerList();
+
+        KeyWord keyword = new KeyWord();
 
         for (int i = 0; i < quizIdList.size(); i++) {
 
@@ -57,13 +69,29 @@ public class QuizService {
 
             Quiz quiz = quizRepo.findById(quizId)
                     .orElseThrow(() -> new NoSuchElementException("No Quiz found with id: " + quizId));
+
+            keyword = quiz.getKeyword();
+
             int realAnswer = quiz.getCorrectAnswer();
 
             if (userAnswer != realAnswer) {
                 return false;
             }
-
         }
+        System.out.println("문제 비교는 다 끝남");
+        
+        LocalDateTime now = LocalDateTime.now();
+
+        QuizState quizState = QuizState.builder()
+                        .keyWord(keyword)
+                                .user(user)
+                                        .category(keyword.getCategory())
+                                                .createTime(LocalDateTime.now())
+                                                        .build();
+
+        quizStateRepo.save(quizState);
+
+        System.out.println("문제 넣기가 안 됨");
 
         return true;
     }

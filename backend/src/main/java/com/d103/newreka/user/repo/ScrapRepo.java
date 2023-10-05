@@ -9,5 +9,6 @@ import com.d103.newreka.user.domain.Scrap;
 
 @Repository
 public interface ScrapRepo extends JpaRepository<Scrap, Long> {
+
 	List<Scrap> findByUserId_Id(Long id);
 }

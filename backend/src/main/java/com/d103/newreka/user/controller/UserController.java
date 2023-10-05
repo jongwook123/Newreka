@@ -33,6 +33,7 @@ public class UserController {
 	@PostMapping("/login")
 	public ResponseEntity<GlobalResDto> login(@Valid @RequestBody LoginReqDto loginReqDto,
 		HttpServletResponse response) {
+		System.out.println("로그인 성공");
 		GlobalResDto globalResponse = userService.login(loginReqDto, response);
 		return ResponseEntity.status(globalResponse.getStatusCode()).body(globalResponse);
 	}

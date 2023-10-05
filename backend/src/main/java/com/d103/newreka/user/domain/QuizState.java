@@ -39,6 +39,6 @@ public class QuizState {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
     @ManyToOne
-    @JoinColumn(name = "quiz_id", nullable = false)
-    private Quiz quiz;
+    @JoinColumn(name = "keyWord_id", nullable = false)
+    private KeyWord keyWord;
 }
