@@ -63,13 +63,16 @@ public class ArticleBatchUtil {
 
 				if (count == 0) {
 					headLineArticle = articleDtos.get(0);
-					headLineArticle.setContent(headLineArticle.getContent().substring(0, 1998));
+
+					int endIndex = Math.min(headLineArticle.getContent().length(), 1998);
+					headLineArticle.setContent(headLineArticle.getContent().substring(0, endIndex));
 
 					if (headLineArticle.getContent().length() <= 500) {
-						int lengthToFill = 500 - headLineArticle.getContent().length();
-						for (int i = 0; i < lengthToFill; i++) {
-							headLineArticle.setContent(headLineArticle.getContent() + " ");
+						StringBuilder contentBuilder = new StringBuilder(headLineArticle.getContent());
+						while (contentBuilder.length() < 500) {
+							contentBuilder.append(" ");
 						}
+						headLineArticle.setContent(contentBuilder.toString());
 					}
 				}
 
@@ -87,7 +90,6 @@ public class ArticleBatchUtil {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			throw new RuntimeException(e);
 		}
 	}
 
