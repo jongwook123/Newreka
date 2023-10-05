@@ -30,14 +30,11 @@ export const CustomTab = styled(Tab)`
 `;
 
 export const CustomTabPanel = styled(TabPanel)`
-   display: ${(props) => (props.selected ? 'flex' : 'none')};
-   justify-content: center;
+   display: flex;
    align-items: center;
    flex-direction: column;
    overflow-y: auto;
-   padding-top: 900px;
-   max-height: 500px; /* Adjust the max height as needed */
-   margin-top: 50px;
+   max-height: 500px;
    & > * {
        margin-top: 20px;
    }
