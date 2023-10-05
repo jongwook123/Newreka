@@ -44,6 +44,7 @@ export const CardList = styled.ul`
     box-sizing: border-box;
     grid-template-columns : repeat(3 , minmax(0 , auto));
 	grid-gap :30px ;
+    line-height: 1.3;
     
     `
 
@@ -71,4 +72,6 @@ export const QuizSection = styled.section`
   overflow-y:auto;
   height: 60%;
   width: 90%;
+  /* letter-spacing: 2px; */
+  line-height: 1.6;
 `;

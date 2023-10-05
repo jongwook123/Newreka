@@ -71,7 +71,6 @@ export default function MainPage() {
       const minutes = String(date.getMinutes()).padStart(2, '0'); // 분
 
       const formattedDate = `${year}${month}${day}${hours}${minutes}`;
-      console.log(formattedDate)
       GetTimeKeyword(formattedDate)
         .then(fetchedData => setData(fetchedData))
         .catch(error => console.log(error));
@@ -112,7 +111,6 @@ export default function MainPage() {
   const handleWordClick = (selectedWord) => {
     setSelectedKeyword(selectedWord);
   }
-  console.log(baseTime, data, formattedTime)
   return (
     <S.Main>
       <Header menuname={menuname} />

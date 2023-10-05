@@ -10,7 +10,46 @@ export const TryGetArticles = async (keywordId) => {
 
         const result = await response.json();
         return result;
+    } catch (e) {
+        console.log(e);
+    }
+}
 
+
+
+export const TryScrapped = async (accessToken,keywordId,articleId) => {
+    try {
+        const response = await FetchTemplate({
+            path: process.env.REACT_APP_BASE_SERVER + '/scrap/add',
+            method: "POST",
+            headers: {
+                Authorization :`${accessToken}`
+            },
+            body: JSON.stringify({
+                "keyWord":keywordId,
+                "article":articleId,
+            })
+        });
+        const result = await response.json();
+        return result
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export const TryGetScrapped = async (accessToken,userId) => {
+    try {
+        const response = await FetchTemplate({
+            path: process.env.REACT_APP_BASE_SERVER + `/scrap/scrapList?user=${userId}`,
+            method: "POST",	
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            },
+        });
+
+        const result = await response.json();
+        
+        return result
     } catch (e) {
         console.log(e);
     }
