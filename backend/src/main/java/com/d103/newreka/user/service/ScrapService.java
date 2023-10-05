@@ -1,6 +1,7 @@
 package com.d103.newreka.user.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -47,5 +48,17 @@ public class ScrapService {
 	@Transactional
 	public List<Scrap> getScrapList(User user) {
 		return scrapRepo.findByUserId_Id(user.getId());
+	}
+
+	@Transactional
+	public List<Scrap> getScrapCategoryList(User user, String category) {
+		List<Scrap> scr = scrapRepo.findByUserId_Id(user.getId());
+		List<Scrap> scraps = new ArrayList<>();
+		for(int i=0;i<scr.size();i++){
+//			keyWordRepo.getReferenceById(scr.get(i).getKeyWordId())
+			if(scr.get(i).getKeyWordId().getCategory().equals(category))
+				scraps.add(scr.get(i));
+		}
+		return scraps;
 	}
 }

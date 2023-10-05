@@ -89,4 +89,38 @@ public class ScrapController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 
+	@GetMapping("/scrapCategoryList")
+	public ResponseEntity<Map<String, Object>> add2(HttpServletRequest request, @RequestParam String category) {
+		//        String accessToken = request.getHeader("Authorization");
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = null;
+
+		try {
+
+			String accessToken = request.getHeader("Authorization");
+			String userEmail = jwtUtil.getEmailFromToken(accessToken);
+			UserDetailsImpl userDetails = (UserDetailsImpl)userDetailsService.loadUserByUsername(userEmail);
+
+			User user = userDetails.getUser();
+
+			List<ScrapDto> scrapCategorylist = scrapService.getScrapCategoryList(user, category)
+					.stream()
+					.map(m -> ScrapDto.fromEntity(m))
+					.collect(Collectors.toList());
+
+			for(ScrapDto s : scrapCategorylist){
+				System.out.println(s);
+			}
+			resultMap.put("scrapCategoryList", scrapCategorylist);
+			resultMap.put("message", "success");
+			status = HttpStatus.ACCEPTED;
+		} catch (Exception e) {
+			//            logger.error("질문 검색 실패", e);
+			resultMap.put("message", "fail: " + e.getClass().getSimpleName());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
+
+
 }
