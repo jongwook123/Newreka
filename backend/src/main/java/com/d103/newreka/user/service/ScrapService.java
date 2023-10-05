@@ -56,12 +56,10 @@ public class ScrapService {
         List<Scrap> scr = scrapRepo.findByUserId_Id(user.getId());
         List<Scrap> scraps = new ArrayList<>();
 
-        System.out.println(category);
 
         for (int i = 0; i < scr.size(); i++) {
             Scrap curScr = scr.get(i);
 
-            System.out.println(curScr.getArticleId().getCategory());
             if (scr.get(i).getArticleId().getCategory().equals(category))
                 scraps.add(scr.get(i));
         }

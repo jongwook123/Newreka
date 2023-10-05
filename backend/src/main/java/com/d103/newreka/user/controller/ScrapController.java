@@ -109,9 +109,6 @@ public class ScrapController {
 					.map(m -> ScrapLoadDto.fromEntity(m))
 					.collect(Collectors.toList());
 
-			for(ScrapLoadDto s : scrapCategorylist){
-				System.out.println(s);
-			}
 			resultMap.put("scrapCategoryList", scrapCategorylist);
 			resultMap.put("message", "success");
 			status = HttpStatus.ACCEPTED;
