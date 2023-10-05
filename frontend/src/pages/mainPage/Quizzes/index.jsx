@@ -1,8 +1,11 @@
+import { TrySubmitAnswers } from "APIs/QuizAPIs";
 import * as S from "./style";
 
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function Quizzes({ quizData }) {
+  const accessToken = useSelector(state => state.user.accessToken);
   const [userAnswers, setUserAnswers] = useState([]);
 
   const handleOptionClick = (quizIndex, optionKey) => {
@@ -14,8 +17,13 @@ export default function Quizzes({ quizData }) {
   };
 
   const handleSubmit = () => {
-    console.log(userAnswers);
+    if (userAnswers.length < 3) {
+      alert('정답을 모두 체크해주세요');
+    } else {
+      TrySubmitAnswers(accessToken, quizData[0].quizId, userAnswers[0][6], quizData[1].quizId, userAnswers[1][6], quizData[2].quizId, userAnswers[2][6])
+    }
   };
+
 
   return (
     <div>
@@ -43,7 +51,11 @@ export default function Quizzes({ quizData }) {
               ))}
             </S.EachQuiz>
           ))}
-          <button onClick={handleSubmit}>제출</button>
+          <S.Button>
+            <S.SubmitButton onClick={handleSubmit}>
+              <p>제출</p>
+            </S.SubmitButton>
+          </S.Button>
         </>
       ) : (
         <p>문제 준비중입니다...</p>
