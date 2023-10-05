@@ -37,18 +37,17 @@ export const TryScrapped = async (accessToken,keywordId,articleId) => {
     }
 }
 
-export const TryGetScrapped = async (accessToken,userId) => {
+export const TryGetAllScrapped = async (accessToken) => {
     try {
         const response = await FetchTemplate({
-            path: process.env.REACT_APP_BASE_SERVER + `/scrap/scrapList?user=${userId}`,
-            method: "POST",	
+            path: process.env.REACT_APP_BASE_SERVER + `/scrap/scrapList`,
+            method: "GET",	
             headers: {
-                Authorization: `Bearer ${accessToken}`
+                Authorization: `${accessToken}`
             },
         });
 
         const result = await response.json();
-        
         return result
     } catch (e) {
         console.log(e);
