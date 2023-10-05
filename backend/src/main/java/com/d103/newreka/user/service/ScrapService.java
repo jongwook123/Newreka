@@ -1,82 +1,51 @@
 package com.d103.newreka.user.service;
 
-import com.d103.newreka.global.dto.GlobalResDto;
-import com.d103.newreka.jwt.dto.TokenDto;
-import com.d103.newreka.jwt.util.JwtUtil;
-import com.d103.newreka.user.domain.RefreshToken;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.d103.newreka.hottopic.domain.Article;
+import com.d103.newreka.hottopic.domain.KeyWord;
+import com.d103.newreka.hottopic.repo.ArticleRepo;
+import com.d103.newreka.hottopic.repo.KeyWordRepo;
 import com.d103.newreka.user.domain.Scrap;
 import com.d103.newreka.user.domain.User;
-import com.d103.newreka.user.dto.LoginReqDto;
-import com.d103.newreka.user.dto.UserReqDto;
+import com.d103.newreka.user.dto.ScrapDto;
 import com.d103.newreka.user.repo.ScrapRepo;
-import com.d103.newreka.user.repository.RefreshTokenRepository;
 import com.d103.newreka.user.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class ScrapService {
+	private final ScrapRepo scrapRepo;
+	private final UserRepository userRepository;
+	private final KeyWordRepo keyWordRepo;
+	private final ArticleRepo articleRepo;
 
-    private final JwtUtil jwtUtil;
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final RefreshTokenRepository refreshTokenRepository;
-    private final ScrapRepo scrapRepo;
+	@Transactional
+	public void saveScrap(ScrapDto scrapDto) {
+		KeyWord keyWord = keyWordRepo.getReferenceById(scrapDto.getKeyWord());
+		User user = userRepository.getReferenceById(scrapDto.getUser());
+		Article article = articleRepo.getReferenceById(scrapDto.getArticle());
+		Scrap scrap = Scrap.builder()
+			// .link(scrapDto.getLink())
+			// .category(scrapDto.getCategory())
+			.createTime(LocalDateTime.now())
+			// .thumbnail(scrapDto.getThumbnail())
+			.userId(user)
+			.keyWordId(keyWord)
+			.articleId(article)
+			.build();
+		scrapRepo.save(scrap);
+	}
 
-    // 조회하기
-    public List<Scrap> search(String userEmail){
-
-        User user = userRepository.findByEmail(userEmail).orElseThrow();
-        List<Scrap> list = scrapRepo.findByUserId(user);
-
-        return list;
-    }
-
-    @org.springframework.transaction.annotation.Transactional
-    public GlobalResDto login(LoginReqDto loginReqDto, HttpServletResponse response) {
-
-        // 아이디 검사
-        User user = userRepository.findByEmail(loginReqDto.getEmail()).orElseThrow(
-                () -> new RuntimeException("Not found Account")
-        );
-
-        // 비밀번호 검사
-        if (!passwordEncoder.matches(loginReqDto.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Not matches Password");
-        }
-
-        // 아이디 정보로 Token생성
-        TokenDto tokenDto = jwtUtil.createAllToken(loginReqDto.getEmail());
-
-        Optional<RefreshToken> refreshToken = refreshTokenRepository.findByUserEmail(loginReqDto.getEmail());
-
-        if (refreshToken.isPresent()) {
-            refreshTokenRepository.save(refreshToken.get().updateToken(tokenDto.getRefreshToken()));
-        } else {
-            RefreshToken newToken = new RefreshToken(tokenDto.getRefreshToken(), loginReqDto.getEmail());
-            refreshTokenRepository.save(newToken);
-        }
-
-        setHeader(response, tokenDto);
-
-        GlobalResDto globalResponse = new GlobalResDto("Success Login", HttpStatus.OK.value());
-        globalResponse.setAccessToken(tokenDto.getAccessToken());  // AccessToken 설정
-
-        return globalResponse;
-    }
-
-    private void setHeader(HttpServletResponse response, TokenDto tokenDto) {
-        response.addHeader(JwtUtil.ACCESS_TOKEN, tokenDto.getAccessToken());
-        response.addHeader(JwtUtil.REFRESH_TOKEN, tokenDto.getRefreshToken());
-    }
+	@Transactional
+	public List<Scrap> getScrapList(Long user) {
+		return scrapRepo.findByUserId_Id(user);
+	}
 }

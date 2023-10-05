@@ -58,7 +58,7 @@ public class EmailService {
 		}
 	}
 
-	@Scheduled(cron = "0 0 18 * * ?") // This will run the method at 6 PM every day.
+	@Scheduled(cron = "0 14 10 * * ?") // This will run the method at 6 PM every day.
 	public void sendEveningSummaryEmails() throws MessagingException {
 		List<User> users = userRepository.findAll(); // Fetch all users.
 
