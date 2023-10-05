@@ -16,6 +16,12 @@ export default function MainPage() {
   const [data, setData] = useState({ quizList: [] });
   const [selectedTime, setSelectedTime] = useState(null);
 
+  // 렌더링시 스크롤 최상단
+  useEffect(() => {
+    window.onbeforeunload = function pushRefresh() {
+      window.scrollTo(0, 0);
+    };
+  }, []);
   // 최신 키워드 불러와서 저장
   const fetchData = async () => {
     try {
