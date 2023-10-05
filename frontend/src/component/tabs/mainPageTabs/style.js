@@ -76,6 +76,7 @@ export const QuizSection = styled.section`
   scrollbar-color: transparent transparent;
   & p {
     line-height: 1.6;
+    text-align: center;
   }
 `;
 
