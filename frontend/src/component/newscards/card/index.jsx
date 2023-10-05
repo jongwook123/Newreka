@@ -4,12 +4,15 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import * as S from './style';
 import { useSelector } from 'react-redux';
 import { TryScrapped } from 'APIs/ArticleAPIs';
+import { useEffect } from 'react';
 
 
 
 function Card({ title, img_src, url, quiz }) {
   const accessToken = useSelector((state) => state.user.accessToken);
-  
+  useEffect(() => {
+    setIsScrapped(false);
+  }, [quiz]);
   const handleClick = () => {
     window.open(url, '_blank');
   };
@@ -21,23 +24,20 @@ function Card({ title, img_src, url, quiz }) {
   const [isScrapped, setIsScrapped] = useState(false);
   
   const handleToggleScrap = async (event) => {
-    event.stopPropagation(); // Stop the event from propagating to the parent element (CardSection)
+    event.stopPropagation(); 
 
-    // Check if it's not already scrapped
     if (!isScrapped) {
       try {
-        // Fetch the quiz information associated with the card
         const result = await TryScrapped(accessToken,quiz.keyWordId,quiz.articleId);
-        // Check the result if scrap was successful
         if (result.message === 'success') {
-          setIsScrapped(true); // Update the state to indicate it's scrapped
+          setIsScrapped(true); 
         } 
       } catch (error) {
         console.error('Error while attempting to scrap:', error);
       }
     }
   };
-
+  
   return (
     <S.CardSection onClick={handleClick}>
       <img
