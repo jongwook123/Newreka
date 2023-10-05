@@ -18,7 +18,7 @@ public class ScrapDto {
 	// String category;
 	// LocalDateTime createTime;
 	// String thumbnail;
-	Long user;
+	// Long user;
 	Long keyWord;
 	Long article;
 
@@ -29,7 +29,7 @@ public class ScrapDto {
 		return ScrapDto.builder()
 			.scrapId(scrap.getScrapId())
 			// .createTime(scrap.getCreateTime())
-			.user(scrap.getUserId().getId())
+			// .user(scrap.getUserId().getId())
 			.keyWord(scrap.getKeyWordId().getKeyWordId())
 			.article(scrap.getArticleId().getArticleId())
 			.build();

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.d103.newreka.jwt.util.JwtUtil;
+import com.d103.newreka.security.user.UserDetailsImpl;
+import com.d103.newreka.security.user.UserDetailsServiceImpl;
+import com.d103.newreka.user.domain.User;
 import com.d103.newreka.user.dto.ScrapDto;
 import com.d103.newreka.user.service.ScrapService;
 
@@ -24,14 +30,23 @@ public class ScrapController {
 
 	@Autowired
 	private ScrapService scrapService;
+	@Autowired
+	private JwtUtil jwtUtil;
+	@Autowired
+	private UserDetailsServiceImpl userDetailsService;
 
 	@PostMapping("/add")
-	public ResponseEntity<Map<String, Object>> add(@RequestBody ScrapDto scrapDto) {
+	public ResponseEntity<Map<String, Object>> add(@RequestBody ScrapDto scrapDto, HttpServletRequest request) {
 		System.out.println(scrapDto);
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		try {
-			scrapService.saveScrap(scrapDto);
+			String accessToken = request.getHeader("Authorization");
+			String userEmail = jwtUtil.getEmailFromToken(accessToken);
+			UserDetailsImpl userDetails = (UserDetailsImpl)userDetailsService.loadUserByUsername(userEmail);
+
+			User user = userDetails.getUser();
+			scrapService.saveScrap(scrapDto, user);
 			resultMap.put("message", "success");
 			status = HttpStatus.ACCEPTED;
 		} catch (Exception e) {
