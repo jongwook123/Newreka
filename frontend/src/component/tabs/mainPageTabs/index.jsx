@@ -6,19 +6,33 @@ import { useEffect } from 'react';
 import { TryGetQuiz } from 'APIs/QuizAPIs';
 import { useSelector } from 'react-redux';
 import { TryGetArticles } from 'APIs/ArticleAPIs';
-
+import { useNavigate } from 'react-router-dom';
 
 const MainPageTabs = ({ selectedKeyword, data }) => {
     const accessToken = useSelector(state => state.user.accessToken);
+    const navigate = useNavigate();
     const [activeTabIndex, setActiveTabIndex] = useState(0);
     const [selectedKeywordId, setSelectedKeywordId] = useState({});
     const [selectedSummary, setSelectedSummary] = useState('요약 준비중입니다...');
     const [quizData, setQuizData] = useState({})
     const [articleData, setArticleData] = useState([])
+    const [isQuizStarted, setIsQuizStarted] = useState(false);
 
     const handleTabSelect = (index) => {
         setActiveTabIndex(index);
     };
+
+    const handleStartQuiz = () => {
+        if (!accessToken) {
+            navigate('/login');
+        } else {
+            setIsQuizStarted(true);
+        }
+    };
+
+    useEffect(() => {
+        setIsQuizStarted(false);
+    }, [selectedKeyword]);
 
     useEffect(() => {
         if (data && data.quizList) {
@@ -56,7 +70,7 @@ const MainPageTabs = ({ selectedKeyword, data }) => {
         }
     }, [selectedKeywordId]);
 
-
+    console.log(selectedKeywordId)
 
     return (
         <S.CustomTabs onSelect={handleTabSelect} selectedIndex={activeTabIndex}>
@@ -87,9 +101,17 @@ const MainPageTabs = ({ selectedKeyword, data }) => {
 
             </S.CustomTabPanel>
             <S.CustomTabPanel>
-                <S.QuizSection>
-                    {quizData && <Quizzes quizData={quizData} />}
-                </S.QuizSection>
+                {isQuizStarted ? (
+                    <S.QuizSection>
+                        {quizData && <Quizzes quizData={quizData} />}
+                    </S.QuizSection>
+                ) : (
+                    <S.Button>
+                        <S.QuizButton onClick={handleStartQuiz}>
+                            <p>문제 보기</p>
+                        </S.QuizButton>
+                    </S.Button>
+                )}
             </S.CustomTabPanel>
         </S.CustomTabs>
     );

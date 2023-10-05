@@ -71,4 +71,32 @@ export const QuizSection = styled.section`
   overflow-y:auto;
   height: 60%;
   width: 90%;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+`;
+
+export const Button = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  margin-right: 20px;
+`;
+
+
+export const QuizButton = styled.button`
+  padding: 10px 20px;
+  background-color: #EDDCCF;
+  color: black;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+   &:hover {
+    background-color: #6c757d;
+   }
+   & p {
+    font-size: 15px;
+   }
 `;
