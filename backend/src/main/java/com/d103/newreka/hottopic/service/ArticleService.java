@@ -41,8 +41,8 @@ public class ArticleService {
         articleRepo.save(article);
     }
 
-    public List<Article> getArticleList(Long articleId) throws IOException, ParseException {
-        List<Article> result = articleRepo.findTop5ByKeyWord_keyWordIdOrderByArticleIdDesc(articleId);
+    public List<Article> getArticleList(Long keywordId) throws IOException, ParseException {
+        List<Article> result = articleRepo.findTop5ByKeyWord_keyWordIdOrderByArticleIdDesc(keywordId);
 
         // URL 기준으로 중복 제거
         List<Article> distinctArticles = result.stream()
