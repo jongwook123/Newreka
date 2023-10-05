@@ -186,10 +186,6 @@ public class QuizBatchUtil {
             return null;
         }
 
-
-        System.out.println(response);
-        System.out.println(response.getStatusLine());
-
         HttpEntity et = response.getEntity();
         InputStream is = et.getContent();
 

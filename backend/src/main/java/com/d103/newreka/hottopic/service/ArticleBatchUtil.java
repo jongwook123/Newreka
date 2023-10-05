@@ -113,7 +113,7 @@ public class ArticleBatchUtil {
 
         HttpEntity et = response.getEntity();
         String resultContent = EntityUtils.toString(et, "UTF-8");
-        System.out.println(resultContent);
+//        System.out.println(resultContent);
         resultContent = resultContent.substring(12, resultContent.length() - 2);
         String[] a = resultContent.split("\\\\n");
         resultContent = a[0] + " " + a[1];
