@@ -11,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.d103.newreka.quizStats.domain.QuizStats;
 import com.d103.newreka.typingStats.domain.TypingStats;
 import com.d103.newreka.user.dto.UserReqDto;
 
@@ -61,7 +60,7 @@ public class User {
 
 	@Builder.Default
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<QuizStats> userQuiz = new ArrayList<>();
+	private List<QuizState> userQuiz = new ArrayList<>();
 
 	@Builder.Default
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

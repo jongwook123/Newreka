@@ -4,25 +4,25 @@ import com.d103.newreka.quiz.domain.Quiz;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 
 @Builder
+@Getter
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class QuizDto {
-    private Long quizId;
-    private String title;
-    private String answer1;
-    private String answer2;
-    private String answer3;
-    private String answer4;
-    private Integer collectAnswer;
-    private Long keyword;
+    Long quizId;
+    String title;
+    String answer1;
+    String answer2;
+    String answer3;
+    String answer4;
+    Integer correctAnswer;
+    Long keyword;
 
     public static QuizDto fromEntity(Quiz quiz) {
-        //        TeamRepo teamRepo = null;
-        //        StadiumRepo stadiumRepo = null;
+//        TeamRepo teamRepo = null;
+//        StadiumRepo stadiumRepo = null;
         return QuizDto.builder()
                 .quizId(quiz.getQuizId())
                 .title(quiz.getTitle())
@@ -30,7 +30,7 @@ public class QuizDto {
                 .answer2(quiz.getAnswer2())
                 .answer3(quiz.getAnswer3())
                 .answer4(quiz.getAnswer4())
-                .collectAnswer(quiz.getCollectAnswer())
+                .correctAnswer((quiz.getCorrectAnswer()))
                 .keyword(quiz.getKeyword().getKeyWordId())
                 .build();
     }

@@ -2,10 +2,7 @@ package com.d103.newreka.quiz.domain;
 
 import com.d103.newreka.hottopic.domain.KeyWord;
 import com.d103.newreka.user.domain.QuizState;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,6 +11,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Setter
 @Getter
 @Builder
 public class Quiz {
@@ -22,20 +20,19 @@ public class Quiz {
     @Column(name = "quiz_id", nullable = false)
     private Long quizId;
 
-    @Column(nullable = false, columnDefinition = "varchar(100)")
+    @Column(nullable = false, columnDefinition = "varchar(200)")
     private String title;
 
-    @Column(nullable = false, columnDefinition = "varchar(200)")
+    @Column(nullable = false, columnDefinition = "varchar(100)")
     private String answer1;
-    @Column(nullable = false, columnDefinition = "varchar(200)")
+    @Column(nullable = false, columnDefinition = "varchar(100)")
     private String answer2;
-    @Column(nullable = false, columnDefinition = "varchar(200)")
+    @Column(nullable = false, columnDefinition = "varchar(100)")
     private String answer3;
-    @Column(nullable = false, columnDefinition = "varchar(200)")
+    @Column(nullable = false, columnDefinition = "varchar(100)")
     private String answer4;
-
     @Column(nullable = false, columnDefinition = "int")
-    private Integer collectAnswer;
+    private Integer correctAnswer;
 
     @ManyToOne
     @JoinColumn(name = "keyWord_id", nullable = false)
@@ -44,5 +41,4 @@ public class Quiz {
     @Builder.Default
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "quiz", cascade = CascadeType.ALL)
     private List<QuizState> quizStates = new ArrayList<>();
-
 }
