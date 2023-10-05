@@ -81,7 +81,7 @@ export default function Quizzes({ quizData, selectedKeyword }) {
           </>)
         }
       </div>);
-   } else if (submitResult === "false") {
+  } else if (submitResult === "false") {
     return (<S.ResultSection>
       <h1>틀렸습니다.</h1><br />
       <S.SubmitButton onClick={() => resetQuiz()}>다시 풀기</S.SubmitButton></S.ResultSection>);
@@ -90,12 +90,12 @@ export default function Quizzes({ quizData, selectedKeyword }) {
       <S.SubmitButton onClick={() => toMyPage()}>확인하러 가기</S.SubmitButton></S.ResultSection>);
   } else if (submitResult === "already solved") {
     return (<S.ResultSection>
-      <h1>이미 푼 문제입니다.</h1>{submitResult}
+      <h1>이미 푼 문제입니다.</h1>
     </S.ResultSection>)
   } else {
     return (<S.ResultSection>
-      <h1>완료.</h1>{submitResult}
+      <h1>완료.</h1>
     </S.ResultSection>)
-  }
+
 
 };
