@@ -11,8 +11,9 @@ export const EachQuiz = styled.div`
   transition: background-color 0.3s ease;
 
   h2 {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     margin-bottom: 10px;
+    line-height: 1.5;
   }
 `;
 
@@ -82,4 +83,11 @@ export const SubmitButton = styled.button`
 `;
 
 
-
+export const ResultSection = styled.section`
+  text-align: center;
+  & h1 {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.6;
+  }
+`

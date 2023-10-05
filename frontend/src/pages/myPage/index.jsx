@@ -3,8 +3,15 @@ import Footer from 'component/footer';
 import * as S from './style';
 import Keywords from './keywords';
 import Scrap from './scrap';
+import { useEffect } from 'react';
 
 export default function MyPage() {
+
+    // 렌더링시 스크롤 최상단
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     return (
         <S.Main>
             <Header>

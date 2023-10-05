@@ -4,8 +4,7 @@ import * as S from './style';
 import WordCloudPage from './WordCloud';
 import MainPageTabs from 'component/tabs/mainPageTabs';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { GetKeyword, GetTimeKeyword } from 'APIs/KeywordAPIs';
 import TimeBar from 'component/timebar';
 
@@ -16,16 +15,29 @@ export default function MainPage() {
   const [selectedKeyword, setSelectedKeyword] = useState('');
   const [data, setData] = useState({ quizList: [] });
   const [selectedTime, setSelectedTime] = useState(null);
-  const [baseTime, setBaseTime] = useState(null);
-  useEffect(() => { 
+
+  // 렌더링시 스크롤 최상단
+  useEffect(() => {
     window.onbeforeunload = function pushRefresh() {
       window.scrollTo(0, 0);
     };
   }, []);
+  // 최신 키워드 불러와서 저장
+  const fetchData = async () => {
+    try {
+      const fetchedData = await GetKeyword();
+      setData(fetchedData);
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // 현재 시간의 분 끝자리가 2일 때 fetchData를 호출하도록 설정
   const getCurrentTimeFormatted = () => {
     const currentDate = new Date();
     let minutes = currentDate.getMinutes();
-    
+
     let adjustedMinutes;
 
     if (minutes >= 2 && minutes <= 11) {
@@ -50,22 +62,39 @@ export default function MainPage() {
     return `${year}${month}${day}${hours}${adjustedMinutes}`;
   };
 
-  
-  const fetchData = async () => {
-    try {
-      const fetchedData = await GetKeyword();
-      setData(fetchedData);
+  const formattedTime = getCurrentTimeFormatted()
 
-      if (baseTime === null && fetchedData.quizList.length > 0) {
-        setBaseTime(fetchedData.quizList[0].time);
-      }
+  // 해당 시간 키워드 불러와서 저장
+  const fetchTimeData = async () => {
+    try {
+      const fetchedData = await GetTimeKeyword(formattedTime);
+      setData(fetchedData);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    
+    const fetchDataOn2ndMinute = () => {
+      const currentMinute = new Date().getMinutes();
+      if (currentMinute % 10 === 2) {
+        fetchData();
+      }
+    };
+
+    // 최초 실행
+    fetchTimeData();
+
+    // 1분마다 fetchDataOn2ndMinute를 호출하여 분 끝자리가 2일 때 fetchData 호출
+    const intervalId = setInterval(fetchDataOn2ndMinute, 60000);
+
+    // 컴포넌트가 언마운트될 때 clearInterval하여 타이머 정리
+    return () => clearInterval(intervalId);
+  }, []);
+
+
+  // timebar에서 시간 클릭시 selectedTime의 format 변경 후 해당 시간 키워드 불러와서 저장
+  useEffect(() => {
     if (selectedTime) {
       const date = new Date(selectedTime);
       date.setHours(date.getHours());
@@ -83,51 +112,31 @@ export default function MainPage() {
     }
   }, [selectedTime]);
 
-  const formattedTime = getCurrentTimeFormatted()
-  const fetchTimeData = async () => {
-    try {
-      const fetchedData = await GetTimeKeyword(formattedTime);
-      setData(fetchedData);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-
-  useEffect(() => {
-    // 함수를 만들어서 현재 시간의 분 끝자리가 2일 때 fetchData를 호출하도록 설정
-
-    const fetchDataOn2ndMinute = () => {
-      const currentMinute = new Date().getMinutes();
-      if (currentMinute % 10 === 2) {
-        fetchData();
-      }
-    };
-
-    fetchTimeData();
-    // 최초 실행
-
-    // 1분마다 fetchDataOn2ndMinute를 호출하여 분 끝자리가 2일 때 fetchData 호출
-    const intervalId = setInterval(fetchDataOn2ndMinute, 60000);
-
-    // 컴포넌트가 언마운트될 때 clearInterval하여 타이머 정리
-    return () => clearInterval(intervalId);
-  }, []);
-
+  // 선택된 키워드 저장
   const handleWordClick = (selectedWord) => {
     setSelectedKeyword(selectedWord);
   }
+
+  // 타임바에서 선택시 스크롤 위로 이동
+  const body1Ref = useRef(null);
+
+  const handleTimeSlotClick = (time) => {
+    setSelectedTime(time);
+    if (body1Ref.current) {
+      body1Ref.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <S.Main>
       <Header menuname={menuname} />
       <S.BodySection>
-        <S.Body>
-          <h2>HOT 10</h2>
+        <S.Body id="body1" ref={body1Ref}>
+          <h2>TOP 10</h2>
           {data && data.quizList && data.quizList.length > 0 &&
             <>
               <WordCloudPage onWordClick={handleWordClick} data={data} />
-              {formattedTime && <TimeBar formattedTime={formattedTime} setSelectedTime={setSelectedTime} selectedTime={selectedTime} />}
+              {formattedTime && <TimeBar formattedTime={formattedTime} setSelectedTime={handleTimeSlotClick} selectedTime={selectedTime} />}
             </>
           }
 

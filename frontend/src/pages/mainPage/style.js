@@ -33,6 +33,7 @@ export const Body = styled.div`
         font-size: 30px;
         padding-top: 20px;
         padding-left: 20px;
+        align-self: flex-start;
     }
     & p {
         font-size: 20px;
