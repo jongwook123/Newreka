@@ -86,7 +86,7 @@ public class ArticleBatchUtil {
 				quiz.setAnswer2(list.get(2));
 				quiz.setAnswer3(list.get(3));
 				quiz.setAnswer4(list.get(4));
-				quiz.setCorrectAnswer(list.get(5));
+				quiz.setCorrectAnswer(Integer.valueOf(list.get(5)));
 				quiz.setKeyword(k);
 				quizRepo.save(quiz);
 				quiz.setTitle(list.get(6));
@@ -94,14 +94,14 @@ public class ArticleBatchUtil {
 				quiz.setAnswer2(list.get(8));
 				quiz.setAnswer3(list.get(9));
 				quiz.setAnswer4(list.get(10));
-				quiz.setCorrectAnswer(list.get(11));
+				quiz.setCorrectAnswer(Integer.valueOf(list.get(11)));
 				quizRepo.save(quiz);
 				quiz.setTitle(list.get(12));
 				quiz.setAnswer1(list.get(13));
 				quiz.setAnswer2(list.get(14));
 				quiz.setAnswer3(list.get(15));
 				quiz.setAnswer4(list.get(16));
-				quiz.setCorrectAnswer(list.get(17));
+				quiz.setCorrectAnswer(Integer.valueOf(list.get(17)));
 				quizRepo.save(quiz);
                 // 연관 뉴스 저장
                 for (ArticleDto articleDto : articleDtos) {
@@ -256,9 +256,9 @@ public class ArticleBatchUtil {
         }
 
         String[] qu = line.split("\\\\n");
-//        for (String i : qu) {
-//            System.out.println(i);
-//        }
+        for (String i : qu) {
+            System.out.println(i);
+        }
         ArrayList<String> a = new ArrayList<>();
         for (String i : qu) {
             if (i.length() > 3) {
@@ -266,14 +266,20 @@ public class ArticleBatchUtil {
                     String[] b = i.split(": ");
                     a.add(b[1]);
                 } else if (i.charAt(1) == '.') {
-                    String[] b = i.split(" ");
+                    String[] b = i.split(". ");
                     a.add(b[1]);
                 } else if (i.charAt(1) == '답') {
                     String[] b = i.split(": ");
-                    if (b[1].charAt(0) == 'A' || b[1].charAt(0) == 'B' || b[1].charAt(0) == 'C' || b[1].charAt(0) == 'D')
-                        a.add(b[1].charAt(0) + "");
+                    if (b[1].charAt(0) == 'A')
+                        a.add("1");
+					else if (b[1].charAt(0) == 'B')
+						a.add("2");
+					else if (b[1].charAt(0) == 'C')
+						a.add("3");
+					else if (b[1].charAt(0) == 'D')
+						a.add("4");
                     else {
-                        a.add(b[1]);
+                        a.add("11");
                     }
                 }
             }
