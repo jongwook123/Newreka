@@ -36,7 +36,7 @@ export const TrySubmitAnswers = async (accessToken,quizId1,quiz1answer,quizId2,q
             })
         });
         const result = await response.json();
-        console.log(result)
+
         return result
     } catch (e) {
         console.log(e);
