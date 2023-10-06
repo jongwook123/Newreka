@@ -44,8 +44,8 @@ public class QuizBatchUtil {
     private static String gpt = "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";
     private static CloseableHttpClient httpClient = null;
 
-    private List<KeyWord> keywordList = new ArrayList<>();
-    private List<String> headLineArticleList = new ArrayList<>();
+    static List<KeyWord> keywordList = new ArrayList<>();
+    static List<String> headLineArticleList = new ArrayList<>();
 
     @Scheduled(cron = "40 1/10 * * * ?")
     public void setArticle() throws IOException, ParseException {

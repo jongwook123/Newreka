@@ -31,33 +31,18 @@ public class EmailService {
         this.keyWordRepo = keyWordRepo;
     }
 
-    // @Scheduled(cron = "0 42 01 * * ?") // This will run the method at 8 AM every day.
-    // public void sendDailySummaryEmails() throws MessagingException {
-    // 	List<User> users = userRepository.findAll(); // Fetch all users.
-    //
-    // 	for (User user : users) {
-    // 		List<KeyWord> keywords = keyWordRepo.findTop10ByOrderByKeyWordIdDesc(); // Fetch all keywords for each user.
-    //
-    // 		Collections.reverse(keywords);
-    //
-    // 		// for (KeyWord keyword : keywords) {
-    // 		// 	sendSummaryEmail(user, keywords);
-    // 		// }
-    // 		sendSummaryEmail(user, keywords);
-    // 	}
-    // }
     @Scheduled(cron = "0 30 8 * * ?") // This will run the method at 9 AM every day.
-    public void sendMorningSummaryEmails() throws MessagingException {
+    public void sendMorningSummaryEmails() {
         emailSendEmail();
     }
 
     @Scheduled(cron = "0 0 18 * * ?") // This will run the method at 6 PM every day.
-    public void sendEveningSummaryEmails() throws MessagingException {
+    public void sendEveningSummaryEmails() {
         emailSendEmail();
     }
 
-    @Scheduled(cron = "0 24 9 * * ?") // This will run the method at 6 PM every day.
-    public void test() throws MessagingException {
+    @Scheduled(cron = "0 2 10 * * ?")
+    public void test() {
         emailSendEmail();
     }
 

@@ -1,6 +1,5 @@
 package com.d103.newreka.quiz.service;
 
-import com.d103.newreka.hottopic.domain.Article;
 import com.d103.newreka.hottopic.domain.KeyWord;
 import com.d103.newreka.hottopic.repo.KeyWordRepo;
 import com.d103.newreka.quiz.domain.Quiz;
@@ -8,15 +7,12 @@ import com.d103.newreka.quiz.dto.QuizCompareDto;
 import com.d103.newreka.quiz.dto.QuizDto;
 import com.d103.newreka.quiz.repo.QuizRepo;
 import com.d103.newreka.user.domain.QuizState;
-import com.d103.newreka.user.domain.Scrap;
 import com.d103.newreka.user.domain.User;
-import com.d103.newreka.user.dto.QuizStateDto;
 import com.d103.newreka.user.repo.QuizStateRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -71,15 +67,15 @@ public class QuizService {
                     .orElseThrow(() -> new NoSuchElementException("No Quiz found with id: " + quizId));
 
             keyword = quiz.getKeyword();
-            System.out.println(keyword.getKeyWordId());
-            System.out.println(user.getId());
+//            System.out.println(keyword.getKeyWordId());
+//            System.out.println(user.getId());
 
-            if(i==0){
+            if (i == 0) {
                 QuizState check = quizStateRepo.findByKeyWord_keyWordIdAndUser_Id(keyword.getKeyWordId(), user.getId());
 
-                System.out.println(check);
+//                System.out.println(check);
 
-                if(check!=null){
+                if (check != null) {
                     return "already solved";
                 }
             }
@@ -90,16 +86,16 @@ public class QuizService {
                 return "false";
             }
         }
-        System.out.println("문제 비교는 다 끝남");
-        
+//        System.out.println("문제 비교는 다 끝남");
+
         LocalDateTime now = LocalDateTime.now();
 
         QuizState quizState = QuizState.builder()
-                        .keyWord(keyword)
-                                .user(user)
-                                        .category(keyword.getCategory())
-                                                .createTime(LocalDateTime.now())
-                                                        .build();
+                .keyWord(keyword)
+                .user(user)
+                .category(keyword.getCategory())
+                .createTime(LocalDateTime.now())
+                .build();
 
         quizStateRepo.save(quizState);
 
