@@ -57,8 +57,6 @@ export default function Keywords() {
         fetchData();
     }, [accessToken]);
 
-    console.log(keywordList)
-
     const data = {
         labels: ['오피니언', '세계', '생활', '사회', '경제', '정치', 'IT'],
         datasets: [
