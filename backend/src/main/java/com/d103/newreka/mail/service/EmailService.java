@@ -41,7 +41,7 @@ public class EmailService {
         emailSendEmail();
     }
 
-    @Scheduled(cron = "0 2 10 * * ?")
+    @Scheduled(cron = "0 0 13 * * ?")
     public void test() {
         emailSendEmail();
     }
@@ -54,8 +54,9 @@ public class EmailService {
 
         for (User user : users) {
             try {
+                System.out.println(user.getEmail());
                 sendSummaryEmail(user, keywords);
-            } catch (MessagingException e) {
+            } catch (Exception e) {
                 logger.error("Failed to send email to user: " + user.getEmail(), e);
             }
         }
@@ -73,18 +74,33 @@ public class EmailService {
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append(String.format("<h1 style=\"font-size: 24px;\">안녕하세요 %s님,</h1>", user.getName()));
+        // Start of HTML and set the background color.
+        sb.append("<div style=\"background-color: #EDDCCF; padding: 20px; width: 75%; margin: auto;\">");
+
+        sb.append(
+                "<h1 style=\"font-size: 40px;  margin-top: 30px; margin-bottom: 30px; text-align: center;\">NewReka</h1>");
+        sb.append("<br/>"); // Adds a line break.
 
         for (KeyWord keyword : keywords) {
             String summary = keyword.getSummary();
             if (summary == null || summary.length() <= 4) {
                 continue;
             }
+
+            // Add a div with white background for each keyword and its summary.
+            // Add border-radius to make corners rounded.
             sb.append(
-                    String.format("<p style=\"font-size: 18px;\"><strong>%s</strong>에 대한 요약 정보:</p>", keyword.getName()));
+                    "<div style=\"background-color: #ffffff;  margin-left: 30px;  margin-right: 30px; margin-bottom: 20px; padding: 10px 40px; border-radius: 10px;\">");
+
+            sb.append(
+                    String.format("<p style=\"font-size: 18px;\"><strong>%s</strong></p>", keyword.getName()));
             sb.append(String.format("<p style=\"font-size: 16px;\">%s</p>", summary));
-            sb.append("<br/>"); // Adds a line break between different keywords.
+
+            sb.append("</div>");
         }
+
+        // End of HTML.
+        sb.append("</div>");
 
         // Set the second parameter to 'true' to indicate that this is an HTML email
         helper.setText(sb.toString(), true);

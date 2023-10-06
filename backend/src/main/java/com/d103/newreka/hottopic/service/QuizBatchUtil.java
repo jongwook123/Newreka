@@ -54,25 +54,29 @@ public class QuizBatchUtil {
         Collections.reverse(keywordList); // 순서가 반대로 불러와져서 있어서 뒤집기
 
         for (KeyWord k : keywordList) {
+            try {
 //            System.out.println(k.getName());
-            List<Article> articles = articleService.getArticleList(k.getKeyWordId());
+                List<Article> articles = articleService.getArticleList(k.getKeyWordId());
 
-            // 헤드라인 뉴스 선정
-            String headLineArticle = null;
-            int count = 0;
-            for (int i = 0; i < 5 && count == 0; i++) {
-                if (articles.get(i).getContent().length() <= 2000) {
-                    headLineArticle = articles.get(i).getContent();
-                    count++;
+                // 헤드라인 뉴스 선정
+                String headLineArticle = null;
+                int count = 0;
+                for (int i = 0; i < 5 && count == 0; i++) {
+                    if (articles.get(i).getContent().length() <= 2000) {
+                        headLineArticle = articles.get(i).getContent();
+                        count++;
+                    }
                 }
-            }
 
-            if (count == 0) {
-                headLineArticle = articles.get(0).getContent().substring(0, 1998);
-            }
+                if (count == 0) {
+                    headLineArticle = articles.get(0).getContent().substring(0, 1998);
+                }
 
 //            System.out.println(headLineArticle);
-            headLineArticleList.add(headLineArticle);
+                headLineArticleList.add(headLineArticle);
+            } catch (Exception e) {
+                logger.error(e.getMessage(), e);
+            }
         }
 
     }
@@ -80,8 +84,12 @@ public class QuizBatchUtil {
     @Scheduled(cron = "50 1/10 * * * ?")
     public void insertQ() throws IOException {
         for (int i = 0; i < 10; i++) {
-            if (!headLineArticleList.isEmpty()) {
-                insertQuiz(keywordList.get(i), headLineArticleList.get(i));
+            try {
+                if (!headLineArticleList.isEmpty()) {
+                    insertQuiz(keywordList.get(i), headLineArticleList.get(i));
+                }
+            } catch (Exception e) {
+                logger.error(e.getMessage(), e);
             }
         }
     }
