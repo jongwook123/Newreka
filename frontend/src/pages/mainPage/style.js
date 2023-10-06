@@ -4,7 +4,8 @@ export const Main = styled.main`
     flex-direction: column;
     margin: 0 auto;
     width: 60%;
-    height: 2000px;
+    height: 100%;
+    padding: 10px;
 `
 
 export const Header = styled.header`
