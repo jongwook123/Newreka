@@ -1,0 +1,18 @@
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - /home/ubuntu/news/*.csv
+
+
+output.kafka:
+  hosts: ["3.38.208.202:9092"]
+
+  topic: "my_topic1"
+  partition.round_robin:
+    reachable_only: false
+
+    required_acks: 1
+  compression: gzip
+  max_message_bytes: 1000000
+
