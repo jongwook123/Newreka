@@ -14,8 +14,7 @@ export default function MyPage() {
 
     return (
         <S.Main>
-            <Header>
-            </Header>
+            <Header menuname={"toggle"} />
             <S.BodySection>
                 <S.Body>
                     <h2>Keywords</h2>
