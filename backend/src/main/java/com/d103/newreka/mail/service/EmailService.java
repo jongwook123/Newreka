@@ -4,6 +4,8 @@ import com.d103.newreka.hottopic.domain.KeyWord;
 import com.d103.newreka.hottopic.repo.KeyWordRepo;
 import com.d103.newreka.user.domain.User;
 import com.d103.newreka.user.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -20,6 +22,7 @@ public class EmailService {
     private final JavaMailSender emailSender;
     private final UserRepository userRepository; // Assuming you have a UserRepository to fetch all users.
     private final KeyWordRepo keyWordRepo; // Assuming you have a KeyWordRepository to fetch keywords.
+    private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
 
     public EmailService(JavaMailSender emailSender, UserRepository userRepository,
                         KeyWordRepo keyWordRepo) {
@@ -43,29 +46,33 @@ public class EmailService {
     // 		sendSummaryEmail(user, keywords);
     // 	}
     // }
-    @Scheduled(cron = "0 0 9 * * ?") // This will run the method at 9 AM every day.
+    @Scheduled(cron = "0 30 8 * * ?") // This will run the method at 9 AM every day.
     public void sendMorningSummaryEmails() throws MessagingException {
-        List<User> users = userRepository.findAll(); // Fetch all users.
-
-        for (User user : users) {
-            List<KeyWord> keywords = keyWordRepo.findTop10ByOrderByKeyWordIdDesc(); // Fetch all keywords for each user.
-
-            Collections.reverse(keywords);
-
-            sendSummaryEmail(user, keywords);
-        }
+        emailSendEmail();
     }
 
     @Scheduled(cron = "0 0 18 * * ?") // This will run the method at 6 PM every day.
     public void sendEveningSummaryEmails() throws MessagingException {
+        emailSendEmail();
+    }
+
+    @Scheduled(cron = "0 24 9 * * ?") // This will run the method at 6 PM every day.
+    public void test() throws MessagingException {
+        emailSendEmail();
+    }
+
+    private void emailSendEmail() {
         List<User> users = userRepository.findAll(); // Fetch all users.
 
+        List<KeyWord> keywords = keyWordRepo.findTop10ByOrderByKeyWordIdDesc(); // Fetch all keywords for each user.
+        Collections.reverse(keywords);
+
         for (User user : users) {
-            List<KeyWord> keywords = keyWordRepo.findTop10ByOrderByKeyWordIdDesc(); // Fetch all keywords for each user.
-
-            Collections.reverse(keywords);
-
-            sendSummaryEmail(user, keywords);
+            try {
+                sendSummaryEmail(user, keywords);
+            } catch (MessagingException e) {
+                logger.error("Failed to send email to user: " + user.getEmail(), e);
+            }
         }
     }
 

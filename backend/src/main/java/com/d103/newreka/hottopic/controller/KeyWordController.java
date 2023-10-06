@@ -23,7 +23,6 @@ public class KeyWordController {
 
     @PostMapping("/add")
     public ResponseEntity<Map<String, Object>> add(@RequestBody KeyWordDto keyWordDto) {
-        System.out.println(keyWordDto);
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
         try {

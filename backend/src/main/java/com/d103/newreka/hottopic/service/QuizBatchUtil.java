@@ -54,7 +54,7 @@ public class QuizBatchUtil {
         Collections.reverse(keywordList); // 순서가 반대로 불러와져서 있어서 뒤집기
 
         for (KeyWord k : keywordList) {
-            System.out.println(k.getName());
+//            System.out.println(k.getName());
             List<Article> articles = articleService.getArticleList(k.getKeyWordId());
 
             // 헤드라인 뉴스 선정
