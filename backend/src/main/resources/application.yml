@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/newreka?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    #    url: jdbc:mysql://localhost:3306/newreka?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     url: jdbc:mysql://43.202.33.232:3306/newreka?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
 
     username: d103
@@ -22,8 +22,8 @@ spring:
   mail:
     host: smtp.naver.com # 이메일 서버 주소를 적어주세요.
     port: 587 #465  # 포트 번호를 적어주세요.
-    username: krbest98@naver.com # 이메일 계정의 사용자 이름을 적어주세요.
-    password: newreka!! # 이메일 계정의 비밀번호를 적어주세요.
+    username: yourEmail # 이메일 계정의 사용자 이름을 적어주세요.
+    password: yourPassword # 이메일 계정의 비밀번호를 적어주세요.
     properties:
       mail:
         smtp.auth:true
