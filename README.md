@@ -15,7 +15,6 @@ Newreka는 평소 뉴스 읽기를 버거워하던 사람들을 위해 제공되
 <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=black">
 <img src="https://img.shields.io/badge/JPA-61DAFB?style=for-the-badge&logo=JPA&logoColor=black">
 <img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=black">
-java, python, springboot, jpa, spring security
 
 <img src="https://img.shields.io/badge/logstash-005571?style=for-the-badge&logo=logstash&logoColor=white">
 <img src="https://img.shields.io/badge/filebeat-yellow?style=for-the-badge&logo=filebeat&logoColor=white">
@@ -23,8 +22,6 @@ java, python, springboot, jpa, spring security
 <img src="https://img.shields.io/badge/elasticsearch-005571?style=for-the-badge&logo=elasticsearch&logoColor=white">
 <img src="https://img.shields.io/badge/kibana-005571?style=for-the-badge&logo=kibana&logoColor=white">
 <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=black">
-
-logstash, filebeat, kafka, elasticsearch, kibana, mysql
 
 ### FrontEnd
 
