@@ -46,7 +46,7 @@ Newreka는 평소 뉴스 읽기를 버거워하던 사람들을 위해 제공되
 
 ### 시간대별 Keyword Top 10
 
-![02__ED_95_AB_ED_86_A0_ED_94_BD](/uploads/b7237864f20a2e6df1520cbc40cac0bc/02__ED_95_AB_ED_86_A0_ED_94_BD.gif)
+![02_%ED%95%AB%ED%86%A0%ED%94%BD](https://github.com/jongwook123/Newreka/assets/122584199/739d38fa-4705-497a-bd4d-aebeb321b7e4)
 
 - 매시 정각부터 시작하여 10분마다 실행되는 작업
 - 로직
@@ -56,7 +56,7 @@ Newreka는 평소 뉴스 읽기를 버거워하던 사람들을 위해 제공되
 
 ### Keyword 관련뉴스 3줄요약 & 관련뉴스 기사
 
-![03__ED_86_A0_ED_94_BD__EA_B4_80_EB_A0_A8__EC_9A_94_EC_95_BD__EB_B0_8F__EA_B8_B0_EC_82_AC](/uploads/6cfcb86dd00fd653401d97d8847d68ec/03__ED_86_A0_ED_94_BD__EA_B4_80_EB_A0_A8__EC_9A_94_EC_95_BD__EB_B0_8F__EA_B8_B0_EC_82_AC.gif)
+![03_%ED%86%A0%ED%94%BD_%EA%B4%80%EB%A0%A8_%EC%9A%94%EC%95%BD_%EB%B0%8F_%EA%B8%B0%EC%82%AC](https://github.com/jongwook123/Newreka/assets/122584199/dfd0db7d-e279-4439-9069-5f521da3e970)
 
 - 매시 1분부터 시작하여 10분마다 실행되는 작업
 - 관련 뉴스 선정은 Elasticsearch에 검색한 결과를 이용
@@ -66,49 +66,50 @@ Newreka는 평소 뉴스 읽기를 버거워하던 사람들을 위해 제공되
 
 ### Keyword 관련뉴스 퀴즈
 
-![04__ED_86_A0_ED_94_BD__EA_B4_80_EB_A0_A8__EB_AC_B8_EC_A0_9C__ED_92_80_EA_B8_B0](/uploads/d7472714c156fcccc9881859562d193a/04__ED_86_A0_ED_94_BD__EA_B4_80_EB_A0_A8__EB_AC_B8_EC_A0_9C__ED_92_80_EA_B8_B0.gif)
+![04_%ED%86%A0%ED%94%BD_%EA%B4%80%EB%A0%A8_%EB%AC%B8%EC%A0%9C_%ED%92%80%EA%B8%B0](https://github.com/jongwook123/Newreka/assets/122584199/5d2ca091-cd72-4cc8-adf9-ae2a3d7fcbf0)
 
 - 매시 2분부터 시작하여 10분마다 실행되는 작업
 - OpenAI API를 이용해 자동화
 
 ### Keyword 뉴스 스크랩 및 리다이랙트
 
-![06__EB_89_B4_EC_8A_A4__EC_8A_A4_ED_81_AC_EB_9E_A9__EB_B0_8F__EB_A6_AC_EB_8B_A4_EC_9D_B4_EB_A0_89_ED_8A_B8](/uploads/d9042ebb5040fe46efc778b21371f484/06__EB_89_B4_EC_8A_A4__EC_8A_A4_ED_81_AC_EB_9E_A9__EB_B0_8F__EB_A6_AC_EB_8B_A4_EC_9D_B4_EB_A0_89_ED_8A_B8.gif)
+![06_%EB%89%B4%EC%8A%A4_%EC%8A%A4%ED%81%AC%EB%9E%A9_%EB%B0%8F_%EB%A6%AC%EB%8B%A4%EC%9D%B4%EB%A0%89%ED%8A%B8](https://github.com/jongwook123/Newreka/assets/122584199/5c027d21-e5bf-4116-8ac4-e7d94415c686)
 
 ### 퀴즈관련 Keyword 수집
 
-![05__ED_82_A4_EC_9B_8C_EB_93_9C__EC_88_98_EC_A7_91__EA_B8_B0_EB_8A_A5](/uploads/c1b6becf3ae6331c08800d754a0e77ce/05__ED_82_A4_EC_9B_8C_EB_93_9C__EC_88_98_EC_A7_91__EA_B8_B0_EB_8A_A5.gif)
+![05_%ED%82%A4%EC%9B%8C%EB%93%9C_%EC%88%98%EC%A7%91_%EA%B8%B0%EB%8A%A5](https://github.com/jongwook123/Newreka/assets/122584199/20281cc5-a4d2-42ad-91a1-7dfbe990735b)
 
 
 ### 구독자 이메일 발송 서비스
 
-![07__EC_9D_B4_EB_A9_94_EC_9D_BC__EC_84_9C_EB_B9_84_EC_8A_A4](/uploads/8f26a6e42681b254b59e91281338989c/07__EC_9D_B4_EB_A9_94_EC_9D_BC__EC_84_9C_EB_B9_84_EC_8A_A4.gif)
+![07_%EC%9D%B4%EB%A9%94%EC%9D%BC_%EC%84%9C%EB%B9%84%EC%8A%A4](https://github.com/jongwook123/Newreka/assets/122584199/4397e22d-32ab-4aac-9c23-96ed8a59d2c6)
+
 
 ### 데이터 시각화
 
-![Untitled](/uploads/34c61d75d80518751c0d6562a9a18d65/Untitled.png)
+![Untitled](https://github.com/jongwook123/Newreka/assets/122584199/64cb1130-d81b-4acd-b89e-b698c070860e)
 
 - Kibana를 통해 실시간 데이터 시각화
 
 ## 📄 아키텍처 설계도
 
-![Untitled_1](/uploads/c29a16e58648d96d41791559d820dff3/Untitled_1.png)
+![Untitled 1](https://github.com/jongwook123/Newreka/assets/122584199/5e15d027-be24-45c1-a301-241bbe83a972)
 
 ### Data Pipeline
 
-![Untitled_2](/uploads/681837301b22bbfddd8c3ff9b168ab72/Untitled_2.png)
+![Untitled 2](https://github.com/jongwook123/Newreka/assets/122584199/162dc0c4-0535-47a3-b5cc-7f710d9835fc)
 
 ### Kafka Cluster
 
-![architecture](/uploads/be90aade38b0400640225a2eba069940/architecture.png)
+![architecture](https://github.com/jongwook123/Newreka/assets/122584199/88a94f8e-5bed-47c7-b621-bfdafa03e578)
 
 ### Elasticsearch Cluster
 
-![Untitled_3](/uploads/be47adbb6ae8f4480e177df528450efa/Untitled_3.png)
+![Untitled 3](https://github.com/jongwook123/Newreka/assets/122584199/504fc57e-3598-4f2b-9008-30b1099fd507)
 
 ## 📊 ERD
 
-![Untitled_4](/uploads/a71962be2bba1ea6cfa38d70193b895c/Untitled_4.png)
+![Untitled 4](https://github.com/jongwook123/Newreka/assets/122584199/501d2869-cf8a-4809-a9cd-75266edf0324)
 
 ## ✌️ 팀원 소개
 
